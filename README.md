@@ -13,4 +13,4 @@ configure following files:
 /src/main/java/com/ascendum/Cantaloupe/OutputFiles : This is the path where all the output generated reports are stored. Every excel report has unique name 
 /src/main/java/com/ascendum/Cantaloupe/PageActions : This folder contains files for each page and the actions performed on these pages
 /src/main/java/com/ascendum/Cantaloupe/PageLocators : This folder contains files with locator details on different pages
-/src/main/java/com/ascendum/Cantaloupe/resources/Cantaloupe.xls : This input file contains test data for Loan officers validation
+/src/main/java/com/ascendum/Cantaloupe/resources/Cantaloupe.xls : This input file contains test data for validation
