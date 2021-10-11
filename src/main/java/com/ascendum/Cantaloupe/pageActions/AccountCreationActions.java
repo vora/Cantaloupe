@@ -80,7 +80,7 @@ public class AccountCreationActions extends TestBase {
                 //verifyErrorTextDisplayed();
                 //baseActions.getSpanText(accountCreationLocators.zipcodeErrorText);
                 verifyConsent();
-                verifyCompleteButtonEnablement();
+                //verifyCompleteButtonEnablement();
              //   verifyCompleteButtonEnablement();
 //                accountCreationProcess( createAccountPassword,  createAccountConfirmPassword,
 //                         firstName,  lastName,  mobileNumber,  streetAddress,  city,  state,  zipcode);
@@ -318,7 +318,19 @@ public class AccountCreationActions extends TestBase {
     }
 
 
-    //Login with existing account
+    //Asset completeButton
+    public void assertCompleteButtonCase()
+    {
+        driver.findElement(loginScreen.createAccountBigButton).click();
+        validateCreateAccountScreen();
+        continueWithEmail();
+        validateAccountCreationScreen();
+        validateInptBlankFieldsErrorMsg();
+        //verifyErrorTextDisplayed();
+        //baseActions.getSpanText(accountCreationLocators.zipcodeErrorText);
+        verifyConsent();
+        verifyCompleteButtonEnablement();
+    }
 
 
 

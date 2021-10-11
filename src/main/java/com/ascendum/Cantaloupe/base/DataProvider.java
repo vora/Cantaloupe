@@ -27,7 +27,7 @@ public class DataProvider extends TestBase {
     public DataProvider() throws IOException {
     }
 
-    @org.testng.annotations.DataProvider(name = "LoanPalTestData")
+    @org.testng.annotations.DataProvider(name = "CantaloupeTestData")
     public Object[][] testData() throws Exception {
 
         Object[][] data = new Object[noOfRows - 1][noOfColumns];

@@ -14,16 +14,19 @@ public class AccountCreationTest extends TestBase {
     public AccountCreationTest() throws IOException {
     }
 
-    @Test(dataProvider = "LoanPalTestData", dataProviderClass = DataProvider.class)
+    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
 
     public void createAccountFeatures(String existingAccountEmail, String existingAccountPassword, String createAccount, String createAccountPassword, String createAccountConfirmPassword,
                           String firstName, String lastName, String mobileNumber, String streetAddress, String city, String state, String zipcode, String newFirstName) throws IOException
 
     {
+
+       // accountCreationActions.assertCompleteButtonCase();
         accountCreationActions.testIOS(existingAccountEmail,  existingAccountPassword,  createAccount,  createAccountPassword,  createAccountConfirmPassword,
                  firstName,  lastName,  mobileNumber,  streetAddress,  city,  state,  zipcode);
         accountCreationActions. accountCreationProcess( createAccountPassword,  createAccountConfirmPassword,
                 firstName,  lastName,  mobileNumber,  streetAddress,  city,  state,  zipcode);
+
 
     }
 }

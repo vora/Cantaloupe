@@ -46,13 +46,14 @@ public class EditProfileActions extends TestBase {
     //Edit FirstName
     public void editFirstName(String newFirstName)
     {
-        editProfileFields(editProfileLocators.editProfileFirstnameInput,  newFirstName);
+        driver.findElement(editProfileLocators.editProfileFirstnameInput).click();
+        editProfileFields(editProfileLocators.editProfileFirstnameInput,  "Testing");
     }
 
     //edit fields
     public void editProfileFields(By element, String requiredFieldData)
     {
-        driver.findElement(element).clear();
+        //driver.findElement(element).clear();
         driver.findElement(element).sendKeys(requiredFieldData);
     }
 
