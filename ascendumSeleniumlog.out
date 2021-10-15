@@ -28768,3 +28768,17 @@ Session ID: f73ac373-0fde-8c48-b1a2-b2f93e0d5596
 2021-10-15 01:05:24 INFO  TestBase:30 - *** Executed "verifyEditProfile" SUCCESSFULLY ...
 2021-10-15 01:05:24 INFO  TestBase:106 - Screenshot captured for the Passed testcase
 2021-10-15 01:05:25 INFO  TestBase:20 - *** Test Suite : "Cantaloupe" HAS ENDED ***
+2021-10-15 02:10:41 INFO  TestBase:15 - *** Test Suite : "Cantaloupe" HAS STARTED ***
+2021-10-15 02:10:45 INFO  TestBase:15 - *** Test Suite : "Cantaloupe" HAS STARTED ***
+2021-10-15 02:10:57 INFO  TestBase:25 - *** Running test method : "createAccountFeatures"***
+2021-10-15 02:11:08 INFO  TestBase:30 - *** Executed "createAccountFeatures" SUCCESSFULLY ...
+2021-10-15 02:11:09 INFO  TestBase:106 - Screenshot captured for the Passed testcase
+2021-10-15 02:11:16 INFO  TestBase:25 - *** Running test method : "validateLogin"***
+2021-10-15 02:11:19 INFO  TestBase:30 - *** Executed "validateLogin" SUCCESSFULLY ...
+2021-10-15 02:11:20 INFO  TestBase:106 - Screenshot captured for the Passed testcase
+2021-10-15 02:11:27 INFO  TestBase:25 - *** Running test method : "enterEmailToResetPassword"***
+2021-10-15 02:11:28 INFO  TestBase:30 - *** Executed "enterEmailToResetPassword" SUCCESSFULLY ...
+2021-10-15 02:11:29 INFO  TestBase:106 - Screenshot captured for the Passed testcase
+2021-10-15 02:11:30 INFO  TestBase:35 - *** Test execution "verifyEditProfile" FAILED...
+2021-10-15 02:11:30 INFO  TestBase:20 - *** Test Suite : "Cantaloupe" HAS ENDED ***
+2021-10-15 02:23:02 INFO  TestBase:101 - Screenshot captured for the Failed testcase

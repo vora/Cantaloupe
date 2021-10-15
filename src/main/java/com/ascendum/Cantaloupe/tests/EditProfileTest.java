@@ -14,7 +14,7 @@ public class EditProfileTest extends TestBase {
     public EditProfileTest() throws IOException {
     }
 
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
+    @Test(dataProvider = "CantaloupeTestData1", dataProviderClass = DataProvider.class)
     public void verifyEditProfile(String existingAccountEmail, String existingAccountPassword,
                                   String createAccount, String createAccountPassword, String createAccountConfirmPassword,
                                   String firstName, String lastName, String mobileNumber, String streetAddress, String city,

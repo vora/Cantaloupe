@@ -17,12 +17,14 @@ public class DataProvider extends TestBase {
 
     FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + properties.getProperty("excelFilePath"));
     XSSFWorkbook workbook = new XSSFWorkbook(fis);
-    XSSFSheet sheet = workbook.getSheetAt(sheetNo);
-    XSSFRow row = sheet.getRow(sheetNo);
+    XSSFSheet sheet1 = workbook.getSheetAt(0);
+    XSSFSheet sheet2 = workbook.getSheetAt(1);
+    XSSFRow row1 = sheet1.getRow(sheetNo);
+    XSSFRow row2 = sheet2.getRow(sheetNo);
     XSSFCell cell;
     DataFormatter formateData = new DataFormatter();
-    int noOfRows = sheet.getPhysicalNumberOfRows();
-    int noOfColumns = row.getLastCellNum();
+    int noOfRows = sheet1.getPhysicalNumberOfRows();
+    int noOfColumns = row1.getLastCellNum();
 
     public DataProvider() throws IOException {
     }
@@ -33,8 +35,38 @@ public class DataProvider extends TestBase {
         Object[][] data = new Object[noOfRows - 1][noOfColumns];
         for (int row = 0; row < noOfRows - 1; row++) {
             for (int column = 0; column < noOfColumns; column++) {
-                if (formateData.formatCellValue(sheet.getRow(row + 1).getCell(column)) != null) {
-                    data[row][column] = formateData.formatCellValue(sheet.getRow(row + 1).getCell(column));
+                if (formateData.formatCellValue(sheet1.getRow(row + 1).getCell(column)) != null) {
+                    data[row][column] = formateData.formatCellValue(sheet1.getRow(row + 1).getCell(column));
+                }
+            }
+        }
+        fis.close();
+        return data;
+    }
+
+    @org.testng.annotations.DataProvider(name = "CantaloupeFaceBookTestData")
+    public Object[][] facebookTestData1() throws Exception {
+
+        Object[][] data = new Object[noOfRows - 1][noOfColumns];
+        for (int row = 0; row < noOfRows - 1; row++) {
+            for (int column = 0; column < noOfColumns; column++) {
+                if (formateData.formatCellValue(sheet2.getRow(row + 1).getCell(column)) != null) {
+                    data[row][column] = formateData.formatCellValue(sheet2.getRow(row + 1).getCell(column));
+                }
+            }
+        }
+        fis.close();
+        return data;
+    }
+
+    @org.testng.annotations.DataProvider(name = "CantaloupeGoogleTestData")
+    public Object[][] googleTestData1() throws Exception {
+
+        Object[][] data = new Object[noOfRows - 1][noOfColumns];
+        for (int row = 0; row < noOfRows - 1; row++) {
+            for (int column = 0; column < noOfColumns; column++) {
+                if (formateData.formatCellValue(sheet2.getRow(row + 1).getCell(column)) != null) {
+                    data[row][column] = formateData.formatCellValue(sheet2.getRow(row + 1).getCell(column));
                 }
             }
         }
@@ -67,8 +99,8 @@ public class DataProvider extends TestBase {
                 if (formateData.formatCellValue(sheet.getRow(i).getCell(0)) != null) {
                     String cellValue = formateData.formatCellValue(sheet.getRow(i).getCell(0));
                     if (cellValue.trim().equalsIgnoreCase(value.trim())) {
-                        row = sheet.getRow(i);
-                        rowIndex = row.getRowNum();
+                        row1 = sheet.getRow(i);
+                        rowIndex = row1.getRowNum();
                         break;
                     }
                 }
@@ -83,10 +115,10 @@ public class DataProvider extends TestBase {
         int columnIndex = 0;
         for (int i = 0; i < noOfColumns; i++) {
 
-            if (formateData.formatCellValue(sheet.getRow(0).getCell(i)) != null) {
-                String cellValue = formateData.formatCellValue(sheet.getRow(0).getCell(i));
+            if (formateData.formatCellValue(sheet1.getRow(0).getCell(i)) != null) {
+                String cellValue = formateData.formatCellValue(sheet1.getRow(0).getCell(i));
                 if (cellValue.trim().equalsIgnoreCase(value)) {
-                    columnIndex = sheet.getRow(0).getCell(i).getColumnIndex();
+                    columnIndex = sheet1.getRow(0).getCell(i).getColumnIndex();
                     break;
                 }
             }
