@@ -30,9 +30,12 @@ public class SignInWithExistingAccountTest extends TestBase {
 
     @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
 
-    public void validateLogin(String existingAccountEmail, String existingAccountPassword, String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                           String firstName, String lastName, String mobileNumber, String streetAddress, String city, String state, String zipcode, String newFirstName) throws IOException {
-
+    public void validateLogin(String existingAccountEmail, String existingAccountPassword,
+                              String createAccount, String createAccountPassword, String createAccountConfirmPassword,
+                              String firstName, String lastName, String mobileNumber, String streetAddress, String city,
+                              String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
+                              String newMobileNumber, String newStreetAddress, String newCity, String newState,
+                              String newZipcode) throws IOException {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
         signInWithExistingAccountActions.clickContinueWithEmail();
         signInWithExistingAccountActions.validateErrorMessages();

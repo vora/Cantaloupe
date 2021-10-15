@@ -1,7 +1,9 @@
 package com.ascendum.Cantaloupe.base;
 
+import io.appium.java_client.TouchAction;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -17,7 +19,7 @@ import java.util.List;
 public class BaseActions extends TestBase {
 
     String url = "";
-    String homePage ="";
+    String homePage = "";
     String link = "";
 
     public BaseActions() throws IOException {
@@ -48,7 +50,7 @@ public class BaseActions extends TestBase {
             }
 
             if (!url.startsWith(homePage)) {
-                log.info( url + " - URL belongs to another domain. Hence, skipping it.");
+                log.info(url + " - URL belongs to another domain. Hence, skipping it.");
                 continue;
             }
 
@@ -65,8 +67,7 @@ public class BaseActions extends TestBase {
             httpConn.setConnectTimeout(2000);
             httpConn.connect();
 
-            if (httpConn.getResponseCode() == 200)
-            {
+            if (httpConn.getResponseCode() == 200) {
                 log.info(link + " " + httpConn.getResponseMessage() + ". The url is valid");
             }
 
@@ -155,21 +156,18 @@ public class BaseActions extends TestBase {
     }
 
     //Mouse over on the webelement
-    public void mousehover(By locator)
-    {
+    public void mousehover(By locator) {
         WebElement element = driver.findElement(locator);
         Actions actions = new Actions(driver);
         actions.moveToElement(element).build().perform();
     }
 
-    public void enterText(By locator, String str)
-    {
+    public void enterText(By locator, String str) {
         WebElement element = driver.findElement(locator);
         element.sendKeys(str);
     }
 
-    public void verifyElementPresent(By locator)
-    {
+    public void verifyElementPresent(By locator) {
         WebElement element = driver.findElement(locator);
         element.isDisplayed();
     }
@@ -189,4 +187,33 @@ public class BaseActions extends TestBase {
         return errorText;
     }
 
+    public void deleteInputCharacters(By element) {
+        String inputField = driver.findElement(element).getAttribute("value");
+        List<String> one = new ArrayList<>();
+
+        for (int i = 0; i <= inputField.length(); i++) {
+            //char c = inputField.charAt(i);
+            driver.findElement(element).sendKeys(Keys.BACK_SPACE);
+        }
+    }
+
+    //Edit InputFilds and update with new test data
+
+    public void EditAndUpdateInputFields(By element, String newTestData)
+    {
+        WebElement webElement = driver.findElement(element);
+        TouchAction touchActions = new TouchAction(driver);
+        touchActions.tap(webElement);
+        deleteInputCharacters(element);
+        webElement.sendKeys(newTestData);
+    }
+
+    public void EditAndUpdateInputFields(By element, Integer newTestData)
+    {
+        WebElement webElement = driver.findElement(element);
+        TouchAction touchActions = new TouchAction(driver);
+        touchActions.tap(webElement);
+        deleteInputCharacters(element);
+        webElement.sendKeys(String.valueOf(newTestData));
+    }
 }

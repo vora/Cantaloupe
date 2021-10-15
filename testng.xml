@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="SocialMediaWebsitesValidationForLoanOfficers">
+<suite name="Cantaloupe">
     <listeners>
         <listener class-name="com.ascendum.Cantaloupe.reports.TestListener" />
     </listeners>
     <test name="Test">
-        <parameter name="browserChrome" value="chrome"></parameter>
+
         <classes>
+            <class name="com.ascendum.Cantaloupe.tests.AccountCreationTest"/>
             <class name="com.ascendum.Cantaloupe.tests.SignInWithExistingAccountTest"/>
+            <class name="com.ascendum.Cantaloupe.tests.ForgotPasswordTest"/>
+            <class name="com.ascendum.Cantaloupe.tests.EditProfileTest"/>
         </classes>
 </test> <!-- Test -->
 </suite> <!-- Suite -->

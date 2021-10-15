@@ -17,11 +17,13 @@ public class ForgotPasswordTest extends TestBase {
 
     @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
 
-    public void enterEmailToResetPassword(String existingAccountEmail, String existingAccountPassword, String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                String firstName, String lastName, String mobileNumber, String streetAddress, String city, String state, String zipcode, String newFirstName) throws IOException {
-
-
-            forgotPasswordActions.verifyForgotPassword(existingAccountEmail);
+    public void enterEmailToResetPassword(String existingAccountEmail, String existingAccountPassword,
+                                          String createAccount, String createAccountPassword, String createAccountConfirmPassword,
+                                          String firstName, String lastName, String mobileNumber, String streetAddress, String city,
+                                          String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
+                                          String newMobileNumber, String newStreetAddress, String newCity, String newState,
+                                          String newZipcode) throws IOException {
+        forgotPasswordActions.verifyForgotPassword(existingAccountEmail);
     }
 
     }

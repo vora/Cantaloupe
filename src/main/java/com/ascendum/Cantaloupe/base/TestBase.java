@@ -9,7 +9,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
@@ -29,7 +28,7 @@ public class TestBase {
 
     public static Properties properties;
     public static BufferedReader reader;
-    public static WebDriver driver;
+    public static IOSDriver driver;
 
     public ExtentReports reports;
     public ExtentTest test;

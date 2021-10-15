@@ -6,10 +6,8 @@ import com.ascendum.Cantaloupe.pageLocators.AccountCreationLocators;
 import com.ascendum.Cantaloupe.pageLocators.ContinueAccountCreationLocators;
 import com.ascendum.Cantaloupe.pageLocators.CreateAccountLocators;
 import com.ascendum.Cantaloupe.pageLocators.LoginScreen;
-import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -19,10 +17,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class AccountCreationActions extends TestBase {
@@ -33,7 +29,7 @@ public class AccountCreationActions extends TestBase {
     CreateAccountLocators createAccountLocators = new CreateAccountLocators();
     ContinueAccountCreationLocators continueAccountCreationLocators = new ContinueAccountCreationLocators();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
-    WebDriver driver;
+
 
     public AccountCreationActions() throws IOException {
     }
@@ -41,7 +37,7 @@ public class AccountCreationActions extends TestBase {
 
     @Test(dataProvider = "LoanPalTestData", dataProviderClass = DataProvider.class)
     public void testIOS(String existingAccountEmail, String existingAccountPassword, String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                        String firstName, String lastName, String mobileNumber, String streetAddress, String city, String state, String zipcode)
+                        String firstName, String lastName, String mobileNumber, String streetAddress, String city, String state, String zipcode, String createNewEmail, String newFirstName)
  throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "iOS");
@@ -52,20 +48,6 @@ public class AccountCreationActions extends TestBase {
         caps.setCapability("automationName", "XCUITest");
 
         try {
-            URL url = new URL("http://0.0.0.0:4723/wd/hub");
-
-            //String sessionId = "d8080676-634d-49fc-8624-fc7b57c5d530";
-            // AppiumDriver driver1 = new AppiumDriver("http://localhost:4723/wd/hub" , sessionId);
-
-
-            driver = new IOSDriver(url, caps);
-            driver.get("https://qa.cantaloupepayments.com");
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,300)", "");
-
-            //WebElement logo = driver.findElement(google.logo);
-            // Boolean logoPresent = (Boolean) ((JavascriptExecutor)driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", logo);
 
             WebElement createAccountButton = driver.findElement(loginScreen.createAccountBigButton);
 
@@ -74,24 +56,16 @@ public class AccountCreationActions extends TestBase {
                 System.out.println("Valid");
                 driver.findElement(loginScreen.createAccountBigButton).click();
                 validateCreateAccountScreen();
-                continueWithEmail();
-                validateAccountCreationScreen();
+                continueWithEmail(createNewEmail);
+                validateAccountCreationScreen(createNewEmail);
                 validateInptBlankFieldsErrorMsg();
-                //verifyErrorTextDisplayed();
-                //baseActions.getSpanText(accountCreationLocators.zipcodeErrorText);
                 verifyConsent();
-                //verifyCompleteButtonEnablement();
-             //   verifyCompleteButtonEnablement();
-//                accountCreationProcess( createAccountPassword,  createAccountConfirmPassword,
-//                         firstName,  lastName,  mobileNumber,  streetAddress,  city,  state,  zipcode);
-
+                verifyCompleteButtonEnablement();
             } else {
                 System.out.println("Invalid");
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -115,7 +89,7 @@ public class AccountCreationActions extends TestBase {
 
 
 // Validates continue with email screen
-    public void continueWithEmail() {
+    public void continueWithEmail(String createNewEmail) {
         driver.findElement(createAccountLocators.continueWithEmail).click();
         WebElement emailInput = driver.findElement(continueAccountCreationLocators.email);
 
@@ -128,19 +102,22 @@ public class AccountCreationActions extends TestBase {
             noEmailEntered.isDisplayed();
 
 
-            driver.findElement(continueAccountCreationLocators.email).sendKeys("rajeshwari.prem@ascendum.com");
+            driver.findElement(continueAccountCreationLocators.email).sendKeys(createNewEmail);
         }
     }
 
     // Validates account creation screen with continue email
-    public void validateAccountCreationScreen() {
-        String myEmail = "rajeshwari.prem@ascendum.com";
+    public void validateAccountCreationScreen(String createNewEmail) {
+
+        WebElement emailInput = driver.findElement(accountCreationLocators.emailIdInputField);
+        String emailInputAttribute = emailInput.getAttribute("value");
+
         driver.findElement(continueAccountCreationLocators.nextButton).click();
         WebElement emailText = driver.findElement(accountCreationLocators.emailIdInputField);
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String getEmailText = (String) js.executeScript("return arguments[0].value", emailText);
+       // String getEmailText = (String) js.executeScript("return arguments[0].value", emailText);
         ;
-        if (getEmailText.equalsIgnoreCase(myEmail)) {
+        if (createNewEmail.equalsIgnoreCase(emailInputAttribute)) {
             Assert.assertTrue(true, "User is on the right page");
             System.out.println("User is on the right page");
         } else {
@@ -218,8 +195,6 @@ public class AccountCreationActions extends TestBase {
             Assert.assertFalse(false, "Some of the error messages are not proper");
             System.out.println("Error messages are all wrong");
         }
-
-
     }
 
 
@@ -304,12 +279,11 @@ public class AccountCreationActions extends TestBase {
             driver.findElement(accountCreationLocators.cityInputField).sendKeys(city);
             driver.findElement(accountCreationLocators.stateInptField).sendKeys(state);
             driver.findElement(accountCreationLocators.zipcodeInputField).sendKeys(zipcode);
-
-
         }
 
-        }
-        //validate mobileField only accepts 10 digits - Regex(@"^[0-9]{10}$");
+    }
+
+    //validate mobileField only accepts 10 digits - Regex(@"^[0-9]{10}$");
     public String verifyMobileInputfield(String mobileNo)
     {
         Pattern mobileNoPattern = Pattern.compile("^\\d{10}$");
@@ -319,12 +293,12 @@ public class AccountCreationActions extends TestBase {
 
 
     //Asset completeButton
-    public void assertCompleteButtonCase()
+    public void assertCompleteButtonCase(String createNewEmail)
     {
         driver.findElement(loginScreen.createAccountBigButton).click();
         validateCreateAccountScreen();
-        continueWithEmail();
-        validateAccountCreationScreen();
+        continueWithEmail(createNewEmail);
+        validateAccountCreationScreen(createNewEmail);
         validateInptBlankFieldsErrorMsg();
         //verifyErrorTextDisplayed();
         //baseActions.getSpanText(accountCreationLocators.zipcodeErrorText);
