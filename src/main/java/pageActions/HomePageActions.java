@@ -34,13 +34,6 @@ public class HomePageActions extends TestBase {
     public HomePageActions() throws IOException {
     }
 
-
-//    public void testIOS(String existingAccountEmail, String existingAccountPassword, String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-//                        String firstName, String lastName, String mobileNumber, String streetAddress, String city, String state, String zipcode, String createNewEmail, String newFirstName)
-//            throws MalformedURLException {
-
-
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
     public void verifyHomePage(String createAccount)
             throws MalformedURLException {
 
@@ -77,7 +70,6 @@ public class HomePageActions extends TestBase {
             }
         }
     }
-
 
 
     // image validations

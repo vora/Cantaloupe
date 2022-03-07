@@ -23,6 +23,7 @@ public class SignInWithExistingAccountActions extends TestBase {
         AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
         LoggedInUserLocators loggedInUserLocators = new LoggedInUserLocators();
         CreateOrLoginInitialLocators createOrLoginInitialLocators = new CreateOrLoginInitialLocators();
+
     String emailErrorText = "Please enter your email.";
 
     public SignInWithExistingAccountActions() throws IOException {
