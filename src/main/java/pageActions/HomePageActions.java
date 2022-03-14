@@ -62,8 +62,10 @@ public class HomePageActions extends TestBase {
         List<WebElement> corousalList = driver.findElements(homePageLocators.carousel);
         for (WebElement li : corousalList) {
             int listCount = corousalList.size();
+
+           // Put assertions
             if (listCount == 4) {
-                Assert.assertTrue(true);
+               // Assert.assertTrue(true);
                 li.click();
             } else {
                 log.info("The corousal number is a mismatch");

@@ -2,11 +2,13 @@ package tests;
 
 import base.DataProvider;
 import base.TestBase;
+import com.sun.xml.internal.ws.api.pipe.Fiber;
 import org.testng.annotations.Test;
 import pageActions.SignInWithExistingAccountActions;
 import pageLocators.AccountCreationLocators;
 import pageLocators.CreateOrLoginInitialLocators;
 import pageLocators.LandingScreen;
+import resources.FinalConstants;
 
 import java.io.IOException;
 
@@ -26,19 +28,13 @@ public class SignInWithExistingAccountTest extends TestBase {
     }
 
 
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-
-    public void validateLogin(String existingAccountEmail, String existingAccountPassword,
-                              String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                              String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-                              String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-                              String newMobileNumber, String newStreetAddress, String newCity, String newState,
-                              String newZipcode, String wrongPassword) throws IOException {
+    @Test
+    public void validateLogin() throws IOException {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
         signInWithExistingAccountActions.clickContinueWithEmail();
         signInWithExistingAccountActions.validateErrorMessages();
         signInWithExistingAccountActions.verifySignInDisabled();
-        signInWithExistingAccountActions.clickSignIn(existingAccountEmail, existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
         signInWithExistingAccountActions.clickSignOut();
 
 

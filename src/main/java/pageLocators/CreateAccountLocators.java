@@ -6,8 +6,9 @@ public class CreateAccountLocators {
 
     public By emailIdInputField = By.xpath("//*[@id='id_email']");
     public By enterYourEmailInput = By.xpath("//*[@id='id_email']");
+    public By blankEmailErrorMsg = By.xpath("//*[contains(text(), 'Please enter a valid email address.')]");
     public By nextButton = By.xpath("//*[@id='registration']/div[2]/button");
-    public By emailErrorMessage = By.xpath("//*[@id='registration']/div/div[1]/span");
+    public By emailErrorMessage = By.xpath("//*[contains(text(),'Password must be between 8 and 20 characters. It must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and a special character from this list')]");
     public static By tickMarkImage = By.xpath("//*[@id='registration']/div[1]/div/span/img");
     public By existingEmailError = By.xpath("//*[@id='registration']/div[1]/div[1]/span");
     public By loginThroughCreateScreen = By.xpath("//*[@id='registration']/div[1]/div[1]/button");
@@ -20,9 +21,9 @@ public class CreateAccountLocators {
     public By passwordMatch = By.xpath("//*[@id='registration']/div[3]/div[1]/div");
     public By showPassword = By.xpath("//span[contains(text(),'Show')]");
     public By hidePassword = By.xpath("//span[contains(text(),'Hide')]");
-    public By passwordErrorCriteria = By.xpath("//*[@id='registration']/div[2]/div[2]/span");
+    public By passwordErrorCriteria = By.xpath("//*[contains(text(),'Password must be between 8 and 20 characters. It must contain at least 1 uppercase letter, 1 lowercase letter, and a special character from this list: [!-@\\\\[-^`{-~]')]");
     public By passwordError = By.xpath("//*[@id='registration']/div[2]/div[3]");
-    public By passwordDoNotMatchError = By.xpath("//*[@id='registration']/div[3]/div[2]/span");
+    public By passwordDoNotMatchError = By.xpath("//div[contains(text(), 'Passwords Do Not Match')]");
 
 
 

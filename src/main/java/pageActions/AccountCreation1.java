@@ -227,7 +227,7 @@ public class AccountCreation1 extends TestBase {
        // driver.findElement(loginScreen.createAccountBigButton).click();
         driver.findElement(createAccountLocators.enterYourEmailInput).click();
         driver.findElement(By.xpath("//html")).click();
-        baseActions.validateErrorMessages(createAccountLocators.emailErrorMessage);
+        baseActions.validateErrorMessages(createAccountLocators.blankEmailErrorMsg);
     }
 
     public void validateEmptyField()

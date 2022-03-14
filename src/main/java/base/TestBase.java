@@ -81,32 +81,32 @@ public class TestBase {
 
     @BeforeMethod
     public void testIO (){
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setCapability("platformName", "iOS");
-            caps.setCapability("deviceName", "iPhone 12 Pro Max");
-            caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
-            caps.setCapability("platformVersion", "14.5");
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("platformName", "iOS");
+        caps.setCapability("deviceName", "iPhone 12 Pro Max");
+        caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
+        caps.setCapability("platformVersion", "14.5");
 
-            caps.setCapability("automationName", "XCUITest");
+        caps.setCapability("automationName", "XCUITest");
 
-            try {
-                URL url = new URL("http://0.0.0.0:4723/wd/hub");
+        try {
+            URL url = new URL("http://0.0.0.0:4723/wd/hub");
 
-                //String sessionId = "d8080676-634d-49fc-8624-fc7b57c5d530";
-                // AppiumDriver driver1 = new AppiumDriver("http://localhost:4723/wd/hub" , sessionId);
+            //String sessionId = "d8080676-634d-49fc-8624-fc7b57c5d530";
+            // AppiumDriver driver1 = new AppiumDriver("http://localhost:4723/wd/hub" , sessionId);
 
 
-                driver = new IOSDriver(url, caps);
-                driver.get("https://more-qa.mycantaloupe.com");
-                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                JavascriptExecutor js = (JavascriptExecutor) driver;
-                js.executeScript("window.scrollBy(0,300)", "");
+            driver = new IOSDriver(url, caps);
+            driver.get("https://more-qa.mycantaloupe.com");
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,300)", "");
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+
+    }
 
 
     @AfterMethod
@@ -118,30 +118,20 @@ public class TestBase {
         String timestamp = dateformat.format(cal.getTime());
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-       try {
-           if (ITestResult.FAILURE == result.getStatus()) {
-               path = "./FailedScreenshots/" + result.getParameters()[0] + "_" + "_" + timestamp + ".png";
-               FileUtils.copyFile(source, new File(path));
-               log.info("Screenshot captured for the Failed testcase");
+        try {
+            if (ITestResult.FAILURE == result.getStatus()) {
+                path = "./FailedScreenshots/" + result.getParameters()[0] + "_" + "_" + timestamp + ".png";
+                FileUtils.copyFile(source, new File(path));
+                log.info("Screenshot captured for the Failed testcase");
 
-           } else if (ITestResult.SUCCESS == result.getStatus()) {
-               path = "./PASS_Screenshots/" + result.getParameters()[0] +  "_" + timestamp + ".png";
-               FileUtils.copyFile(source, new File(path));
-               log.info("Screenshot captured for the Passed testcase");
-                }
-       }catch (Exception e) {
+            } else if (ITestResult.SUCCESS == result.getStatus()) {
+                path = "./PASS_Screenshots/" + result.getParameters()[0] +  "_" + timestamp + ".png";
+                FileUtils.copyFile(source, new File(path));
+                log.info("Screenshot captured for the Passed testcase");
+            }
+        }catch (Exception e) {
             System.out.println("Exception while taking screenshot " + e.getMessage());
         }
         driver.quit();
-    }
-
-    public void callExcelHeaders(String existingAccountEmail, String existingAccountPassword,
-                                 String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                                 String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-                                 String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-                                 String newMobileNumber, String newStreetAddress, String newCity, String newState,
-                                 String newZipcode) throws IOException
-    {
-        return;
     }
 }

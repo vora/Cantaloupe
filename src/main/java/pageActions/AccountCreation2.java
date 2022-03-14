@@ -94,16 +94,18 @@ public class AccountCreation2 extends TestBase {
     public void validateErrorMessageForPassword(String wrongPassword)
     {
        driver.findElement(createAccountLocators.createPassowrd).sendKeys(wrongPassword);
-        WebElement passwordError = driver.findElement(createAccountLocators.emailErrorMessage);
+        driver.findElement(By.xpath("//html")).click();
+        WebElement passwordError = driver.findElement(createAccountLocators.passwordErrorCriteria);
 
-        if(passwordError.isDisplayed())
+        Boolean status = passwordError.isDisplayed();
+        if(status == true)
         {
             driver.findElement(By.xpath("//html")).click();
-            Assert.assertTrue((driver.findElement(createAccountLocators.passwordErrorCriteria).isDisplayed()), "Password criteria is validated");
+            Assert.assertTrue(true, "Password criteria is validated");
         }
         else
         {
-            Assert.assertTrue((driver.findElement(createAccountLocators.passwordErrorCriteria).isDisplayed()), "Password criteria is validated");
+            Assert.assertTrue(false, "Password criteria is validated");
 
         }
 

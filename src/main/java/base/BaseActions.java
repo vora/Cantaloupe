@@ -206,8 +206,8 @@ public class BaseActions extends TestBase {
     public void EditAndUpdateInputFields(By element, String newTestData)
     {
         WebElement webElement = driver.findElement(element);
-        TouchAction touchActions = new TouchAction(driver);
-        touchActions.tap((TapOptions) webElement);
+       // TouchAction touchActions = new TouchAction(driver);
+       // touchActions.tap((TapOptions) webElement);
         deleteInputCharacters(element);
         webElement.sendKeys(newTestData);
     }
@@ -215,8 +215,8 @@ public class BaseActions extends TestBase {
     public void EditAndUpdateInputFields(By element, Integer newTestData)
     {
         WebElement webElement = driver.findElement(element);
-        TouchAction touchActions = new TouchAction(driver);
-        touchActions.tap((TapOptions) webElement);
+       // TouchAction touchActions = new TouchAction(driver);
+       // touchActions.tap((TapOptions) webElement);
         deleteInputCharacters(element);
         webElement.sendKeys(String.valueOf(newTestData));
     }
@@ -474,4 +474,14 @@ public class BaseActions extends TestBase {
         }
 
     }
+
+    //JS
+    public void clearData(WebElement element)
+    {
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("arguments[0].value= ''", element);
+
+
+    }
+
 }

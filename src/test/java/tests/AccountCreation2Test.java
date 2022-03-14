@@ -1,12 +1,16 @@
 package tests;
 
+import base.BaseActions;
 import base.DataProvider;
 import base.TestBase;
 
+import com.sun.xml.internal.ws.api.pipe.Fiber;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
 import pageActions.AccountCreation2;
 import pageActions.SignInWithExistingAccountActions;
+import resources.FinalConstants;
 
 import java.io.IOException;
 
@@ -15,143 +19,94 @@ public class AccountCreation2Test extends TestBase {
     AccountCreation1 accountCreation1 = new AccountCreation1();
     AccountCreation2 accountCreation2 = new AccountCreation2();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
+    BaseActions baseActions = new BaseActions();
 
     public AccountCreation2Test() throws IOException {
     }
 
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
+    @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailValidationFlow
-            (String existingAccountEmail, String existingAccountPassword,
-             String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-             String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-             String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-             String newMobileNumber, String newStreetAddress, String newCity, String newState,
-             String newZipcode, String wrongPassword) throws IOException {
+    public void verifyEmailValidationFlow()throws IOException {
 
         // Verify email entered, tick mark
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(createNewEmail);
-        accountCreation2.enteredEmaiCheck(createNewEmail);
+        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail);
+        accountCreation2.enteredEmaiCheck(FinalConstants.createNewEmail);
 
     }
 
         //Verify if the email is editable
-        @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
+        @Test
 
         //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-        public void verifyEmailIsEditable (String existingAccountEmail, String existingAccountPassword,
-                String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-                String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-                String newMobileNumber, String newStreetAddress, String newCity, String newState,
-                String newZipcode, String wrongPassword) throws IOException {
+        public void verifyEmailIsEditable() throws IOException {
 
             accountCreation1.clickCreateButton();
-            accountCreation1.validateEmailCriteriaField(createNewEmail);
-            accountCreation2.enteredEmaiCheck(createNewEmail);
-            accountCreation2.verifyEmailIsEditable(existingAccountEmail);
+            accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail);
+            accountCreation2.enteredEmaiCheck(FinalConstants.createNewEmail);
+            accountCreation2.verifyEmailIsEditable(FinalConstants.existingAccountEmail);
         }
 
         //Verify wrong password fields
-        @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-        public void verifyPassword
-        (String existingAccountEmail, String existingAccountPassword,
-         String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-         String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-         String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-         String newMobileNumber, String newStreetAddress, String newCity, String newState,
-         String newZipcode, String wrongPassword) throws IOException {
+        @Test
+        public void verifyPassword() throws IOException {
 
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(createNewEmail);
+        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail);
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-        accountCreation2.tryWrongPassword(wrongPassword);
-        accountCreation2.validateErrorMessageForPassword(createAccountPassword);
-        accountCreation2.tryConfirmPassword(createAccountPassword);
-        accountCreation2.validateErrorMessageForConfirmPassword(wrongPassword);
+        accountCreation2.tryWrongPassword(FinalConstants.wrongPassword);
+        baseActions.clearData(driver.findElement(By.id("id_password")));
+        accountCreation2.validateErrorMessageForPassword(FinalConstants.wrongPassword);
+        accountCreation2.tryConfirmPassword(FinalConstants.wrongPassword);
+        accountCreation2.validateErrorMessageForConfirmPassword(FinalConstants.wrongPassword);
     }
 
     //Verify if both the password and confirm password matches adn click on show icon and hide icon
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void showPasswordAndHide
-            (String existingAccountEmail, String existingAccountPassword,
-             String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-             String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-             String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-             String newMobileNumber, String newStreetAddress, String newCity, String newState,
-             String newZipcode, String wrongPassword) throws IOException {
+    @Test
+    public void showPasswordAndHide() throws IOException {
 
-        verifyPassword(existingAccountEmail,  existingAccountPassword,
-                 createAccount,  createAccountPassword,  createAccountConfirmPassword,
-                 firstName,  lastName,  mobileNumber,  streetAddress,  city,
-                 state,  zipcode,  createNewEmail,  newFirstName,  newLastName,
-                 newMobileNumber,  newStreetAddress,  newCity,  newState,
-                 newZipcode,  wrongPassword);
+        verifyPassword();
         accountCreation2.clickShowPassword();
         accountCreation2.clickHidePassword();
     }
 
     //verify if the password and confirm passwords are a match
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void verifyPasswords(String existingAccountEmail, String existingAccountPassword,
-                                String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                                String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-                                String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-                                String newMobileNumber, String newStreetAddress, String newCity, String newState,
-                                String newZipcode, String wrongPassword)
+    @Test
+    public void verifyPasswords()
     {
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(createNewEmail);
+        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail);
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-        accountCreation2.enterPassword(createAccountPassword);
-        accountCreation2.verifyPasswordAndConfirmPassword(createAccountPassword, createAccountConfirmPassword);
+        accountCreation2.enterPassword(FinalConstants.createAccountPassword);
+        accountCreation2.verifyPasswordAndConfirmPassword(FinalConstants.createAccountPassword, FinalConstants.createAccountConfirmPassword);
     }
 
     //verify personal details section
-    @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void verifyPersonalDetailsSection(String existingAccountEmail, String existingAccountPassword,
-                                String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                                String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-                                String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-                                String newMobileNumber, String newStreetAddress, String newCity, String newState,
-                                String newZipcode, String wrongPassword) throws IOException {
+    @Test
+    public void verifyPersonalDetailsSection() throws IOException {
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(createNewEmail);
+        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail);
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-        accountCreation2.verifyPasswordAndConfirmPassword(createAccountPassword, createAccountConfirmPassword);
-        accountCreation2.verifyFirstNameInput(firstName);
-        accountCreation2.verifyLastNameInput(lastName);
-        accountCreation2.verifyPhoneNoInput(mobileNumber);
-        accountCreation2.verifyAddressInput(streetAddress, city, state, zipcode);
+        accountCreation2.verifyPasswordAndConfirmPassword(FinalConstants.createAccountPassword, FinalConstants.createAccountConfirmPassword);
+        accountCreation2.verifyFirstNameInput(FinalConstants.firstName);
+        accountCreation2.verifyLastNameInput(FinalConstants.lastName);
+        accountCreation2.verifyPhoneNoInput(FinalConstants.mobileNumber);
+        accountCreation2.verifyAddressInput(FinalConstants.streetAddress, FinalConstants.city, FinalConstants.state, FinalConstants.zipcode);
         }
 
 
      //verify if checkbox is not checked and validate the links
-   @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void verifyConsentSection(String existingAccountEmail, String existingAccountPassword,
-                                     String createAccount, String createAccountPassword, String createAccountConfirmPassword,
-                                     String firstName, String lastName, String mobileNumber, String streetAddress, String city,
-                                     String state, String zipcode, String createNewEmail, String newFirstName, String newLastName,
-                                     String newMobileNumber, String newStreetAddress, String newCity, String newState,
-                                     String newZipcode, String wrongPassword) throws IOException {
-       {
-           verifyPersonalDetailsSection(existingAccountEmail, existingAccountPassword,
-                   createAccount, createAccountPassword, createAccountConfirmPassword,
-                   firstName, lastName, mobileNumber, streetAddress, city,
-                   state, zipcode, createNewEmail, newFirstName, newLastName,
-                   newMobileNumber, newStreetAddress, newCity, newState,
-                   newZipcode, wrongPassword);
+   @Test
+    public void verifyConsentSection() throws IOException {
+           verifyPersonalDetailsSection();
            accountCreation2.checkbox();
            accountCreation2.verifyTermsAndPrivacy();
            accountCreation2.clickCompleteButton();
 
        }
 
-
-   }
 }
