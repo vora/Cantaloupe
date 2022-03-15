@@ -3,6 +3,7 @@ package pageActions;
 import base.BaseActions;
 
 import base.TestBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -57,18 +58,27 @@ public class HomePageActions extends TestBase {
     }
 
 
-    //Corousal check and click
-    public void verifyCrousal() {
+    // Verify corousal click and check if the header is present appropriately
+    public void verifyCrousal() throws InterruptedException {
         List<WebElement> corousalList = driver.findElements(homePageLocators.carousel);
-        for (WebElement li : corousalList) {
-            int listCount = corousalList.size();
+        List<WebElement> headerList = new ArrayList<>();
+        headerList.add(driver.findElement(homePageLocators.firstHeader));
+        headerList.add(driver.findElement(homePageLocators.secondHeader));
+        headerList.add(driver.findElement(homePageLocators.thirdHeader));
+        headerList.add(driver.findElement(homePageLocators.fourthHeader));
 
-           // Put assertions
-            if (listCount == 4) {
-               // Assert.assertTrue(true);
-                li.click();
-            } else {
-                log.info("The corousal number is a mismatch");
+        for ( int i = 0 ; i<corousalList.size(); i++ )
+        {
+            corousalList.get(i).click();
+            Thread.sleep(3000);
+            WebElement text = headerList.get(i);
+            Boolean status = text.isDisplayed();
+            if(status==true) {
+                Assert.assertTrue( true, "Header is displayed");
+            }
+            else
+            {
+                Assert.assertFalse(false, "Header is missing");
             }
         }
     }

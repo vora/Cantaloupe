@@ -11,6 +11,13 @@ public class HomePageLocators {
     public static By cpayCardImge = By.xpath("//img[@alt='cpay Card']");
     public static By morePassImg = By.xpath("//img[@alt='Cantaloupe Payment Options']");
     public static By moreTransactionImg = By.xpath("//img[@alt='Google Wallet/Apple Pay Card']");
+    public By firstHeader = By.xpath("//*[text()='Reload your pass with a credit or debit card']");
+    public By secondHeader = By.xpath("//*[text()='Your More Pass Works with Apple Wallet']");
+    public By thirdHeader = By.xpath("//*[text()='Add a CPay pass to pay with digital tokens']");
+    public By fourthHeader = By.xpath("//*[text()='View your transactions, get help, and more ']");
+
+
+
 
 
 
