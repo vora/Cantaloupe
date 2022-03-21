@@ -3,19 +3,18 @@ package pageActions;
 import base.BaseActions;
 import base.DataProvider;
 import base.TestBase;
+import base.TestBase1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pageLocators.AccountCreationLocators;
-import pageLocators.ForgotPasswordLocators;
-import pageLocators.HomePageLocators;
-import pageLocators.SignInWithExistingAccountLocators;
+import pageLocators.*;
 
+import java.awt.*;
 import java.io.IOException;
 
-public class ForgotPasswordActions extends TestBase {
+public class ForgotPasswordActions extends TestBase1 {
 
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
     SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
@@ -204,8 +203,7 @@ public class ForgotPasswordActions extends TestBase {
 
     // @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
     //Verify if the password criteria is met
-    public void validatePasswordAndConfirmError2(String wrongPassword, String createAccountPassword, String createAccountConfirmPassword)
-    {
+    public void validatePasswordAndConfirmError2(String wrongPassword, String createAccountPassword, String createAccountConfirmPassword) throws AWTException {
         String editEmail = " ";
 
         driver.findElement(accountCreationLocators.createPasswordInputField).click();
@@ -238,20 +236,30 @@ public class ForgotPasswordActions extends TestBase {
     //Verify if the password criteria is met
     public void validatePasswordCriteriaAndMatch4(String createAccountPassword, String createAccountConfirmPassword)
     {
-        String editEmail = " ";
-
-
         clickShowAndHide(createAccountPassword, createAccountConfirmPassword);
         driver.findElement(forgotPasswordLocators.updatePassword).isEnabled();
-        //driver.findElement(forgotPasswordLocators.updatePassword).click();
+    }
 
+    //TC_07
+    // Verify that clicking on update password button navigates user to the confirmation screen
+    public void clickUpdatePasswordFeature(String enterPassword, String enterConfirmPassword)
+    {
+        validatePasswordCriteria(enterPassword);
+        updateButtonStatus(enterPassword, enterConfirmPassword );
+        driver.findElement(forgotPasswordLocators.updatePassword).click();
+    }
+
+    @Test
+    //TC_07
+    // Verify if the login is possible with the newly changed password after the password update
+    public void verifyLoginwithNewPassword(String email, String password) throws IOException {
+        WebElement signInLink = driver.findElement(homePageLocators.alreadyHaveAnAccountLink);
+        signInLink.isEnabled();
+        signInLink.click();
+        //signInWithExistingAccountActions.verifySignInScreen(email, password);
+       signInWithExistingAccountActions.clickSignIn(email, password);
     }
 
 
 
-
-
-
-        // JavascriptExecutor js = (JavascriptExecutor)driver;
-    //        js.executeScript("arguments[0].value=' "+ editValue + " ';", element);
 }

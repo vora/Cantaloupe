@@ -2,6 +2,7 @@ package tests;
 
 import base.DataProvider;
 import base.TestBase;
+import base.TestBase1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
@@ -10,14 +11,14 @@ import resources.FinalConstants;
 
 import java.io.IOException;
 
-public class ForgotPasswordTest extends TestBase {
+public class ForgotPasswordTest extends TestBase1 {
 
     ForgotPasswordActions forgotPasswordActions = new ForgotPasswordActions();
 
     public ForgotPasswordTest() throws IOException {}
 
 
-    @Test
+   // @Test
    public void enterEmailToResetPassword1()
     {
         forgotPasswordActions.verifyForgotPassword(FinalConstants.existingAccountEmail);
@@ -28,19 +29,24 @@ public class ForgotPasswordTest extends TestBase {
         forgotPasswordActions.returnToSignInScreen(FinalConstants.existingAccountEmail);
     }
 
-    @Test
+   // @Test
     public void validatePasswordCriteria(){
             forgotPasswordActions.validatePasswordCriteria(FinalConstants.wrongPassword);
         }
 
-     @Test
+    // @Test
      public void validateConfirmPasswordFeature(){
              forgotPasswordActions.checkInputFieldIsEnabled();
         forgotPasswordActions.verifyFieldsDataForPassword(FinalConstants.createAccountPassword);
     }
 
-    @Test
+   // @Test
     public void validateUpdateSattusButton(){
         forgotPasswordActions.updateButtonStatus(FinalConstants.createAccountPassword, FinalConstants.createAccountConfirmPassword);
+    }
+
+    @Test
+    public void verifyLoginWithNewPassword() throws IOException {
+        forgotPasswordActions.verifyLoginwithNewPassword(FinalConstants.existingAccountEmail, FinalConstants.newPassword);
     }
 }

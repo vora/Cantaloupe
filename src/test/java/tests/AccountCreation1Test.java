@@ -1,7 +1,7 @@
 package tests;
 
-import base.DataProvider;
 import base.TestBase;
+import base.TestBase1;
 
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
@@ -18,7 +18,7 @@ public class AccountCreation1Test extends TestBase {
     public AccountCreation1Test() throws IOException {
     }
 
-    @Test
+   @Test
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
     public void errorValidations(){
 
@@ -31,7 +31,7 @@ public class AccountCreation1Test extends TestBase {
     public void newEmailFlow(){
         //accountCreation1.verifyEmailRegex(createNewEmail);
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail);
+        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
 
@@ -39,10 +39,10 @@ public class AccountCreation1Test extends TestBase {
 
 
     // validate login through existing user
-    @Test
+   @Test
     public void existingEmaillowLogin() throws IOException {
         accountCreation1.clickCreateButton();
-        accountCreation1.loginThroughExistingEmail(FinalConstants.existingAccountEmail);
+        accountCreation1.loginThroughExistingEmail(FinalConstants.existingAccountEmail, FinalConstants.regexEmail);
         signInWithExistingAccountActions.verifySignInDisabled();
     }
 }

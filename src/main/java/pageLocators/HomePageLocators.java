@@ -15,6 +15,9 @@ public class HomePageLocators {
     public By secondHeader = By.xpath("//*[text()='Your More Pass Works with Apple Wallet']");
     public By thirdHeader = By.xpath("//*[text()='Add a CPay pass to pay with digital tokens']");
     public By fourthHeader = By.xpath("//*[text()='View your transactions, get help, and more ']");
+    public By alreadyHaveAnAccountLink = By.xpath("//*[text()='Already have an account?']");
+    public By createAccountButton = By.xpath("//*[text()='Create account']");
+
 
 
 

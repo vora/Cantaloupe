@@ -2,7 +2,7 @@ package tests;
 
 import base.DataProvider;
 import base.TestBase;
-import com.sun.xml.internal.ws.api.pipe.Fiber;
+import base.TestBase1;
 import org.testng.annotations.Test;
 import pageActions.SignInWithExistingAccountActions;
 import pageLocators.AccountCreationLocators;
@@ -30,15 +30,13 @@ public class SignInWithExistingAccountTest extends TestBase {
 
     @Test
     public void validateLogin() throws IOException {
+
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
         signInWithExistingAccountActions.clickContinueWithEmail();
         signInWithExistingAccountActions.validateErrorMessages();
         signInWithExistingAccountActions.verifySignInDisabled();
         signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
         signInWithExistingAccountActions.clickSignOut();
-
-
-
     }
 
 

@@ -2,6 +2,7 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
+import base.TestBase1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -9,11 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pageLocators.AccountCreationLocators;
-import pageLocators.CreateAccountLocators;
 import pageLocators.LandingScreen;
+import resources.FinalConstants;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Hashtable;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -24,7 +26,7 @@ public class AccountCreation1 extends TestBase {
 
        AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
        LandingScreen loginScreen = new LandingScreen();
-       CreateAccountLocators createAccountLocators = new CreateAccountLocators();
+
 
 
 
@@ -59,7 +61,7 @@ public class AccountCreation1 extends TestBase {
 
     //Validates account creation screen
     public void validateCreateAccountScreen(String createNewEmail) {
-        WebElement emailLink = driver.findElement(createAccountLocators.enterYourEmailInput);
+        WebElement emailLink = driver.findElement(accountCreationLocators.enterYourEmailInput);
 
         if (emailLink.isEnabled()) {
             Assert.assertTrue(true, "Create Account screen is valid");
@@ -75,10 +77,10 @@ public class AccountCreation1 extends TestBase {
     // Validates account creation screen with continue email
     public void validateAccountCreationScreen(String createNewEmail) {
 
-        WebElement emailInput = driver.findElement(createAccountLocators.enterYourEmailInput);
+        WebElement emailInput = driver.findElement(accountCreationLocators.enterYourEmailInput);
         String emailInputAttribute = emailInput.getAttribute("value");
 
-        driver.findElement(createAccountLocators.nextButton).click();
+        driver.findElement(accountCreationLocators.nextButton).click();
         WebElement emailText = driver.findElement(accountCreationLocators.emailIdInputField);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         // String getEmailText = (String) js.executeScript("return arguments[0].value", emailText);
@@ -215,9 +217,11 @@ public class AccountCreation1 extends TestBase {
 
 
    //Regex for email
-    public void verifyEmailRegex(String email)
+    public void verifyEmailRegex(String email, String emailRegex)
     {
-        baseActions.validateEmailInputs(createAccountLocators.enterYourEmailInput, email);
+        //baseActions.validateEmailInputs(accountCreationLocators.enterYourEmailInput, email);
+
+        baseActions.regexExpression(accountCreationLocators.enterYourEmailInput, email, emailRegex);
     }
 
 
@@ -225,22 +229,22 @@ public class AccountCreation1 extends TestBase {
     public void emailErrorMessage()
     {
        // driver.findElement(loginScreen.createAccountBigButton).click();
-        driver.findElement(createAccountLocators.enterYourEmailInput).click();
+        driver.findElement(accountCreationLocators.enterYourEmailInput).click();
         driver.findElement(By.xpath("//html")).click();
-        baseActions.validateErrorMessages(createAccountLocators.blankEmailErrorMsg);
+        baseActions.validateErrorMessages(accountCreationLocators.blankEmailErrorMsg);
     }
 
     public void validateEmptyField()
     {
        driver.findElement(loginScreen.createAccountBigButton).click();
-        WebElement emailInput = driver.findElement(createAccountLocators.enterYourEmailInput);
+        WebElement emailInput = driver.findElement(accountCreationLocators.enterYourEmailInput);
         if(emailInput.getAttribute("value").isEmpty())
         {
             emailErrorMessage();
         }
         else
         {
-            Assert.assertTrue(driver.findElement(createAccountLocators.nextButton).isEnabled());
+            Assert.assertTrue(driver.findElement(accountCreationLocators.nextButton).isEnabled());
         }
     }
 
@@ -249,12 +253,12 @@ public class AccountCreation1 extends TestBase {
     //VerifyTickMark()
     public void verrifyTickMark()
     {
-        if((driver.findElement(CreateAccountLocators.tickMarkImage).isDisplayed()))
+        if((driver.findElement(accountCreationLocators.tickMarkImage).isDisplayed()))
         {
-            Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", driver.findElement(CreateAccountLocators.tickMarkImage));
+            Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", driver.findElement(accountCreationLocators.tickMarkImage));
             Assert.assertTrue(image1Present == true, "Tick mark is present" );
         }
-        else if(!(driver.findElement(CreateAccountLocators.tickMarkImage)).isDisplayed())
+        else if(!(driver.findElement(accountCreationLocators.tickMarkImage)).isDisplayed())
         {
             Assert.assertTrue(false, "tick mark is not present");
         }
@@ -262,11 +266,11 @@ public class AccountCreation1 extends TestBase {
 
 
     //Validates if email entered is valid, and checks if the tick mark is displayed
-    public String validateEmailCriteriaField(String email)
+    public String validateEmailCriteriaField(String email, String emailRegex)
     {
         //driver.findElement(loginScreen.createAccountBigButton).click();
-        verifyEmailRegex(email);
-        Assert.assertTrue(driver.findElement(createAccountLocators.nextButton).isEnabled());
+        verifyEmailRegex(email, emailRegex);
+        Assert.assertTrue(driver.findElement(accountCreationLocators.nextButton).isEnabled());
         driver.findElement(By.xpath("//html")).click();
        // verrifyTickMark();
         return email;
@@ -279,9 +283,9 @@ public class AccountCreation1 extends TestBase {
     public void verifyNextButtonEnabled()
     {
        // validateEmailCriteriaField(email);
-        if((driver.findElement(createAccountLocators.nextButton).isEnabled()))
+        if((driver.findElement(accountCreationLocators.nextButton).isEnabled()))
         {
-            driver.findElement(createAccountLocators.nextButton).click();
+            driver.findElement(accountCreationLocators.nextButton).click();
             Assert.assertTrue(true, "Button is enabled");
         }
         else
@@ -292,21 +296,21 @@ public class AccountCreation1 extends TestBase {
     }
 
     //Verify if the entered email is already registered
-    public void existingEmail_AlreadyRegistered(String alreadyRegisteredEmail)
+    public void existingEmail_AlreadyRegistered(String alreadyRegisteredEmail, String regexEmail)
     {
         //driver.findElement(loginScreen.createAccountBigButton).click();
-        validateEmailCriteriaField(alreadyRegisteredEmail);
+        validateEmailCriteriaField(alreadyRegisteredEmail, FinalConstants.regexEmail);
 
        // WebElement element = driver.findElement(createAccountLocators.existingEmailError);
 
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(createAccountLocators.existingEmailError));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.existingEmailError));
 
-        Boolean flag = driver.findElement(createAccountLocators.existingEmailError).isDisplayed();
+        Boolean flag = driver.findElement(accountCreationLocators.existingEmailError).isDisplayed();
         if(flag == true)
         {
             Assert.assertTrue(true, "Existing email error is displayed");
-            Boolean loginButtonStatus = driver.findElement(createAccountLocators.loginThroughCreateScreen).isEnabled();
+            Boolean loginButtonStatus = driver.findElement(accountCreationLocators.loginThroughCreateScreen).isEnabled();
             Assert.assertTrue(loginButtonStatus == true, "Login button is displayed for existing user");
 
 
@@ -322,16 +326,18 @@ public class AccountCreation1 extends TestBase {
     }
 
     //If the user enters existing email - then he should be allowed to click on login
-    public void loginThroughExistingEmail(String alreadyRegisteredEmail)
+    public void loginThroughExistingEmail(String alreadyRegisteredEmail, String regexEmail)
     {
-            existingEmail_AlreadyRegistered(alreadyRegisteredEmail);
-            driver.findElement(createAccountLocators.loginThroughCreateScreen).click();
+            existingEmail_AlreadyRegistered(alreadyRegisteredEmail, FinalConstants.regexEmail);
+            driver.findElement(accountCreationLocators.loginThroughCreateScreen).click();
     }
 
        //Click create button
         public void clickCreateButton()
         {
             driver.findElement(loginScreen.createAccountBigButton).click();
+            Boolean createAccountText = driver.findElement(accountCreationLocators.createAccountText).isDisplayed();
+            Assert.assertTrue(createAccountText == true, "User is on Account creation screen");
         }
 
 }

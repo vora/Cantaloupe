@@ -37,29 +37,6 @@ public class TestBase {
     public static final String propertyFilePath = System.getProperty("user.dir") + "/src/main/java/resources/config.properties";
     public static final String log4jpropertyFilepPath = System.getProperty("user.dir") + "/src/main/java/resources/log4j.properties";
 
-    public String existingAccountEmail;
-    public String existingAccountPassword;
-    public String createAccount;
-    public String createAccountPassword;
-    public String createAccountConfirmPassword;
-    public String firstName;
-    public String lastName;
-    public String mobileNumber;
-    public String streetAddress;
-    public String city;
-    public String state;
-    public String zipcode;
-    public String createNewEmail;
-    public String newFirstName;
-    public String newLastName;
-    public String newMobileNumber;
-    public String newStreetAddress;
-    public String newCity;
-    public String newState;
-    public String newZipcod;
-
-
-
 
     public TestBase() {
 
@@ -81,6 +58,9 @@ public class TestBase {
 
     @BeforeMethod
     public void testIO (){
+
+
+
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "iOS");
         caps.setCapability("deviceName", "iPhone 12 Pro Max");
@@ -96,7 +76,9 @@ public class TestBase {
             // AppiumDriver driver1 = new AppiumDriver("http://localhost:4723/wd/hub" , sessionId);
 
 
+
             driver = new IOSDriver(url, caps);
+           // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
             driver.get("https://more-qa.mycantaloupe.com");
             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             JavascriptExecutor js = (JavascriptExecutor) driver;

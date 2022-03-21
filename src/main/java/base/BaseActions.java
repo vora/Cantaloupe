@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -483,5 +484,42 @@ public class BaseActions extends TestBase {
 
 
     }
+
+    //Random click()
+    public void randomClickOnScreen() throws AWTException {
+        Actions actions = new Actions(driver);
+
+        Robot robot = new Robot();
+
+        robot.mouseMove(0,0);
+
+        actions.click().build().perform();
+    }
+
+    //AddMoreCrad - REgex
+    //regex phone no
+    public void regexExpression(By element, String moreCardNo, String regexType)
+    {
+       // String regex = "^\\d{19}$";
+        WebElement webElement = driver.findElement(element);
+        Pattern pattern = Pattern.compile(regexType);
+        Matcher matcher = pattern.matcher(moreCardNo);
+
+        Boolean checkPatternCondition = matcher.matches();
+
+        if (checkPatternCondition == true) {
+            webElement.sendKeys(moreCardNo);
+        } else if((checkPatternCondition == false))
+        {
+            Assert.assertTrue(false, "The entered number is not valid");
+        }
+        else
+        {
+            log.info("Create Account Screen : Something is not proper for the entered phone number ");
+        }
+
+    }
+
+
 
 }

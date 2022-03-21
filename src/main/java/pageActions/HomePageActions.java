@@ -3,16 +3,14 @@ package pageActions;
 import base.BaseActions;
 
 import base.TestBase;
+import base.TestBase1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pageLocators.AccountCreationLocators;
-import pageLocators.CreateAccountLocators;
-import pageLocators.HomePageLocators;
-import pageLocators.LandingScreen;
+import pageLocators.*;
 import resources.FinalConstants;
 
 import java.io.IOException;
@@ -21,13 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class HomePageActions extends TestBase {
+public class HomePageActions extends TestBase1 {
 
     Properties prop = new Properties();
     BaseActions baseActions = new BaseActions();
     HomePageLocators homePageLocators = new HomePageLocators();
     LandingScreen loginScreen = new LandingScreen();
-    CreateAccountLocators createAccountLocators = new CreateAccountLocators();
+    SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
+
     //ContinueAccountCreationLocators continueAccountCreationLocators = new ContinueAccountCreationLocators();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
 
@@ -35,28 +34,43 @@ public class HomePageActions extends TestBase {
     public HomePageActions() throws IOException {
     }
 
-    public void verifyHomePage(String createAccount)
-            throws MalformedURLException {
+
+
+    public void verifyHomePage(String createAccount) throws MalformedURLException {
 
         try {
-
             WebElement createAccountButton = driver.findElement(loginScreen.createAccountBigButton);
+            WebElement alreadyHaveAccountLink = driver.findElement(loginScreen.alreadyHaveAccountButton);
+            WebElement firstCorousal = driver.findElement(homePageLocators.carousel);
+            WebElement firstHeader = driver.findElement(homePageLocators.firstHeader);
 
-            if (createAccountButton.isDisplayed()) {
 
+            for (Object image : driver.findElements(By.cssSelector("img"))) {
+                verifyBrokenImages((WebElement) image);
+            }
+
+            if ((createAccountButton.isEnabled()) && (alreadyHaveAccountLink.isEnabled()) && (firstCorousal.isEnabled()) && (firstHeader.isDisplayed())) {
+                Assert.assertTrue(true, "All elements are valid on the Home Page");
                 createAccountButton.click();
-                WebElement enterEmail = driver.findElement(createAccountLocators.enterYourEmailInput);
+                WebElement createAccountText = driver.findElement(accountCreationLocators.createAccountText);
+                Boolean createAccountTextStatus = createAccountText.isDisplayed();
+                Assert.assertTrue(createAccountTextStatus == true, "User is on the right screen - Create Account");
+                WebElement enterEmail = driver.findElement(accountCreationLocators.enterYourEmailInput);
                 enterEmail.sendKeys(createAccount);
+               driver.findElement(accountCreationLocators.backHomeLink).click();
+               driver.findElement(homePageLocators.alreadyHaveAnAccountLink).click();
+              WebElement signInText = driver.findElement(signInWithExistingAccountLocators.signInText);
+              Boolean signInTextStatus = signInText.isDisplayed();
+              Assert.assertTrue(signInTextStatus == true, "User is on the Sign In with existing account screen");
 
             } else {
-                System.out.println("Invalid");
+                log.info("Invalid");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     // Verify corousal click and check if the header is present appropriately
     public void verifyCrousal() throws InterruptedException {
@@ -83,68 +97,15 @@ public class HomePageActions extends TestBase {
         }
     }
 
-
-    // image validations
-    public void CheckImage() throws Exception {
-
-
-        WebElement image1 = FinalConstants.image1;
-        WebElement image2 = FinalConstants.image2;
-        WebElement image3 = FinalConstants.image3;
-        WebElement image4 = FinalConstants.image4;
-        WebElement logo = FinalConstants.logo;
-
-        List<WebElement> corousalList = driver.findElements(homePageLocators.carousel);
-        List<WebElement> listOfAllImages = new ArrayList<WebElement>();
-        listOfAllImages.add(FinalConstants.image1);
-        listOfAllImages.add(FinalConstants.image2);
-        listOfAllImages.add(FinalConstants.image3);
-        listOfAllImages.add(FinalConstants.image4);
-        listOfAllImages.add(FinalConstants.logo);
-
-        List<String> corousalList1 = new ArrayList<String>();
-
-        corousalList1.add("Cantaloupe More Card");
-        corousalList1.add("Cantaloupe Payment Options");
-        corousalList1.add("cpay Card");
-        corousalList1.add("Google Wallet/Apple Pay Card");
-        corousalList1.add("cantaloupe more logo");
-
-
-
-        for (WebElement li : corousalList) {
-            int i = 0;
-            for (String imageList : corousalList1) {
-
-
-                int j = 0;
-                for (WebElement images : listOfAllImages) {
-                    images.isDisplayed();
-
-
-                    li.click();
-                    int length = listOfAllImages.size();
-
-
-                    Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", image1);
-                    Boolean image2Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", image2);
-                    Boolean image3Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", image3);
-                    Boolean image4Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", image4);
-                    Boolean logoPresent = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", logo);
-
-                   // Assert.assertEquals(images.getAttribute("alt"), imageList);
-                    System.out.println(images.getAttribute("alt"));
-
-                    j++;
-                    i++;
-                    if (!image1Present && !image2Present && !image3Present && !image4Present && !logoPresent) {
-                        System.out.println("Image not displayed.");
-                    } else {
-                        System.out.println("Image displayed.");
-                    }
-                }
-            }
+    //Broken images
+    public void verifyBrokenImages(WebElement image)
+    {
+        if (image.getAttribute("naturalWidth").equals("0"))
+        {
+            log.info(image.getAttribute("outerHTML") + " is broken.");
         }
     }
+
+
 }
 
