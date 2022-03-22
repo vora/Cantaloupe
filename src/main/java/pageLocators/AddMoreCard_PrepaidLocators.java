@@ -39,6 +39,10 @@ public class AddMoreCard_PrepaidLocators {
     //Manual Reload
     public By manualReloadText = By.xpath("//span[contains(text(), 'Manually Reload')]");
     public By manualReloadArrow = By.xpath("//span[contains(text(), 'Manually Reload')]/span");
+    public By moreCardAlertPopUp = By.className("Toastify__toast-body");
+    public By blankMoreCardErrorText = By.xpath("//*[text()='Please enter a valid card number.']");
+    public By blankSecuritydErrorText = By.xpath("//*[text()='Please enter a valid security code.']");
+
 
 
     //Add to Apple Wallet

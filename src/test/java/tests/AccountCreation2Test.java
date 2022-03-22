@@ -8,18 +8,20 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
 import pageActions.AccountCreation2;
+import pageActions.HomePageActions;
 import pageActions.SignInWithExistingAccountActions;
 import resources.FinalConstants;
 
 import java.awt.*;
 import java.io.IOException;
 
-public class AccountCreation2Test extends TestBase1 {
+public class AccountCreation2Test extends TestBase {
 
     AccountCreation1 accountCreation1 = new AccountCreation1();
     AccountCreation2 accountCreation2 = new AccountCreation2();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
     BaseActions baseActions = new BaseActions();
+    HomePageActions homePageActions = new HomePageActions();
 
     public AccountCreation2Test() throws IOException {
     }

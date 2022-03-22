@@ -4,6 +4,7 @@ import base.DataProvider;
 import base.TestBase;
 import base.TestBase1;
 import org.testng.annotations.Test;
+import pageActions.HomePageActions;
 import pageActions.SignInWithExistingAccountActions;
 import pageLocators.AccountCreationLocators;
 import pageLocators.CreateOrLoginInitialLocators;
@@ -21,11 +22,13 @@ public class SignInWithExistingAccountTest extends TestBase {
     CreateOrLoginInitialLocators createAccountLocators = new CreateOrLoginInitialLocators();
    // ContinueAccountCreationLocators continueAccountCreationLocators = new ContinueAccountCreationLocators();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
+    HomePageActions homePageActions = new HomePageActions();
 
 
 
     public SignInWithExistingAccountTest() throws IOException {
     }
+
 
 
     @Test

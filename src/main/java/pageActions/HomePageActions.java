@@ -106,6 +106,23 @@ public class HomePageActions extends TestBase1 {
         }
     }
 
+    public void checkFor503Error()
+    {
+        try
+        {
+            WebElement ErrorAlert503 = driver.findElement(homePageLocators.errorStatus503);
+
+            if(ErrorAlert503.isDisplayed())
+            {
+                Assert.assertTrue(false, "Something is wrong");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 

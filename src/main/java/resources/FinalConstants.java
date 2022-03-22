@@ -53,7 +53,16 @@ public final class FinalConstants extends TestBase1 {
     //MoreCardDetails
 
     public static final String moreCardNumber = "1234567890123456789";
-    public static final String secutityNumber = "123";
+    public static final String moreCardNumberInvalid = "1234567890123456789";
+    public static final String moreCardNumberAlreadyRegistered = "6396212035796818322";
+    public static final String secutityNumber = "6396";
+    public static final String registeredMoreCardAlertText = "This card has already been registered. Please try another card";
+    public static final String invalidMoreCardNumberAlertText = "You entered an invalid card number. Please enter a valid one";
+
+
+
+
+
     public static final String regexMoreCard = "^\\d{19}$";
     public static final String regexSecurity = "^\\d{4}$";
     public static final String regexEmail = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";

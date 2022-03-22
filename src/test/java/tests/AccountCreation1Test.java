@@ -5,6 +5,7 @@ import base.TestBase1;
 
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
+import pageActions.HomePageActions;
 import pageActions.SignInWithExistingAccountActions;
 import resources.FinalConstants;
 
@@ -14,6 +15,7 @@ public class AccountCreation1Test extends TestBase {
 
     AccountCreation1 accountCreation1 = new AccountCreation1();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
+    HomePageActions homePageActions = new HomePageActions();
 
     public AccountCreation1Test() throws IOException {
     }

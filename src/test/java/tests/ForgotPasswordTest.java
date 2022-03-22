@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 import pageActions.ForgotPasswordActions;
+import pageActions.HomePageActions;
 import resources.FinalConstants;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.io.IOException;
 public class ForgotPasswordTest extends TestBase1 {
 
     ForgotPasswordActions forgotPasswordActions = new ForgotPasswordActions();
+    HomePageActions homePageActions = new HomePageActions();
 
     public ForgotPasswordTest() throws IOException {}
 

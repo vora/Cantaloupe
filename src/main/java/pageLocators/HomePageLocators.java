@@ -17,6 +17,7 @@ public class HomePageLocators {
     public By fourthHeader = By.xpath("//*[text()='View your transactions, get help, and more ']");
     public By alreadyHaveAnAccountLink = By.xpath("//*[text()='Already have an account?']");
     public By createAccountButton = By.xpath("//*[text()='Create account']");
+    public By errorStatus503 = By.xpath("//*[text()='Request failed with status code 503'");
 
 
 
