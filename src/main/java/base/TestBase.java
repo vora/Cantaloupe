@@ -2,19 +2,22 @@ package base;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import resources.FinalConstants;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -29,7 +32,8 @@ public class TestBase {
 
     public static Properties properties;
     public static BufferedReader reader;
-    public static IOSDriver driver;
+    public static WebDriver driver;
+
 
     public ExtentReports reports;
     public ExtentTest test;
@@ -60,38 +64,56 @@ public class TestBase {
 
     @BeforeMethod
     public void testIO (){
-
-
-
+    String iOS = "iOS";
+    String Android = "Android";
         DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "iOS");
-        caps.setCapability("deviceName", "iPhone 12 Pro Max");
-        caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
-        caps.setCapability("platformVersion", "14.5");
+        if(FinalConstants.platformName.equalsIgnoreCase(iOS)) {
+            caps.setCapability("platformName", "iOS");
+            caps.setCapability("deviceName", "iPhone 12 Pro Max");
+            caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
+            caps.setCapability("platformVersion", "14.5");
 
-        caps.setCapability("automationName", "XCUITest");
+            caps.setCapability("automationName", "XCUITest");
+            try {
+                URL url = new URL("http://0.0.0.0:4723/wd/hub");
+                driver = new RemoteWebDriver(url, caps);
+                // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
+                driver.get("https://more-qa.mycantaloupe.com");
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("window.scrollBy(0,300)", "");
 
-        try {
-            URL url = new URL("http://0.0.0.0:4723/wd/hub");
-
-            //String sessionId = "d8080676-634d-49fc-8624-fc7b57c5d530";
-            // AppiumDriver driver1 = new AppiumDriver("http://localhost:4723/wd/hub" , sessionId);
-
-
-
-            driver = new IOSDriver(url, caps);
-           // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
-            driver.get("https://more-qa.mycantaloupe.com");
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,300)", "");
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
+     if(FinalConstants.platformName.equalsIgnoreCase(Android)) {
+         DesiredCapabilities andCaps = DesiredCapabilities.chrome();
+         andCaps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+         andCaps.setCapability("deviceName", "emulator-5554");
+         andCaps.setCapability("androidPackage", "com.android.chrome");
+         andCaps.setCapability("platformVersion", "12.0");
+         andCaps.setCapability("automationName", "Appium");
+
+         ChromeOptions options = new ChromeOptions();
+         andCaps.merge(options);
+
+         try {
+             URL url = new URL("http://127.0.0.1:4723/wd/hub");
+             driver = new RemoteWebDriver(url,
+                     andCaps);
+             // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
+             driver.get("https://more-qa.mycantaloupe.com");
+             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+             JavascriptExecutor js = (JavascriptExecutor) driver;
+             js.executeScript("window.scrollBy(0,300)", "");
+
+         } catch (MalformedURLException malformedURLException) {
+             malformedURLException.printStackTrace();
+         }
+     }
 
     }
-
 
     @AfterMethod
 

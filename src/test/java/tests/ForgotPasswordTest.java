@@ -1,10 +1,5 @@
 package tests;
 
-import base.DataProvider;
-import base.TestBase;
-import base.TestBase1;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 import pageActions.ForgotPasswordActions;
 import pageActions.HomePageActions;

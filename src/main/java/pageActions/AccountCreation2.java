@@ -2,10 +2,8 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
-import base.TestBase1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import pageLocators.AccountCreationLocators;
 import pageLocators.LandingScreen;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-public class AccountCreation2 extends TestBase1 {
+public class AccountCreation2 extends TestBase {
 
     Properties prop = new Properties();
     BaseActions baseActions = new BaseActions();
@@ -169,10 +167,10 @@ public class AccountCreation2 extends TestBase1 {
 
 
     //Verify Personal details
-    public void verifyFirstNameInput(String firstname)
-    {
+    public void verifyFirstNameInput(String firstname) throws AWTException {
         baseActions.clickButton(accountCreationLocators.firstnameInput);
-        driver.findElement(By.xpath("//html")).click();
+        //driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickOnScreen();
         baseActions.validateErrorMessages(accountCreationLocators.firstNameError);
         baseActions.enterValue(accountCreationLocators.firstnameInput, firstname);
     }

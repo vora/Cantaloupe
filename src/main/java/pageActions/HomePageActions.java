@@ -2,16 +2,10 @@ package pageActions;
 
 import base.BaseActions;
 
-import base.TestBase;
-import base.TestBase1;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 import pageLocators.*;
-import resources.FinalConstants;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

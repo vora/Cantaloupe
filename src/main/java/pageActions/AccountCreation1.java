@@ -2,7 +2,6 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
-import base.TestBase1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -15,7 +14,6 @@ import resources.FinalConstants;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Hashtable;
 import java.util.Properties;
 import java.util.regex.Pattern;
 

@@ -1,7 +1,5 @@
 package resources;
 
-import base.TestBase;
-import base.TestBase1;
 import org.openqa.selenium.WebElement;
 import pageLocators.HomePageLocators;
 
@@ -78,8 +76,7 @@ public final class FinalConstants extends TestBase1 {
             "|Wisconsin|Wyoming";
 
 
-
-
+    public static final String platformName = "Android";
     //
 }
 

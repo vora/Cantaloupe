@@ -1,9 +1,7 @@
 package tests;
 
 import base.BaseActions;
-import base.DataProvider;
 import base.TestBase;
-import base.TestBase1;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;

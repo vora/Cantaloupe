@@ -1,8 +1,5 @@
 package tests;
 
-import base.DataProvider;
-import base.TestBase;
-import base.TestBase1;
 import org.testng.annotations.Test;
 import pageActions.HomePageActions;
 import resources.FinalConstants;
