@@ -76,7 +76,20 @@ public final class FinalConstants extends TestBase {
             "|Wisconsin|Wyoming";
 
 
-    public static final String platformName = "Android";
-    //public static final String platformName = "iOS";
+    //public static final String platformName = "Android";
+    public static final String platformName = "iOS";
+
+
+    //FAQ
+    public static final String faqQ1 = "If I already have a MORE Loyalty Card, can I use my existing account to log in to the new Web Application?";
+    public static final String faqA1 = "If you have an existing MORE Card & a Cantaloupe GetMORE.com account, you can use your existing credentials to log in to the new Web Application. If you do not have a GetMORE.com account, you will have to create a new account within the new Web Application.";
+    public static final String faqQ2 = "How do I add funds to my MORE Account within the App?";
+    public static final String faqA2 = "Within the MORE App, you will click into the MORE Prepaid card icon, and you will have the option to manually add funds to your account or you can set up an \"automatic reload\" when your funds fall below a specific threshold. This feature can be turned on and off.";
+    public static final String faqQ3 = "Can I track my purchases within the Web App?";
+    public static final String faqA3 = "Yes. There is a transactions section within the app that will keep track of your purchases and when funds are added to your account.";
+    public static final String faqQ4 = "If I make an incorrect purchase or need a refund on my account, who do I contact?";
+    public static final String faqA4 = "Please find contact information for the machine operator on the specific machine to contact them for a refund on your account.";
+    public static final String faqQ5 = "How do I add my Bakkt Card to my MORE Account?";
+    public static final String faqA5 = "Within the Web Application there is an option, \"Add Bakkt Card\", from there you will be directed to the Bakkt app, and you can link to your existing accounts with your Bakkt login, or you have the ability to create a brand-new account with Bakkt and then link your accounts.";
 }
 

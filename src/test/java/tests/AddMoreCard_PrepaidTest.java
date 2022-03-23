@@ -16,9 +16,6 @@ import java.io.IOException;
 
 public class AddMoreCard_PrepaidTest extends TestBase {
 
-   LandingScreen loginScreen = new LandingScreen();
-   AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
-   CreateOrLoginInitialLocators createAccountLocators = new CreateOrLoginInitialLocators();
    SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
    AddMoreCard_Prepaid addMoreCard_prepaid = new AddMoreCard_Prepaid();
 
@@ -78,6 +75,16 @@ public class AddMoreCard_PrepaidTest extends TestBase {
       addMoreCard_prepaid.checkIfCardHAsBeenRegisteredAlready();
       addMoreCard_prepaid.clickButtonMore();
    }
+
+    @Test
+    public void navigateBackToDashboard() throws IOException, AWTException {
+        signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
+//        signInWithExistingAccountActions.clickContinueWithEmail();
+//        signInWithExistingAccountActions.verifySignInDisabled();
+        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        addMoreCard_prepaid.clickAddMoreCardButton();
+        addMoreCard_prepaid.navigateBackToDashboard();
+    }
 
 
 }
