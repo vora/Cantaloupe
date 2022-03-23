@@ -529,6 +529,11 @@ public class BaseActions extends TestBase {
         }
     }
 
-
+    //Scroll to top of the screen
+    public void scrollUp()
+    {
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,0)");
+    }
 
 }

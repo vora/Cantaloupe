@@ -61,7 +61,6 @@ public final class FinalConstants extends TestBase {
 
 
 
-
     public static final String regexMoreCard = "^\\d{19}$";
     public static final String regexSecurity = "^\\d{4}$";
     public static final String regexEmail = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -77,7 +76,7 @@ public final class FinalConstants extends TestBase {
             "|Wisconsin|Wyoming";
 
 
-    //public static final String platformName = "Android";
-   public static final String platformName = "iOS";
+    public static final String platformName = "Android";
+    //public static final String platformName = "iOS";
 }
 

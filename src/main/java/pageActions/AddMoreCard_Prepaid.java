@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import pageLocators.AccountCreationLocators;
-import pageLocators.AddMoreCard_PrepaidLocators;
-import pageLocators.LandingScreen;
+import pageLocators.*;
 import resources.FinalConstants;
 import java.io.IOException;
 import java.util.Properties;
@@ -17,8 +15,9 @@ public class AddMoreCard_Prepaid extends TestBase {
 
         BaseActions baseActions = new BaseActions();
         AddMoreCard_PrepaidLocators addMoreCard_prepaidLocators = new AddMoreCard_PrepaidLocators();
+        LoggedInUserLocators loggedInUserLocators = new LoggedInUserLocators();
 
-    public AddMoreCard_Prepaid() throws IOException {
+       public AddMoreCard_Prepaid() throws IOException {
     }
 
     //TC_01
@@ -91,6 +90,14 @@ public class AddMoreCard_Prepaid extends TestBase {
             WebElement securityBlankError = driver.findElement(addMoreCard_prepaidLocators.blankSecuritydErrorText);
             Assert.assertTrue(moreBlankError.isDisplayed() && securityBlankError.isDisplayed());
         }
+    }
+
+    public void navigateBackToDashboard()
+    {
+        baseActions.scrollUp();
+        baseActions.clickButton(addMoreCard_prepaidLocators.backLink);
+        WebElement profileLink = driver.findElement(loggedInUserLocators.profileLink);
+        Assert.assertTrue((profileLink.isDisplayed())==true, "User has navigated back to Dashboard screen");
     }
 
 

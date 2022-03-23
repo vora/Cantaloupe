@@ -42,7 +42,7 @@ public class AddMoreCard_PrepaidLocators {
     public By moreCardAlertPopUp = By.className("Toastify__toast-body");
     public By blankMoreCardErrorText = By.xpath("//*[text()='Please enter a valid card number.']");
     public By blankSecuritydErrorText = By.xpath("//*[text()='Please enter a valid security code.']");
-
+    public By backLink = By.xpath("//*[text()='BACK']");
 
 
     //Add to Apple Wallet
