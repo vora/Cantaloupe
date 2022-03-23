@@ -1,11 +1,12 @@
 package resources;
 
+import base.TestBase;
 import org.openqa.selenium.WebElement;
 import pageLocators.HomePageLocators;
 
 import java.io.IOException;
 
-public final class FinalConstants extends TestBase1 {
+public final class FinalConstants extends TestBase {
 
 
 
@@ -76,7 +77,7 @@ public final class FinalConstants extends TestBase1 {
             "|Wisconsin|Wyoming";
 
 
-    public static final String platformName = "Android";
-    //
+    //public static final String platformName = "Android";
+   public static final String platformName = "iOS";
 }
 

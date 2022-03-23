@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageLocators.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -47,12 +48,11 @@ public class SignInWithExistingAccountActions extends TestBase {
 
 
         //Verify error messages displayed whn there are no data entered
-        public void validateErrorMessages()
-        {
+        public void validateErrorMessages() throws AWTException {
             driver.findElement(signInWithExistingAccountLocators.emailInput).click();
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             driver.findElement(signInWithExistingAccountLocators.passwordInput).click();
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             String emailErrorText = "Please enter your email.";
             String passwordErrorText = "Please enter your password.";
             List<String> getAllErrors = baseActions.getSpanText(signInWithExistingAccountLocators.errorMessages);
@@ -69,7 +69,7 @@ public class SignInWithExistingAccountActions extends TestBase {
 
 
     //Validate all the fields on Sign in screen and enter data in email and password fields and verify sign in button mode
-    public void verifySignInScreen(String existingAccountEmail, String existingAccountPassword) throws IOException {
+    public void verifySignInScreen(String existingAccountEmail, String existingAccountPassword) throws IOException, AWTException {
 
 
         driver.findElement(createOrLoginInitialLocators.continueWithEmail).click();
@@ -85,9 +85,9 @@ public class SignInWithExistingAccountActions extends TestBase {
             Assert.assertTrue(forgotPasswordLink);
 
             driver.findElement(signInWithExistingAccountLocators.emailInput).sendKeys(existingAccountEmail);
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             driver.findElement(signInWithExistingAccountLocators.passwordInput).sendKeys(existingAccountPassword);
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
 
             Boolean buttonNotEnabled = driver.findElement(signInWithExistingAccountLocators.signInButton).isEnabled();
 
@@ -119,7 +119,7 @@ public class SignInWithExistingAccountActions extends TestBase {
 
     //Verify user is able to login successfully
     @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void clickSignIn(String existingAccountEmail, String existingAccountPassword) throws IOException {
+    public void clickSignIn(String existingAccountEmail, String existingAccountPassword) throws IOException, AWTException {
             verifySignInScreen(existingAccountEmail, existingAccountPassword);
             driver.findElement(signInWithExistingAccountLocators.signInButton).click();
            if(driver.findElement(loggedInUserLocators.profileLink).isEnabled())

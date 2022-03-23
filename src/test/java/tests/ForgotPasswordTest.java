@@ -1,16 +1,17 @@
 package tests;
 
+import base.TestBase;
 import org.testng.annotations.Test;
 import pageActions.ForgotPasswordActions;
 import pageActions.HomePageActions;
 import resources.FinalConstants;
 
+import java.awt.*;
 import java.io.IOException;
 
-public class ForgotPasswordTest extends TestBase1 {
+public class ForgotPasswordTest extends TestBase {
 
     ForgotPasswordActions forgotPasswordActions = new ForgotPasswordActions();
-    HomePageActions homePageActions = new HomePageActions();
 
     public ForgotPasswordTest() throws IOException {}
 
@@ -27,7 +28,7 @@ public class ForgotPasswordTest extends TestBase1 {
     }
 
    // @Test
-    public void validatePasswordCriteria(){
+    public void validatePasswordCriteria() throws AWTException {
             forgotPasswordActions.validatePasswordCriteria(FinalConstants.wrongPassword);
         }
 
@@ -43,7 +44,7 @@ public class ForgotPasswordTest extends TestBase1 {
     }
 
     @Test
-    public void verifyLoginWithNewPassword() throws IOException {
+    public void verifyLoginWithNewPassword() throws IOException, AWTException {
         forgotPasswordActions.verifyLoginwithNewPassword(FinalConstants.existingAccountEmail, FinalConstants.newPassword);
     }
 }

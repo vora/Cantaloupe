@@ -11,20 +11,16 @@ import pageLocators.CreateOrLoginInitialLocators;
 import pageLocators.LandingScreen;
 import resources.FinalConstants;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class AddMoreCard_PrepaidTest extends TestBase {
 
-   //LoginWithExistingActions loginWithExistingAccount = new LoginWithExistingActions();
    LandingScreen loginScreen = new LandingScreen();
-   //DataProvider dataProvider = new DataProvider();
    AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
    CreateOrLoginInitialLocators createAccountLocators = new CreateOrLoginInitialLocators();
-   // ContinueAccountCreationLocators continueAccountCreationLocators = new ContinueAccountCreationLocators();
    SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
    AddMoreCard_Prepaid addMoreCard_prepaid = new AddMoreCard_Prepaid();
-   HomePageActions homePageActions = new HomePageActions();
-
 
 
    public AddMoreCard_PrepaidTest() throws IOException {
@@ -32,7 +28,7 @@ public class AddMoreCard_PrepaidTest extends TestBase {
 
 
    @Test
-   public void verifyBlankInputFields() throws IOException {
+   public void verifyBlankInputFields() throws IOException, AWTException {
 
 
       signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
@@ -45,7 +41,7 @@ public class AddMoreCard_PrepaidTest extends TestBase {
    }
 
    @Test
-   public void cardInputData() throws IOException {
+   public void cardInputData() throws IOException, AWTException {
       signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();
@@ -56,7 +52,7 @@ public class AddMoreCard_PrepaidTest extends TestBase {
    }
 
    @Test
-     public void checkUniquessnessOfCard() throws IOException {
+     public void checkUniquessnessOfCard() throws IOException, AWTException {
       signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();
@@ -70,7 +66,7 @@ public class AddMoreCard_PrepaidTest extends TestBase {
    }
 
    @Test
-   public void checkForAlreadyRegisteredCard() throws IOException {
+   public void checkForAlreadyRegisteredCard() throws IOException, AWTException {
       signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();

@@ -17,9 +17,8 @@ public class AccountCreation2Test extends TestBase {
 
     AccountCreation1 accountCreation1 = new AccountCreation1();
     AccountCreation2 accountCreation2 = new AccountCreation2();
-    SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
     BaseActions baseActions = new BaseActions();
-    HomePageActions homePageActions = new HomePageActions();
+
 
     public AccountCreation2Test() throws IOException {
     }
@@ -27,7 +26,7 @@ public class AccountCreation2Test extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailValidationFlow()throws IOException {
+    public void verifyEmailValidationFlow() throws IOException, AWTException {
 
         // Verify email entered, tick mark
         accountCreation1.clickCreateButton();
@@ -40,7 +39,7 @@ public class AccountCreation2Test extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailIsEditable() throws IOException {
+    public void verifyEmailIsEditable() throws IOException, AWTException {
 
         accountCreation1.clickCreateButton();
         accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
@@ -74,8 +73,7 @@ public class AccountCreation2Test extends TestBase {
 
     //verify if the password and confirm passwords are a match
     @Test
-    public void verifyPasswords()
-    {
+    public void verifyPasswords() throws AWTException {
         accountCreation1.clickCreateButton();
         accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
         accountCreation1.verrifyTickMark();

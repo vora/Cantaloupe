@@ -2,28 +2,20 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pageLocators.AccountCreationLocators;
-import pageLocators.LandingScreen;
-
 import java.awt.*;
 import java.io.IOException;
-import java.util.Properties;
+
 
 
 public class AccountCreation2 extends TestBase {
 
-    Properties prop = new Properties();
     BaseActions baseActions = new BaseActions();
-    LandingScreen loginScreen = new LandingScreen();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
     AccountCreation1 accountCreation1 = new AccountCreation1();
 
-
-
-    // WebDriverWait wait = new WebDriverWait(driver,20);
 
     public AccountCreation2() throws IOException {
     }
@@ -59,7 +51,7 @@ public class AccountCreation2 extends TestBase {
         try {
             WebElement emailField = driver.findElement(accountCreationLocators.emailIdInputField);
             if (emailField.isDisplayed()) {
-                driver.findElement(By.xpath("//html")).click();
+                baseActions.randomClickBasedOnOS();
                 baseActions.clearInputfieldAndEnterNewData(emailField, editEmail);
             }
         }
@@ -67,8 +59,6 @@ public class AccountCreation2 extends TestBase {
             {
                 e.printStackTrace();
             }
-        // Assert.assertEquals(editEmail, enteredEditedEmail);
-
     }
 
     //Enter data in password fields;
@@ -91,24 +81,21 @@ public class AccountCreation2 extends TestBase {
     }
 
     //check if error message is shown when the password criteria is not met
-    public void validateErrorMessageForPassword(String wrongPassword)
-    {
+    public void validateErrorMessageForPassword(String wrongPassword) throws AWTException {
        driver.findElement(accountCreationLocators.createPassowrd).sendKeys(wrongPassword);
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         WebElement passwordError = driver.findElement(accountCreationLocators.passwordErrorCriteria);
 
         Boolean status = passwordError.isDisplayed();
         if(status == true)
         {
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             Assert.assertTrue(true, "Password criteria is validated");
         }
         else
         {
             Assert.assertTrue(false, "Password criteria is validated");
-
         }
-
     }
 
     //Try wrong password
@@ -130,15 +117,13 @@ public class AccountCreation2 extends TestBase {
 
         if(passwordError.isDisplayed())
         {
-            baseActions.randomClickOnScreen();
-           // driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             Boolean passwordPresent = passwordError.isDisplayed();
             Assert.assertTrue(passwordPresent == true, "Password criteria is validated");
         }
         else
         {
             Assert.assertTrue((driver.findElement(accountCreationLocators.passwordDoNotMatchError).isDisplayed()), "Password criteria is validated");
-
         }
 
     }
@@ -146,7 +131,6 @@ public class AccountCreation2 extends TestBase {
     public void clickShowPassword()
     {
         baseActions.clickButton(accountCreationLocators.showPassword);
-       // driver.findElement(By.xpath("//span[contains(text(),'Show')]")).click();
     }
 
     public void clickHidePassword()
@@ -169,8 +153,7 @@ public class AccountCreation2 extends TestBase {
     //Verify Personal details
     public void verifyFirstNameInput(String firstname) throws AWTException {
         baseActions.clickButton(accountCreationLocators.firstnameInput);
-        //driver.findElement(By.xpath("//html")).click();
-        baseActions.randomClickOnScreen();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.firstNameError);
         baseActions.enterValue(accountCreationLocators.firstnameInput, firstname);
     }
@@ -178,8 +161,7 @@ public class AccountCreation2 extends TestBase {
 
     public void verifyLastNameInput(String lastname) throws AWTException {
         baseActions.clickButton(accountCreationLocators.lastNameInput);
-       baseActions.randomClickOnScreen();
-       // driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.lastNameError);
         baseActions.enterValue(accountCreationLocators.lastNameInput, lastname);
 
@@ -188,8 +170,7 @@ public class AccountCreation2 extends TestBase {
     //verify errors
     public void verifyPhoneNoInput(String phoneNo) throws AWTException {
        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys("A");
-       baseActions.randomClickOnScreen();
-        //driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.invalidMobileError);
         baseActions.regexPhoneno(accountCreationLocators.phoneNoInput, phoneNo);
     }
@@ -197,26 +178,22 @@ public class AccountCreation2 extends TestBase {
     //verify address
     public void verifyAddressInput(String streetAddress, String city, String state, String zipcode ) throws AWTException {
         driver.findElement(accountCreationLocators.streetAddressInput).sendKeys("");
-        baseActions.randomClickOnScreen();
-        //driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankStreetError);
         baseActions.regexAddress(accountCreationLocators.streetAddressInput, streetAddress);
 
         driver.findElement(accountCreationLocators.cityInput).sendKeys("");
-        baseActions.randomClickOnScreen();
-       // driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankCityError);
         baseActions.regexCity(accountCreationLocators.cityInput, city);
 
         driver.findElement(accountCreationLocators.stateInput).sendKeys("");
-        baseActions.randomClickOnScreen();
-       // driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankStateError);
         baseActions.regexState(accountCreationLocators.stateInput, state);
 
         driver.findElement(accountCreationLocators.zipcodeInput).sendKeys("");
-        baseActions.randomClickOnScreen();
-       // driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankZipcodeError);
         baseActions.regexZipcode(accountCreationLocators.zipcodeInput, zipcode);
     }

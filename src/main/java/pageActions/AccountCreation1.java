@@ -12,6 +12,7 @@ import pageLocators.AccountCreationLocators;
 import pageLocators.LandingScreen;
 import resources.FinalConstants;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Properties;
@@ -58,13 +59,13 @@ public class AccountCreation1 extends TestBase {
     }
 
     //Validates account creation screen
-    public void validateCreateAccountScreen(String createNewEmail) {
+    public void validateCreateAccountScreen(String createNewEmail) throws AWTException {
         WebElement emailLink = driver.findElement(accountCreationLocators.enterYourEmailInput);
 
         if (emailLink.isEnabled()) {
             Assert.assertTrue(true, "Create Account screen is valid");
             emailLink.click();
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             emailLink.sendKeys(createNewEmail);
 
         } else {
@@ -91,45 +92,45 @@ public class AccountCreation1 extends TestBase {
     }
 
     //Validates all the input fields on the account creation screen
-    public void validateInptBlankFieldsErrorMsg() {
+    public void validateInptBlankFieldsErrorMsg() throws AWTException {
         WebElement emailInputbox = driver.findElement(accountCreationLocators.emailIdInputField);
 
         // Get value of Css property border-bottom-color which will be returned in RGB format.
 //            String colorCode= emailInputbox.getCssValue("border-bottom-color");
         driver.findElement(accountCreationLocators.createPasswordInputField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.passwordCriteriaText).isDisplayed();
 
         driver.findElement(accountCreationLocators.confirmPasswordInptField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.passwordNotAMatchText).isDisplayed();
 
         driver.findElement(accountCreationLocators.firstName).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.enterFirstNameErrorText).isDisplayed();
 
         driver.findElement(accountCreationLocators.lastName).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.enterLastNameErrorText).isDisplayed();
 
         driver.findElement(accountCreationLocators.mobileNumberField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.enterMobileNumberErrorText).isDisplayed();
 
         driver.findElement(accountCreationLocators.streetAddressInputField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.streetAddressErrorText).isDisplayed();
 
         driver.findElement(accountCreationLocators.cityInputField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.cityErrorText).isDisplayed();
 
         driver.findElement(accountCreationLocators.stateInptField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.stateErrorText).isDisplayed();
 
         driver.findElement(accountCreationLocators.zipcodeInputField).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.zipcodeErrorText).isDisplayed();
     }
 
@@ -205,7 +206,7 @@ public class AccountCreation1 extends TestBase {
 
 
     //Asset completeButton
-    public void assertCompleteButtonCase(String createNewEmail) {
+    public void assertCompleteButtonCase(String createNewEmail) throws AWTException {
         driver.findElement(loginScreen.createAccountBigButton).click();
         validateCreateAccountScreen(createNewEmail);
         validateAccountCreationScreen(createNewEmail);
@@ -224,16 +225,13 @@ public class AccountCreation1 extends TestBase {
 
 
     //Verify Error messages()
-    public void emailErrorMessage()
-    {
-       // driver.findElement(loginScreen.createAccountBigButton).click();
+    public void emailErrorMessage() throws AWTException {
         driver.findElement(accountCreationLocators.enterYourEmailInput).click();
-        driver.findElement(By.xpath("//html")).click();
+        baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankEmailErrorMsg);
     }
 
-    public void validateEmptyField()
-    {
+    public void validateEmptyField() throws AWTException {
        driver.findElement(loginScreen.createAccountBigButton).click();
         WebElement emailInput = driver.findElement(accountCreationLocators.enterYourEmailInput);
         if(emailInput.getAttribute("value").isEmpty())
@@ -264,13 +262,10 @@ public class AccountCreation1 extends TestBase {
 
 
     //Validates if email entered is valid, and checks if the tick mark is displayed
-    public String validateEmailCriteriaField(String email, String emailRegex)
-    {
-        //driver.findElement(loginScreen.createAccountBigButton).click();
+    public String validateEmailCriteriaField(String email, String emailRegex) throws AWTException {
         verifyEmailRegex(email, emailRegex);
         Assert.assertTrue(driver.findElement(accountCreationLocators.nextButton).isEnabled());
-        driver.findElement(By.xpath("//html")).click();
-       // verrifyTickMark();
+        baseActions.randomClickBasedOnOS();
         return email;
 
     }
@@ -280,7 +275,6 @@ public class AccountCreation1 extends TestBase {
     // verify next button
     public void verifyNextButtonEnabled()
     {
-       // validateEmailCriteriaField(email);
         if((driver.findElement(accountCreationLocators.nextButton).isEnabled()))
         {
             driver.findElement(accountCreationLocators.nextButton).click();
@@ -294,13 +288,8 @@ public class AccountCreation1 extends TestBase {
     }
 
     //Verify if the entered email is already registered
-    public void existingEmail_AlreadyRegistered(String alreadyRegisteredEmail, String regexEmail)
-    {
-        //driver.findElement(loginScreen.createAccountBigButton).click();
+    public void existingEmail_AlreadyRegistered(String alreadyRegisteredEmail, String regexEmail) throws AWTException {
         validateEmailCriteriaField(alreadyRegisteredEmail, FinalConstants.regexEmail);
-
-       // WebElement element = driver.findElement(createAccountLocators.existingEmailError);
-
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.existingEmailError));
 
@@ -310,22 +299,15 @@ public class AccountCreation1 extends TestBase {
             Assert.assertTrue(true, "Existing email error is displayed");
             Boolean loginButtonStatus = driver.findElement(accountCreationLocators.loginThroughCreateScreen).isEnabled();
             Assert.assertTrue(loginButtonStatus == true, "Login button is displayed for existing user");
-
-
         }
         else
         {
             Assert.assertTrue(false, "Validation for existing email is not done");
         }
-
-//        Boolean emailNewOrExistingCondition = element.isDisplayed();
-
-        //return flag;
     }
 
     //If the user enters existing email - then he should be allowed to click on login
-    public void loginThroughExistingEmail(String alreadyRegisteredEmail, String regexEmail)
-    {
+    public void loginThroughExistingEmail(String alreadyRegisteredEmail, String regexEmail) throws AWTException {
             existingEmail_AlreadyRegistered(alreadyRegisteredEmail, FinalConstants.regexEmail);
             driver.findElement(accountCreationLocators.loginThroughCreateScreen).click();
     }

@@ -1,6 +1,7 @@
 package pageActions;
 
 import base.BaseActions;
+import base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -10,14 +11,13 @@ import pageLocators.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class ForgotPasswordActions extends TestBase1 {
+public class ForgotPasswordActions extends TestBase {
 
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
     SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
     ForgotPasswordLocators forgotPasswordLocators = new ForgotPasswordLocators();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
     AccountCreation2 accountCreation2 = new AccountCreation2();
-    BaseActions baseActions = new BaseActions();
     HomePageLocators homePageLocators = new HomePageLocators();
     public ForgotPasswordActions() throws IOException {
     }
@@ -124,15 +124,9 @@ public class ForgotPasswordActions extends TestBase1 {
          i) Verify if the password criteria is met
     */
 
-        public void validatePasswordCriteria(String enterPassword)
+        public void validatePasswordCriteria(String enterPassword) throws AWTException
         {
-//            driver.findElement(accountCreationLocators.createPasswordInputField).sendKeys(enterPassword);
-//            driver.findElement(By.xpath("//html")).click();
-//            clearData(driver.findElement(accountCreationLocators.createPasswordInputField));
-//            driver.findElement(By.xpath("//html")).click();
             accountCreation2.validateErrorMessageForPassword(enterPassword);
-            //clearData(driver.findElement(accountCreationLocators.createPasswordInputField));
-            //accountCreation2.enterPassword(enterPassword);
         }
 
         //TC_05
@@ -238,8 +232,7 @@ public class ForgotPasswordActions extends TestBase1 {
 
     //TC_07
     // Verify that clicking on update password button navigates user to the confirmation screen
-    public void clickUpdatePasswordFeature(String enterPassword, String enterConfirmPassword)
-    {
+    public void clickUpdatePasswordFeature(String enterPassword, String enterConfirmPassword) throws AWTException {
         validatePasswordCriteria(enterPassword);
         updateButtonStatus(enterPassword, enterConfirmPassword );
         driver.findElement(forgotPasswordLocators.updatePassword).click();
@@ -248,11 +241,10 @@ public class ForgotPasswordActions extends TestBase1 {
     @Test
     //TC_07
     // Verify if the login is possible with the newly changed password after the password update
-    public void verifyLoginwithNewPassword(String email, String password) throws IOException {
+    public void verifyLoginwithNewPassword(String email, String password) throws IOException, AWTException {
         WebElement signInLink = driver.findElement(homePageLocators.alreadyHaveAnAccountLink);
         signInLink.isEnabled();
         signInLink.click();
-        //signInWithExistingAccountActions.verifySignInScreen(email, password);
        signInWithExistingAccountActions.clickSignIn(email, password);
     }
 

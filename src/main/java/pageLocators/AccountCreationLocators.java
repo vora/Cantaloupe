@@ -28,8 +28,8 @@ public class AccountCreationLocators {
     public By zipcodeErrorText = By.xpath("//span[@class='styles__Msg-sc-1730kyp-1 fAhVqa']");
     public By consentCheckText = By.xpath("//label[@class='styles__Label-sc-89ol7f-0 eeINRw']");
     public By consentCheckBox = By.xpath("//div[@class='styles__StyledCheckbox-sc-89ol7f-3 gBQzxl']");
-    public By termsOfUseLink = By.xpath("//div[@class='styles__Text-sc-1r7ypxo-0 hrQHPH']");
-    public By privacyPolicyLink = By.xpath("//div[@class='styles__Text-sc-1r7ypxo-0 WfrYY']");
+    public By termsOfUseLink = By.xpath("//*[text()='Terms of Use']");
+    public By privacyPolicyLink = By.xpath("//*[text()='Privacy Policy']");
     public By completeButton =By.xpath("//*[text()='Complete']");
     public By backToLoginLink = By.xpath("//div[@class='styles__Text-sc-1r7ypxo-0 fwwrnt']");
 
@@ -81,7 +81,7 @@ public class AccountCreationLocators {
 
 
     //public By consentToPrivacyText = By.xpath("//span[contains(text(), 'You must consent to our Privacy Policy and Terms of Use.')]");
-    public By checkboxForTerms = By.id("agreement");
+    public By checkboxForTerms = By.xpath("//input[@id='agreement']");
     public By checkBoxErrorMessage = By.xpath("//span[contains(text(), 'You must consent to our Privacy Policy and Terms of Use.')]");
     public By readAndAgreeText = By.xpath("//*[@id='registration']/label");
     //public By termsOfUseLink = By.xpath("//*[@id='registration']/div[11]");

@@ -10,21 +10,13 @@ import pageLocators.AccountCreationLocators;
 import pageLocators.AddMoreCard_PrepaidLocators;
 import pageLocators.LandingScreen;
 import resources.FinalConstants;
-
 import java.io.IOException;
 import java.util.Properties;
 
 public class AddMoreCard_Prepaid extends TestBase {
 
-        Properties prop = new Properties();
         BaseActions baseActions = new BaseActions();
         AddMoreCard_PrepaidLocators addMoreCard_prepaidLocators = new AddMoreCard_PrepaidLocators();
-
-
-
-
-        AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
-        LandingScreen loginScreen = new LandingScreen();
 
     public AddMoreCard_Prepaid() throws IOException {
     }
@@ -99,7 +91,6 @@ public class AddMoreCard_Prepaid extends TestBase {
             WebElement securityBlankError = driver.findElement(addMoreCard_prepaidLocators.blankSecuritydErrorText);
             Assert.assertTrue(moreBlankError.isDisplayed() && securityBlankError.isDisplayed());
         }
-
     }
 
 

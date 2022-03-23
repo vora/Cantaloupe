@@ -1,12 +1,13 @@
 package tests;
 
+import base.TestBase;
 import org.testng.annotations.Test;
 import pageActions.HomePageActions;
 import resources.FinalConstants;
 
 import java.io.IOException;
 
-public class HomePageTest extends TestBase1 {
+public class HomePageTest extends TestBase {
 
     HomePageActions homePageActions = new HomePageActions();
 

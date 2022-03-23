@@ -2,6 +2,7 @@ package pageActions;
 
 import base.BaseActions;
 
+import base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -13,15 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class HomePageActions extends TestBase1 {
+public class HomePageActions extends TestBase {
 
-    Properties prop = new Properties();
-    BaseActions baseActions = new BaseActions();
+
     HomePageLocators homePageLocators = new HomePageLocators();
     LandingScreen loginScreen = new LandingScreen();
     SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
-
-    //ContinueAccountCreationLocators continueAccountCreationLocators = new ContinueAccountCreationLocators();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
 
 
@@ -116,7 +114,6 @@ public class HomePageActions extends TestBase1 {
             e.printStackTrace();
         }
     }
-
 
 }
 

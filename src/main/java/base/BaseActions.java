@@ -9,6 +9,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import resources.FinalConstants;
 
 import java.awt.*;
 import java.io.IOException;
@@ -518,6 +519,14 @@ public class BaseActions extends TestBase {
             log.info("Create Account Screen : Something is not proper for the entered phone number ");
         }
 
+    }
+
+    public void randomClickBasedOnOS() throws AWTException {
+        if ((FinalConstants.platformName).equalsIgnoreCase("iOS")) {
+            driver.findElement(By.xpath("//html")).click();
+        } else if ((FinalConstants.platformName).equalsIgnoreCase("Android")) {
+            randomClickOnScreen();
+        }
     }
 
 
