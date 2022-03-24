@@ -81,7 +81,7 @@ public class AccountCreationLocators {
 
 
     //public By consentToPrivacyText = By.xpath("//span[contains(text(), 'You must consent to our Privacy Policy and Terms of Use.')]");
-    public By checkboxForTerms = By.xpath("//input[@id='agreement']");
+    public By checkboxForTerms = By.xpath("//*[local-name()='svg' and @viewBox='0_0_24_24']/*[localname()='path']");
     public By checkBoxErrorMessage = By.xpath("//span[contains(text(), 'You must consent to our Privacy Policy and Terms of Use.')]");
     public By readAndAgreeText = By.xpath("//*[@id='registration']/label");
     //public By termsOfUseLink = By.xpath("//*[@id='registration']/div[11]");

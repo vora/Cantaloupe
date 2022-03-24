@@ -100,5 +100,15 @@ public class AddMoreCard_Prepaid extends TestBase {
         Assert.assertTrue((profileLink.isDisplayed())==true, "User has navigated back to Dashboard screen");
     }
 
-
+    public void navigateBackAfterDataInput(String moreCardNo, String securityNo)
+    {
+        verifyMoreCardInput(moreCardNo, securityNo);
+        navigateBackToDashboard();
+        driver.findElement(addMoreCard_prepaidLocators.addMoreCardLink).click();
+        WebElement moreCardInput = driver.findElement(addMoreCard_prepaidLocators.moreCardInputField);
+        WebElement securityInput = driver.findElement(addMoreCard_prepaidLocators.securityCodeIputField);
+        String blankMore = moreCardInput.getAttribute("value");
+        String blankSecurity = securityInput.getAttribute("value");
+        Assert.assertTrue(blankMore.equalsIgnoreCase("") && blankSecurity.equalsIgnoreCase(""), "User inputs have not been saved");
+    }
 }

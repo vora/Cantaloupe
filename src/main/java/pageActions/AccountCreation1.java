@@ -4,6 +4,7 @@ import base.BaseActions;
 import base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -226,6 +227,9 @@ public class AccountCreation1 extends TestBase {
 
     //Verify Error messages()
     public void emailErrorMessage() throws AWTException {
+
+//        WebDriverWait wait = new WebDriverWait(driver, 30);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.enterYourEmailInput));
         driver.findElement(accountCreationLocators.enterYourEmailInput).click();
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankEmailErrorMsg);
@@ -290,7 +294,7 @@ public class AccountCreation1 extends TestBase {
     //Verify if the entered email is already registered
     public void existingEmail_AlreadyRegistered(String alreadyRegisteredEmail, String regexEmail) throws AWTException {
         validateEmailCriteriaField(alreadyRegisteredEmail, FinalConstants.regexEmail);
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, 3000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.existingEmailError));
 
         Boolean flag = driver.findElement(accountCreationLocators.existingEmailError).isDisplayed();
@@ -309,7 +313,9 @@ public class AccountCreation1 extends TestBase {
     //If the user enters existing email - then he should be allowed to click on login
     public void loginThroughExistingEmail(String alreadyRegisteredEmail, String regexEmail) throws AWTException {
             existingEmail_AlreadyRegistered(alreadyRegisteredEmail, FinalConstants.regexEmail);
-            driver.findElement(accountCreationLocators.loginThroughCreateScreen).click();
+        WebDriverWait wait = new WebDriverWait(driver, 3000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.loginThroughCreateScreen));
+        driver.findElement(accountCreationLocators.loginThroughCreateScreen).click();
     }
 
        //Click create button

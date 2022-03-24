@@ -522,9 +522,9 @@ public class BaseActions extends TestBase {
     }
 
     public void randomClickBasedOnOS() throws AWTException {
-        if ((FinalConstants.platformName).equalsIgnoreCase("iOS")) {
+        if ((FinalConstants.platformName2).equalsIgnoreCase("iOS")) {
             driver.findElement(By.xpath("//html")).click();
-        } else if ((FinalConstants.platformName).equalsIgnoreCase("Android")) {
+        } else if ((FinalConstants.platformName2).equalsIgnoreCase("Android")) {
             randomClickOnScreen();
         }
     }
@@ -535,5 +535,12 @@ public class BaseActions extends TestBase {
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("window.scrollBy(0,0)");
     }
+
+    //Navigate without Submitting the changes
+    public void navigateWithoutSubmit(By element)
+    {
+        driver.findElement(element).click();
+    }
+
 
 }

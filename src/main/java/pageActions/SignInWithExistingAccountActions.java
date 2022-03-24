@@ -105,7 +105,7 @@ public class SignInWithExistingAccountActions extends TestBase {
     public void verifySignInDisabled()
     {
 
-        WebElement buttonNotEnabled = (driver.findElement(signInWithExistingAccountLocators.signInButton));
+        WebElement buttonNotEnabled = driver.findElement(signInWithExistingAccountLocators.signInButton);
         if(buttonNotEnabled.isEnabled())
         {
             Assert.assertTrue(false, "Sign iin button is enabled and is not working as expected");

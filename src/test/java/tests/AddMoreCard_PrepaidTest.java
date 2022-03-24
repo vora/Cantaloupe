@@ -86,5 +86,15 @@ public class AddMoreCard_PrepaidTest extends TestBase {
         addMoreCard_prepaid.navigateBackToDashboard();
     }
 
+    @Test
+    public void navigatewithoutSubmittingData() throws IOException, AWTException {
+        signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
+//        signInWithExistingAccountActions.clickContinueWithEmail();
+//        signInWithExistingAccountActions.verifySignInDisabled();
+        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        addMoreCard_prepaid.clickAddMoreCardButton();
+        addMoreCard_prepaid.navigateBackAfterDataInput(FinalConstants.moreCardNumber, FinalConstants.secutityNumber);
+    }
+
 
 }

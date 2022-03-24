@@ -6,17 +6,17 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import resources.FinalConstants;
 
 import java.io.*;
@@ -62,56 +62,82 @@ public class TestBase {
         }
     }
 
+    final String myPlatform = "mobile";
+
+
+    @Parameters({"platform","runOn"})
     @BeforeMethod
-    public void testIO (){
-    String iOS = "iOS";
-    String Android = "Android";
-        DesiredCapabilities caps = new DesiredCapabilities();
-        if(FinalConstants.platformName.equalsIgnoreCase(iOS)) {
-            caps.setCapability("platformName", "iOS");
-            caps.setCapability("deviceName", "iPhone 12 Pro Max");
-            caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
-            caps.setCapability("platformVersion", "14.5");
+    public void setUp (@Optional(myPlatform)String platform, @Optional("iOS")String runOn) throws MalformedURLException {
+        String iOS = "iOS";
+        String Android = "Android";
 
-            caps.setCapability("automationName", "XCUITest");
-            try {
-                URL url = new URL("http://0.0.0.0:4723/wd/hub");
-                driver = new RemoteWebDriver(url, caps);
-                // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
-                driver.get("https://more-qa.mycantaloupe.com");
-                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                JavascriptExecutor js = (JavascriptExecutor) driver;
-                js.executeScript("window.scrollBy(0,300)", "");
+        switch (platform) {
+            case "mobile":
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+
+                DesiredCapabilities caps = new DesiredCapabilities();
+                //  if(FinalConstants.platformName2.equalsIgnoreCase(iOS)){
+                if (runOn.equals("iPhone 12 Pro Max")) {
+
+                    caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+                    //  caps.setCapability("platformName", "iOS");
+                    caps.setCapability("deviceName", "iPhone 12 Pro Max");
+                    caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
+                    caps.setCapability("platformVersion", "14.5");
+                    caps.setCapability("automationName", "XCUITest");
+
+                    SafariOptions options = new SafariOptions();
+                    caps.merge(options);
+                    URL url = new URL("http://0.0.0.0:4726/wd/hub");
+                    driver = new RemoteWebDriver(url, caps);
+                }
+
+
+                //  caps.setCapability("automationName", "XCUITest");
+//            try {
+//                //URL url = new URL("http://192.168.86.45:4444/wd/hub");
+//               URL url = new URL("http://0.0.0.0:4726/wd/hub");
+//                driver = new RemoteWebDriver(url, caps);
+//                // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
+//                driver.get("https://more-qa.mycantaloupe.com");
+//                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+//                JavascriptExecutor js = (JavascriptExecutor) driver;
+//                js.executeScript("window.scrollBy(0,500)", "");
+//
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+                //}
+
+         if (runOn.equals("emulator-5554")) {
+                // if(FinalConstants.platformName1.equalsIgnoreCase(Android)) {
+
+                //DesiredCapabilities caps1 = DesiredCapabilities.chrome();
+                caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+                caps.setCapability("deviceName", "emulator-5554");
+                caps.setCapability("androidPackage", "com.android.chrome");
+                caps.setCapability("platformVersion", "12.0");
+                caps.setCapability("automationName", "Appium");
+
+                ChromeOptions options = new ChromeOptions();
+                caps.merge(options);
+                URL url1 = new URL("http://0.0.0.0:4727/wd/hub");
+                driver = new RemoteWebDriver(url1, caps);
             }
+
+                try {
+                    //URL url = new URL("http://192.168.86.45:4444/wd/hub");
+//             URL url = new URL("http://0.0.0.0:4727/wd/hub");
+//             driver = new RemoteWebDriver(url, caps);
+                    // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
+                    driver.get("https://more-qa.mycantaloupe.com");
+                    //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                    JavascriptExecutor js = (JavascriptExecutor) driver;
+                    js.executeScript("window.scrollBy(0,500)", "");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
         }
-     if(FinalConstants.platformName.equalsIgnoreCase(Android)) {
-         DesiredCapabilities andCaps = DesiredCapabilities.chrome();
-         andCaps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-         andCaps.setCapability("deviceName", "emulator-5554");
-         andCaps.setCapability("androidPackage", "com.android.chrome");
-         andCaps.setCapability("platformVersion", "12.0");
-         andCaps.setCapability("automationName", "Appium");
-
-         ChromeOptions options = new ChromeOptions();
-         andCaps.merge(options);
-
-         try {
-             URL url = new URL("http://127.0.0.1:4723/wd/hub");
-             driver = new RemoteWebDriver(url, andCaps);
-             // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
-             driver.get("https://more-qa.mycantaloupe.com");
-             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-             JavascriptExecutor js = (JavascriptExecutor) driver;
-             js.executeScript("window.scrollBy(0,300)", "");
-
-         } catch (MalformedURLException malformedURLException) {
-             malformedURLException.printStackTrace();
-         }
-     }
-
     }
 
     @AfterMethod

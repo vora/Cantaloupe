@@ -76,8 +76,8 @@ public final class FinalConstants extends TestBase {
             "|Wisconsin|Wyoming";
 
 
-    //public static final String platformName = "Android";
-    public static final String platformName = "iOS";
+    public static final String platformName1 = "Android";
+    public static final String platformName2 = "iOS";
 
 
     //FAQ
