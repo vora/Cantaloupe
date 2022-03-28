@@ -1,7 +1,5 @@
 package base;
 
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.TapOptions;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -179,7 +177,7 @@ public class BaseActions extends TestBase {
     }
 
     //Gets all the error messages in a list
-    public List<String> getSpanText(By element) {
+    public List<String> getListElements(By element) {
         List<WebElement> allErrors = driver.findElements(element);
 
         List<String> errorText = new ArrayList<>();
@@ -522,9 +520,9 @@ public class BaseActions extends TestBase {
     }
 
     public void randomClickBasedOnOS() throws AWTException {
-        if ((FinalConstants.platformName2).equalsIgnoreCase("iOS")) {
+        if ((FinalConstants.platformName).equalsIgnoreCase("iOS")) {
             driver.findElement(By.xpath("//html")).click();
-        } else if ((FinalConstants.platformName2).equalsIgnoreCase("Android")) {
+        } else if ((FinalConstants.platformName).equalsIgnoreCase("Android")) {
             randomClickOnScreen();
         }
     }
