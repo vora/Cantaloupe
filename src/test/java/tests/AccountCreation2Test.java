@@ -6,9 +6,6 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
 import pageActions.AccountCreation2;
-import pageActions.HomePageActions;
-import pageActions.SignInWithExistingAccountActions;
-import resources.FinalConstants;
 
 import java.awt.*;
 import java.io.IOException;
@@ -26,12 +23,12 @@ public class AccountCreation2Test extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailValidationFlow() throws IOException, AWTException {
-
+    public void verifyEmailValidationFlow() throws IOException, AWTException
+    {
         // Verify email entered, tick mark
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
-        accountCreation2.enteredEmaiCheck(FinalConstants.createNewEmail);
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation2.enteredEmaiCheck(properties.getProperty("createNewEmail"));
 
     }
 
@@ -39,33 +36,33 @@ public class AccountCreation2Test extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailIsEditable() throws IOException, AWTException {
-
+    public void verifyEmailIsEditable() throws IOException, AWTException
+    {
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
-        accountCreation2.enteredEmaiCheck(FinalConstants.createNewEmail);
-        accountCreation2.verifyEmailIsEditable(FinalConstants.existingAccountEmail);
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation2.enteredEmaiCheck(properties.getProperty("createNewEmail"));
+        accountCreation2.verifyEmailIsEditable(properties.getProperty("existingAccountEmail"));
     }
 
     //Verify wrong password fields
     @Test
-    public void verifyPassword() throws IOException, AWTException {
-
+    public void verifyPassword() throws IOException, AWTException
+    {
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-        accountCreation2.tryWrongPassword(FinalConstants.wrongPassword);
+        accountCreation2.tryWrongPassword(properties.getProperty("wrongPassword"));
         baseActions.clearData(driver.findElement(By.id("id_password")));
-        accountCreation2.validateErrorMessageForPassword(FinalConstants.wrongPassword);
-        accountCreation2.tryConfirmPassword(FinalConstants.wrongPassword);
-        accountCreation2.validateErrorMessageForConfirmPassword(FinalConstants.wrongPassword);
+        accountCreation2.validateErrorMessageForPassword(properties.getProperty("wrongPassword"));
+        accountCreation2.tryConfirmPassword(properties.getProperty("wrongPassword"));
+        accountCreation2.validateErrorMessageForConfirmPassword(properties.getProperty("wrongPassword"));
     }
 
     //Verify if both the password and confirm password matches adn click on show icon and hide icon
     @Test
-    public void showPasswordAndHide() throws IOException, AWTException {
-
+    public void showPasswordAndHide() throws IOException, AWTException
+    {
         verifyPassword();
         accountCreation2.clickShowPassword();
         accountCreation2.clickHidePassword();
@@ -75,25 +72,26 @@ public class AccountCreation2Test extends TestBase {
     @Test
     public void verifyPasswords() throws AWTException {
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-        accountCreation2.enterPassword(FinalConstants.createAccountPassword);
-        accountCreation2.verifyPasswordAndConfirmPassword(FinalConstants.createAccountPassword, FinalConstants.createAccountConfirmPassword);
+        accountCreation2.enterPassword(properties.getProperty("createAccountPassword"));
+        accountCreation2.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
     }
 
     //verify personal details section
     @Test
     public void verifyPersonalDetailsSection() throws IOException, AWTException {
         accountCreation1.clickCreateButton();
-        accountCreation1.validateEmailCriteriaField(FinalConstants.createNewEmail, FinalConstants.regexEmail);
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-        accountCreation2.verifyPasswordAndConfirmPassword(FinalConstants.createAccountPassword, FinalConstants.createAccountConfirmPassword);
-        accountCreation2.verifyFirstNameInput(FinalConstants.firstName);
-        accountCreation2.verifyLastNameInput(FinalConstants.lastName);
-        accountCreation2.verifyPhoneNoInput(FinalConstants.mobileNumber);
-        accountCreation2.verifyAddressInput(FinalConstants.streetAddress, FinalConstants.city, FinalConstants.state, FinalConstants.zipcode);
+        accountCreation2.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
+        accountCreation2.verifyFirstNameInput(properties.getProperty("firstName"));
+        accountCreation2.verifyLastNameInput(properties.getProperty("lastName"));
+        accountCreation2.verifyPhoneNoInput(properties.getProperty("mobileNumber"));
+        accountCreation2.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
     }
 
 

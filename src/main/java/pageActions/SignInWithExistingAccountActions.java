@@ -2,7 +2,6 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -55,7 +54,7 @@ public class SignInWithExistingAccountActions extends TestBase {
             baseActions.randomClickBasedOnOS();
             String emailErrorText = "Please enter your email.";
             String passwordErrorText = "Please enter your password.";
-            List<String> getAllErrors = baseActions.getSpanText(signInWithExistingAccountLocators.errorMessages);
+            List<String> getAllErrors = baseActions.getListElements(signInWithExistingAccountLocators.errorMessages);
             if((getAllErrors.contains(emailErrorText)) && (getAllErrors).contains(passwordErrorText))
             {
                 Assert.assertTrue(true, "Error messages are displayed");

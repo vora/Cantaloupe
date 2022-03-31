@@ -2,7 +2,6 @@ package tests;
 
 import base.TestBase;
 import org.testng.annotations.Test;
-import pageActions.AccountCreation1;
 import pageActions.FAQActions;
 import pageActions.SignInWithExistingAccountActions;
 import resources.FinalConstants;
@@ -21,7 +20,7 @@ public class FAQTest extends TestBase {
     @Test
     public void validtaeFAQUI() throws IOException, AWTException {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         faqActions.clickFAQLink();
         faqActions.validateUIOnFAQ();
     }
@@ -29,7 +28,7 @@ public class FAQTest extends TestBase {
     @Test
     public void verifyFAQQA() throws IOException, AWTException {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         faqActions.clickFAQLink();
         faqActions.verifyQuestionsOnFAQ();
     }
@@ -37,7 +36,7 @@ public class FAQTest extends TestBase {
     @Test
     public void navigateBackToDashboard() throws IOException, AWTException {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         faqActions.clickFAQLink();
         faqActions.navigateBackToDashboard();
     }

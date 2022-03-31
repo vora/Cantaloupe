@@ -4,14 +4,10 @@ import base.BaseActions;
 import base.TestBase;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pageLocators.AccountCreationLocators;
 import pageLocators.FAQLocators;
-import pageLocators.LandingScreen;
 import pageLocators.LoggedInUserLocators;
-import resources.FinalConstants;
-
 import java.io.IOException;
-import java.util.Properties;
+
 
 public class FAQActions extends TestBase {
 
@@ -20,21 +16,9 @@ public class FAQActions extends TestBase {
     LoggedInUserLocators loggedInUserLocators = new LoggedInUserLocators();
 
 
+
     public FAQActions() throws IOException {
     }
-
-//    WebElement homeLink = driver.findElement(faqLocators.homeLink);
-//    WebElement faqHeader = driver.findElement(faqLocators.faqHeader);
-//    WebElement q1 = driver.findElement(faqLocators.question1);
-//    WebElement a1 = driver.findElement(faqLocators.answer1);
-//    WebElement q2 = driver.findElement(faqLocators.question2);
-//    WebElement a2 = driver.findElement(faqLocators.answer2);
-//    WebElement q3 = driver.findElement(faqLocators.question3);
-//    WebElement a3 = driver.findElement(faqLocators.answer3);
-//    WebElement q4 = driver.findElement(faqLocators.question4);
-//    WebElement a4 = driver.findElement(faqLocators.answer4);
-//    WebElement q5 = driver.findElement(faqLocators.question5);
-//    WebElement a5 = driver.findElement(faqLocators.answer5);
 
     public void navigateBackToDashboard()
     {
@@ -85,16 +69,16 @@ public class FAQActions extends TestBase {
         String question5 = q5.getText();
         String answer5 = a5.getText();
 
-        Assert.assertEquals(question1, FinalConstants.faqQ1, "FAQQ1 is valid");
-        Assert.assertEquals(answer1, FinalConstants.faqA1, "FAQA1 is valid");
-        Assert.assertEquals(question2, FinalConstants.faqQ2, "FAQQ2 is valid");
-        Assert.assertEquals(answer2, FinalConstants.faqA2, "FAQA2 is valid");
-        Assert.assertEquals(question3, FinalConstants.faqQ3, "FAQQ3 is valid");
-        Assert.assertEquals(answer3, FinalConstants.faqA3, "FAQA3 is valid");
-        Assert.assertEquals(question4, FinalConstants.faqQ4, "FAQQ4 is valid");
-        Assert.assertEquals(answer4, FinalConstants.faqA4, "FAQA4 is valid");
-        Assert.assertEquals(question5, FinalConstants.faqQ5, "FAQQ5 is valid");
-        Assert.assertEquals(answer5, FinalConstants.faqA5, "FAQA5 is valid");
+        Assert.assertEquals(question1, properties.getProperty("faqQ1"), "FAQQ1 is valid");
+        Assert.assertEquals(answer1, properties.getProperty("faqA1"), "FAQA1 is valid");
+        Assert.assertEquals(question2, properties.getProperty("faqQ2"), "FAQQ2 is valid");
+        Assert.assertEquals(answer2, properties.getProperty("faqA2"), "FAQA2 is valid");
+        Assert.assertEquals(question3, properties.getProperty("faqQ3"), "FAQQ3 is valid");
+        Assert.assertEquals(answer3, properties.getProperty("faqA3"), "FAQA3 is valid");
+        Assert.assertEquals(question4, properties.getProperty("faqQ4"), "FAQQ4 is valid");
+        Assert.assertEquals(answer4, properties.getProperty("faqA4"), "FAQA4 is valid");
+        Assert.assertEquals(question5, properties.getProperty("faqQ5"), "FAQQ5 is valid");
+        Assert.assertEquals(answer5, properties.getProperty("faqA5"), "FAQA5 is valid");
     }
 
     public void clickFAQLink()

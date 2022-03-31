@@ -7,9 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pageLocators.*;
-import resources.FinalConstants;
 import java.io.IOException;
-import java.util.Properties;
 
 public class AddMoreCard_Prepaid extends TestBase {
 
@@ -39,8 +37,8 @@ public class AddMoreCard_Prepaid extends TestBase {
          driver.findElement(addMoreCard_prepaidLocators.securityCodeText).isDisplayed();
          driver.findElement(addMoreCard_prepaidLocators.securityCodeIputField).isEnabled();
 
-        baseActions.regexExpression(addMoreCard_prepaidLocators.moreCardInputField, cardInput, FinalConstants.regexMoreCard );
-        baseActions.regexExpression(addMoreCard_prepaidLocators.securityCodeIputField, securityInput, FinalConstants.regexSecurity);
+        baseActions.regexExpression(addMoreCard_prepaidLocators.moreCardInputField, cardInput, properties.getProperty("regexMoreCard"));
+        baseActions.regexExpression(addMoreCard_prepaidLocators.securityCodeIputField, securityInput, properties.getProperty("regexSecurity"));
     }
 
     public void clickButtonMore()
@@ -56,7 +54,7 @@ public class AddMoreCard_Prepaid extends TestBase {
         WebElement alert = wait.until(ExpectedConditions.presenceOfElementLocated(addMoreCard_prepaidLocators.moreCardAlertPopUp));
         String alertText = wait.until(ExpectedConditions.visibilityOf(alert)).getText();
         alertPopUp.isDisplayed();
-        Assert.assertTrue((FinalConstants.invalidMoreCardNumberAlertText).equals(alertText), "User has entered an invalid card number");
+        Assert.assertTrue((properties.getProperty("invalidMoreCardNumberAlertText").equals(alertText)), "User has entered an invalid card number");
     }
     public void checkIfCardHAsBeenRegisteredAlready()
     {
@@ -65,7 +63,7 @@ public class AddMoreCard_Prepaid extends TestBase {
         WebElement alert = wait.until(ExpectedConditions.presenceOfElementLocated(addMoreCard_prepaidLocators.moreCardAlertPopUp));
         String alertText = wait.until(ExpectedConditions.visibilityOf(alert)).getText();
         alertPopUp.isDisplayed();
-        Assert.assertTrue((FinalConstants.registeredMoreCardAlertText).equals(alertText), "User has entered an already existing card number");
+        Assert.assertTrue((properties.getProperty("registeredMoreCardAlertText")).equals(alertText), "User has entered an already existing card number");
     }
 
     //TC_03

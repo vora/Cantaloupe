@@ -1,13 +1,8 @@
 package tests;
 
-import base.DataProvider;
 import base.TestBase;
 import org.testng.annotations.Test;
-import pageActions.HomePageActions;
 import pageActions.SignInWithExistingAccountActions;
-import pageLocators.AccountCreationLocators;
-import pageLocators.CreateOrLoginInitialLocators;
-import pageLocators.LandingScreen;
 import resources.FinalConstants;
 
 import java.awt.*;
@@ -29,7 +24,7 @@ public class SignInWithExistingAccountTest extends TestBase {
         signInWithExistingAccountActions.clickContinueWithEmail();
         signInWithExistingAccountActions.validateErrorMessages();
         signInWithExistingAccountActions.verifySignInDisabled();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         signInWithExistingAccountActions.clickSignOut();
     }
 

@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
 import pageActions.MoreCardDetailScreenActions;
 import pageActions.SignInWithExistingAccountActions;
-import resources.FinalConstants;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,39 +21,45 @@ public class MoreCardDetailsScreenTest extends TestBase {
    @Test
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
     public void verifyAddedMoreCardNumber() throws AWTException, IOException {
-       // moreCardDetailScreenActions.verifyAddedMoreCardNumber();
-       signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-       signInWithExistingAccountActions.clickContinueWithEmail();
-       signInWithExistingAccountActions.validateErrorMessages();
-       signInWithExistingAccountActions.verifySignInDisabled();
-       signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
-       moreCardDetailScreenActions.verifyAddedMoreCardNumber(FinalConstants.moreCardNumber);
+
+      signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
+      signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
+      moreCardDetailScreenActions.verifyAddedMoreCardNumber(properties.getProperty("moreCardNumber"));
 
    }
 
    @Test
     public void navigateToAddedMoreCardscreen() throws AWTException, IOException {
-        // moreCardDetailScreenActions.verifyAddedMoreCardNumber();
+
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickContinueWithEmail();
-        signInWithExistingAccountActions.validateErrorMessages();
-        signInWithExistingAccountActions.verifySignInDisabled();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
-        moreCardDetailScreenActions.verifyAddedMoreCardNumber(FinalConstants.moreCardNumber);
-        moreCardDetailScreenActions.navigateToMoreCardDetailsScreen(FinalConstants.moreCardNumber);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
+        moreCardDetailScreenActions.verifyAddedMoreCardNumber(properties.getProperty("moreCardNumber"));
+        moreCardDetailScreenActions.navigateToMoreCardDetailsScreen(properties.getProperty("moreCardNumber"));
 
     }
 
     @Test
     public void viewBalance() throws AWTException, IOException {
-        // moreCardDetailScreenActions.verifyAddedMoreCardNumber();
+
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickContinueWithEmail();
-        signInWithExistingAccountActions.validateErrorMessages();
-        signInWithExistingAccountActions.verifySignInDisabled();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
-        moreCardDetailScreenActions.verifyAddedMoreCardNumber(FinalConstants.moreCardNumber);
-        moreCardDetailScreenActions.verifyBalance(FinalConstants.balanceAmount);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
+        moreCardDetailScreenActions.verifyAddedMoreCardNumber(properties.getProperty("moreCardNumber"));
+        moreCardDetailScreenActions.verifyBalance(properties.getProperty("balanceAmount"));
+    }
+
+    @Test
+    public void verifyUIComponents_DetailsScreen() throws AWTException, IOException {
+
+        signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
+        moreCardDetailScreenActions.verifyAddedMoreCardNumber(properties.getProperty("moreCardNumber"));
+        moreCardDetailScreenActions.verifyUIComponents(properties.getProperty("moreCardNumber"));
+    }
+
+    @Test
+    public void viewAvailableCards() throws AWTException, IOException {
+        signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         moreCardDetailScreenActions.viewallCardsAvailable();
     }
 

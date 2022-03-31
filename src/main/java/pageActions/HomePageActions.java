@@ -1,7 +1,5 @@
 package pageActions;
 
-import base.BaseActions;
-
 import base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class HomePageActions extends TestBase {
 

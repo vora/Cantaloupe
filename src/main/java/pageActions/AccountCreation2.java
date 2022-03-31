@@ -65,7 +65,7 @@ public class AccountCreation2 extends TestBase {
     public void enterPassword(String password)
     {
        baseActions.regexPassword(accountCreationLocators.createPassowrd, password);
-    //Include spl character ` - should not be allowed
+       //Include spl character ` - should not be allowed
     }
 
     //MaskedPassword for create Password
@@ -145,7 +145,6 @@ public class AccountCreation2 extends TestBase {
         baseActions.enterValue(accountCreationLocators.confirmPassword, confirm);
         String createpPassword = driver.findElement(accountCreationLocators.createPassowrd).getText();
         String confirmPassword = driver.findElement(accountCreationLocators.createPassowrd).getText();
-
         Assert.assertEquals(createpPassword, confirmPassword);
     }
 
@@ -169,7 +168,7 @@ public class AccountCreation2 extends TestBase {
 
     //verify errors
     public void verifyPhoneNoInput(String phoneNo) throws AWTException {
-       driver.findElement(accountCreationLocators.phoneNoInput).sendKeys("A");
+        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys("A");
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.invalidMobileError);
         baseActions.regexPhoneno(accountCreationLocators.phoneNoInput, phoneNo);
@@ -202,10 +201,8 @@ public class AccountCreation2 extends TestBase {
     public void checkbox()
     {
         driver.findElement(accountCreationLocators.completeButton).click();
-        WebElement checkboxStatus = driver.findElement(accountCreationLocators.checkboxForTerms);
-        Boolean checkboxErrorStatus = driver.findElement(accountCreationLocators.checkBoxErrorMessage).isDisplayed();
-
-        if(!(checkboxStatus.isSelected()) && checkboxErrorStatus == true)
+        Boolean checkboxErrorStatus = driver.findElement(accountCreationLocators.checkBoxErrorMessage).isDisplayed();// WebElement checkboxStatus = driver.findElement(accountCreationLocators.checkboxForTerms);
+        if(checkboxErrorStatus == true)
         {
             Assert.assertTrue(checkboxErrorStatus, "Check box is unchecked");
             baseActions.clickButton(accountCreationLocators.checkboxForTerms);

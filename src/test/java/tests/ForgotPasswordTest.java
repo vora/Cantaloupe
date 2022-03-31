@@ -3,8 +3,6 @@ package tests;
 import base.TestBase;
 import org.testng.annotations.Test;
 import pageActions.ForgotPasswordActions;
-import pageActions.HomePageActions;
-import resources.FinalConstants;
 
 import java.awt.*;
 import java.io.IOException;
@@ -19,32 +17,32 @@ public class ForgotPasswordTest extends TestBase {
    // @Test
    public void enterEmailToResetPassword1()
     {
-        forgotPasswordActions.verifyForgotPassword(FinalConstants.existingAccountEmail);
+        forgotPasswordActions.verifyForgotPassword(properties.getProperty("existingAccountEmail"));
     }
 
     public void verifyNavigations_PasswordReset(){
         forgotPasswordActions.forgotPasswordEmailLinkNavigation();
-        forgotPasswordActions.returnToSignInScreen(FinalConstants.existingAccountEmail);
+        forgotPasswordActions.returnToSignInScreen(properties.getProperty("existingAccountEmail"));
     }
 
    // @Test
     public void validatePasswordCriteria() throws AWTException {
-            forgotPasswordActions.validatePasswordCriteria(FinalConstants.wrongPassword);
+            forgotPasswordActions.validatePasswordCriteria(properties.getProperty("wrongPassword"));
         }
 
     // @Test
      public void validateConfirmPasswordFeature(){
              forgotPasswordActions.checkInputFieldIsEnabled();
-        forgotPasswordActions.verifyFieldsDataForPassword(FinalConstants.createAccountPassword);
+        forgotPasswordActions.verifyFieldsDataForPassword(properties.getProperty("createAccountPassword"));
     }
 
    // @Test
     public void validateUpdateSattusButton(){
-        forgotPasswordActions.updateButtonStatus(FinalConstants.createAccountPassword, FinalConstants.createAccountConfirmPassword);
+        forgotPasswordActions.updateButtonStatus(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
     }
 
     @Test
     public void verifyLoginWithNewPassword() throws IOException, AWTException {
-        forgotPasswordActions.verifyLoginwithNewPassword(FinalConstants.existingAccountEmail, FinalConstants.newPassword);
+        forgotPasswordActions.verifyLoginwithNewPassword(properties.getProperty("existingAccountEmail"), properties.getProperty("newPassword"));
     }
 }

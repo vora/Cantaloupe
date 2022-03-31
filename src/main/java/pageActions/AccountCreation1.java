@@ -2,9 +2,7 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,31 +31,29 @@ public class AccountCreation1 extends TestBase {
     public AccountCreation1() throws IOException {
     }
 
-   // @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void testIOS(String createAccount)
-            throws MalformedURLException {
-
-        try {
-
-            WebElement createAccountButton = driver.findElement(loginScreen.createAccountBigButton);
-
-            if (createAccountButton.isDisplayed()) {
-                Assert.assertTrue(true, "User has landed to the right page");
-                System.out.println("Valid");
-                driver.findElement(loginScreen.createAccountBigButton).click();
-                validateCreateAccountScreen(createAccount);
-                validateAccountCreationScreen(createAccount);
-                validateInptBlankFieldsErrorMsg();
-                verifyCompleteButtonEnablement();
-            } else {
-                System.out.println("Invalid");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void testIOS(String createAccount) throws MalformedURLException {
+//
+//        try {
+//
+//            WebElement createAccountButton = driver.findElement(loginScreen.createAccountBigButton);
+//
+//            if (createAccountButton.isDisplayed()) {
+//                Assert.assertTrue(true, "User has landed to the right page");
+//                System.out.println("Valid");
+//                driver.findElement(loginScreen.createAccountBigButton).click();
+//                validateCreateAccountScreen(createAccount);
+//                validateAccountCreationScreen(createAccount);
+//                validateInptBlankFieldsErrorMsg();
+//                verifyCompleteButtonEnablement();
+//            } else {
+//                System.out.println("Invalid");
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     //Validates account creation screen
     public void validateCreateAccountScreen(String createNewEmail) throws AWTException {
@@ -95,9 +91,6 @@ public class AccountCreation1 extends TestBase {
     //Validates all the input fields on the account creation screen
     public void validateInptBlankFieldsErrorMsg() throws AWTException {
         WebElement emailInputbox = driver.findElement(accountCreationLocators.emailIdInputField);
-
-        // Get value of Css property border-bottom-color which will be returned in RGB format.
-//            String colorCode= emailInputbox.getCssValue("border-bottom-color");
         driver.findElement(accountCreationLocators.createPasswordInputField).click();
         baseActions.randomClickBasedOnOS();
         driver.findElement(accountCreationLocators.passwordCriteriaText).isDisplayed();
@@ -219,17 +212,12 @@ public class AccountCreation1 extends TestBase {
    //Regex for email
     public void verifyEmailRegex(String email, String emailRegex)
     {
-        //baseActions.validateEmailInputs(accountCreationLocators.enterYourEmailInput, email);
-
         baseActions.regexExpression(accountCreationLocators.enterYourEmailInput, email, emailRegex);
     }
 
 
     //Verify Error messages()
     public void emailErrorMessage() throws AWTException {
-
-//        WebDriverWait wait = new WebDriverWait(driver, 30);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.enterYourEmailInput));
         driver.findElement(accountCreationLocators.enterYourEmailInput).click();
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankEmailErrorMsg);
@@ -293,7 +281,7 @@ public class AccountCreation1 extends TestBase {
 
     //Verify if the entered email is already registered
     public void existingEmail_AlreadyRegistered(String alreadyRegisteredEmail, String regexEmail) throws AWTException {
-        validateEmailCriteriaField(alreadyRegisteredEmail, FinalConstants.regexEmail);
+        validateEmailCriteriaField(alreadyRegisteredEmail, properties.getProperty("regexEmail"));
         WebDriverWait wait = new WebDriverWait(driver, 3000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.existingEmailError));
 
@@ -312,7 +300,7 @@ public class AccountCreation1 extends TestBase {
 
     //If the user enters existing email - then he should be allowed to click on login
     public void loginThroughExistingEmail(String alreadyRegisteredEmail, String regexEmail) throws AWTException {
-            existingEmail_AlreadyRegistered(alreadyRegisteredEmail, FinalConstants.regexEmail);
+        existingEmail_AlreadyRegistered(alreadyRegisteredEmail, properties.getProperty("regexEmail"));
         WebDriverWait wait = new WebDriverWait(driver, 3000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.loginThroughCreateScreen));
         driver.findElement(accountCreationLocators.loginThroughCreateScreen).click();

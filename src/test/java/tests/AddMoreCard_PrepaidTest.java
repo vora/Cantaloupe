@@ -1,14 +1,9 @@
 package tests;
 
-import base.DataProvider;
 import base.TestBase;
 import org.testng.annotations.Test;
 import pageActions.AddMoreCard_Prepaid;
-import pageActions.HomePageActions;
 import pageActions.SignInWithExistingAccountActions;
-import pageLocators.AccountCreationLocators;
-import pageLocators.CreateOrLoginInitialLocators;
-import pageLocators.LandingScreen;
 import resources.FinalConstants;
 
 import java.awt.*;
@@ -32,7 +27,7 @@ public class AddMoreCard_PrepaidTest extends TestBase {
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();
       signInWithExistingAccountActions.verifySignInDisabled();
-      signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+      signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
       addMoreCard_prepaid.clickAddMoreCardButton();
       addMoreCard_prepaid.blankInputsForMoreAndSecurity();
    }
@@ -43,9 +38,9 @@ public class AddMoreCard_PrepaidTest extends TestBase {
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();
       signInWithExistingAccountActions.verifySignInDisabled();
-      signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+      signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
       addMoreCard_prepaid.clickAddMoreCardButton();
-      addMoreCard_prepaid.verifyMoreCardInput(FinalConstants.moreCardNumber, FinalConstants.secutityNumber);
+      addMoreCard_prepaid.verifyMoreCardInput(properties.getProperty("moreCardNumber"), properties.getProperty("securityNumber"));
    }
 
    @Test
@@ -54,9 +49,9 @@ public class AddMoreCard_PrepaidTest extends TestBase {
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();
       signInWithExistingAccountActions.verifySignInDisabled();
-      signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+      signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
       addMoreCard_prepaid.clickAddMoreCardButton();
-      addMoreCard_prepaid.verifyMoreCardInput(FinalConstants.moreCardNumberInvalid, FinalConstants.secutityNumber);
+      addMoreCard_prepaid.verifyMoreCardInput(properties.getProperty("moreCardNumberInvalid"), properties.getProperty("securityNumber"));
       addMoreCard_prepaid.clickButtonMore();
       addMoreCard_prepaid.checkIFTheCardNoIsUnique();
       addMoreCard_prepaid.clickButtonMore();
@@ -68,9 +63,9 @@ public class AddMoreCard_PrepaidTest extends TestBase {
       signInWithExistingAccountActions.clickContinueWithEmail();
       signInWithExistingAccountActions.validateErrorMessages();
       signInWithExistingAccountActions.verifySignInDisabled();
-      signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+      signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
       addMoreCard_prepaid.clickAddMoreCardButton();
-      addMoreCard_prepaid.verifyMoreCardInput(FinalConstants.moreCardNumberAlreadyRegistered, FinalConstants.secutityNumber);
+      addMoreCard_prepaid.verifyMoreCardInput(properties.getProperty("moreCardNumberAlreadyRegistered"), properties.getProperty("securityNumber"));
       addMoreCard_prepaid.clickButtonMore();
       addMoreCard_prepaid.checkIfCardHAsBeenRegisteredAlready();
       addMoreCard_prepaid.clickButtonMore();
@@ -81,7 +76,7 @@ public class AddMoreCard_PrepaidTest extends TestBase {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
 //        signInWithExistingAccountActions.clickContinueWithEmail();
 //        signInWithExistingAccountActions.verifySignInDisabled();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         addMoreCard_prepaid.clickAddMoreCardButton();
         addMoreCard_prepaid.navigateBackToDashboard();
     }
@@ -91,9 +86,9 @@ public class AddMoreCard_PrepaidTest extends TestBase {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
 //        signInWithExistingAccountActions.clickContinueWithEmail();
 //        signInWithExistingAccountActions.verifySignInDisabled();
-        signInWithExistingAccountActions.clickSignIn(FinalConstants.existingAccountEmail, FinalConstants.existingAccountPassword);
+        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
         addMoreCard_prepaid.clickAddMoreCardButton();
-        addMoreCard_prepaid.navigateBackAfterDataInput(FinalConstants.moreCardNumber, FinalConstants.secutityNumber);
+        addMoreCard_prepaid.navigateBackAfterDataInput(properties.getProperty("moreCardNumber"), properties.getProperty("securityNumber"));
     }
 
 

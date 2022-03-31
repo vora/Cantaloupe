@@ -3,7 +3,7 @@ package tests;
 import base.TestBase;
 import org.testng.annotations.Test;
 import pageActions.HomePageActions;
-import resources.FinalConstants;
+
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class HomePageTest extends TestBase {
     @Test
     public void validateHomePageElements() throws Exception {
 
-        homePageActions.verifyHomePage(FinalConstants.createNewEmail);
+        homePageActions.verifyHomePage(properties.getProperty("createNewEmail"));
     }
 
     @Test

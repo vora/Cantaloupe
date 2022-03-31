@@ -203,44 +203,39 @@ public class BaseActions extends TestBase {
 
     //Edit InputFilds and update with new test data
 
-    public void EditAndUpdateInputFields(By element, String newTestData)
-    {
+    public void EditAndUpdateInputFields(By element, String newTestData) {
         WebElement webElement = driver.findElement(element);
-       // TouchAction touchActions = new TouchAction(driver);
-       // touchActions.tap((TapOptions) webElement);
+        // TouchAction touchActions = new TouchAction(driver);
+        // touchActions.tap((TapOptions) webElement);
         deleteInputCharacters(element);
         webElement.sendKeys(newTestData);
     }
 
-    public void EditAndUpdateInputFields(By element, Integer newTestData)
-    {
+    public void EditAndUpdateInputFields(By element, Integer newTestData) {
         WebElement webElement = driver.findElement(element);
-       // TouchAction touchActions = new TouchAction(driver);
-       // touchActions.tap((TapOptions) webElement);
+        // TouchAction touchActions = new TouchAction(driver);
+        // touchActions.tap((TapOptions) webElement);
         deleteInputCharacters(element);
         webElement.sendKeys(String.valueOf(newTestData));
     }
 
-    public void clickButton(By element)
-    {
+    public void clickButton(By element) {
         WebElement webElement = driver.findElement(element);
         webElement.click();
     }
 
-    public void enterValue(By element, String sendKeysData)
-    {
-         driver.findElement(element).sendKeys(sendKeysData);
+    public void enterValue(By element, String sendKeysData) {
+        driver.findElement(element).sendKeys(sendKeysData);
     }
 
-    public void enterPhoneNo(By element, String sendKeysData)
-    {
+    public void enterPhoneNo(By element, String sendKeysData) {
         driver.findElement(element).sendKeys(sendKeysData);
     }
 
 
     //Regex for Email
     public void validateEmailInputs(By element, String email) {
-       // String regex = "^(.+)@(\\S+)$";
+        // String regex = "^(.+)@(\\S+)$";
         String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -250,27 +245,20 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(email);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered email is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for email ");
         }
     }
 
-    public String validateErrorMessages(By element)
-    {
+    public String validateErrorMessages(By element) {
         WebElement webElement = driver.findElement(element);
         String errorMessage = webElement.getText();
-        if(webElement.isDisplayed())
-        {
+        if (webElement.isDisplayed()) {
 
             Assert.assertTrue(true, errorMessage + " is showing up");
-        }
-        else
-        {
+        } else {
             Assert.assertTrue(false, errorMessage + " is not shown");
         }
 
@@ -278,23 +266,18 @@ public class BaseActions extends TestBase {
     }
 
     //Tick marks for email, phone number
-    public static void verifyTick(WebElement element)
-    {
-        if(element.isDisplayed())
-        {
+    public static void verifyTick(WebElement element) {
+        if (element.isDisplayed()) {
             Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", element);
-            Assert.assertTrue(image1Present == true, "Tick mark is present" );
-        }
-        else if(!(element).isDisplayed())
-        {
+            Assert.assertTrue(image1Present == true, "Tick mark is present");
+        } else if (!(element).isDisplayed()) {
             Assert.assertTrue(false, "tick mark is not present");
         }
     }
 
-    public void regexPassword(By element, String password)
-    {
+    public void regexPassword(By element, String password) {
 
-       String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
 
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -304,40 +287,34 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(password);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(false, "The entered email is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for email ");
         }
     }
 
     //Verify if the password fields are masked before clicking show
-    public void checkPasswordMaskedOrNot(By element)
-    {
+    public void checkPasswordMaskedOrNot(By element) {
         WebElement passwordMasked = driver.findElement(element);
-        if (passwordMasked.isDisplayed()){
+        if (passwordMasked.isDisplayed()) {
 
             Boolean showTrue = driver.findElement(element).isEnabled();
             Assert.assertTrue(showTrue);
-        }else {
+        } else {
             Boolean showTrue = driver.findElement(element).isEnabled();
             Assert.assertFalse(showTrue);
         }
     }
 
     //Clear and re-enter data in input field through js
-    public void clearInputfieldAndEnterNewData(WebElement element, String editValue)
-    {
-        JavascriptExecutor js = (JavascriptExecutor)driver;
-        js.executeScript("arguments[0].value=' "+ editValue + " ';", element);
+    public void clearInputfieldAndEnterNewData(WebElement element, String editValue) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].value=' " + editValue + " ';", element);
 
     }
 
-    public void regexFirstAndLastName(By element, String name)
-    {
+    public void regexFirstAndLastName(By element, String name) {
         String regex = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{8,20})?)";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -347,19 +324,15 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(name);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered name is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for the entered name ");
         }
     }
 
     //regex phone no
-    public void regexPhoneno(By element, String phoneNo)
-    {
+    public void regexPhoneno(By element, String phoneNo) {
         String regex = "^\\d{10}$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -369,20 +342,16 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(phoneNo);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered nmber is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for the entered phone number ");
         }
 
     }
 
-      //regex phone no
-    public void regexAddress(By element, String phoneNo)
-    {
+    //regex phone no
+    public void regexAddress(By element, String phoneNo) {
 
         String regex = "\\d+\\s+([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)";
         //String regex = "^\\b\\d{1,8}(-)?[a-z]?\\W[a-z|\\W|\\.]{1,}\\W(road|drive|avenue|boulevard|circle|street|lane|waylrd\\.|st\\.|dr\\.|ave\\.|blvd\\.|cir\\.|In\\.|rd|dr|ave|blvd|cir|ln)";
@@ -394,12 +363,9 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(phoneNo);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered address is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for the entered address ");
         }
 
@@ -424,8 +390,7 @@ public class BaseActions extends TestBase {
     }
 
     ///^[a-zA-Z]+$/
-    public void regexCity(By element, String cityOrState)
-    {
+    public void regexCity(By element, String cityOrState) {
         String regex = "(?:[A-Z][a-z.-]+[ ]?)+";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -435,12 +400,9 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(cityOrState);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered address is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for the entered address ");
         }
 
@@ -448,8 +410,7 @@ public class BaseActions extends TestBase {
 
 
     ///^[a-zA-Z]+$/
-    public void regexState(By element, String State)
-    {
+    public void regexState(By element, String State) {
         String regex = "Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|\n" +
                 "Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|\n" +
                 "Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico\n" +
@@ -464,21 +425,17 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(State);
-        } else if((checkPatternCondition == false))
-        {
+        } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered address is not valid");
-        }
-        else
-        {
+        } else {
             log.info("Create Account Screen : Something is not proper for the entered address ");
         }
 
     }
 
     //JS
-    public void clearData(WebElement element)
-    {
-        JavascriptExecutor js = (JavascriptExecutor)driver;
+    public void clearData(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value= ''", element);
 
 
@@ -490,16 +447,15 @@ public class BaseActions extends TestBase {
 
         Robot robot = new Robot();
 
-        robot.mouseMove(0,0);
+        robot.mouseMove(0, 0);
 
         actions.click().build().perform();
     }
 
     //AddMoreCrad - REgex
     //regex phone no
-    public void regexExpression(By element, String moreCardNo, String regexType)
-    {
-       // String regex = "^\\d{19}$";
+    public void regexExpression(By element, String moreCardNo, String regexType) {
+        // String regex = "^\\d{19}$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regexType);
         Matcher matcher = pattern.matcher(moreCardNo);
@@ -508,12 +464,9 @@ public class BaseActions extends TestBase {
 
         if (checkPatternCondition == true) {
             webElement.sendKeys(moreCardNo);
-        } else if((checkPatternCondition == false))
-        {
-            Assert.assertTrue(false, "The entered number is not valid");
-        }
-        else
-        {
+        } else if ((checkPatternCondition == false)) {
+            Assert.assertTrue(false, "The entered data is not valid");
+        } else {
             log.info("Create Account Screen : Something is not proper for the entered phone number ");
         }
 
@@ -528,17 +481,24 @@ public class BaseActions extends TestBase {
     }
 
     //Scroll to top of the screen
-    public void scrollUp()
-    {
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
+    public void scrollUp() {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("window.scrollBy(0,0)");
     }
 
     //Navigate without Submitting the changes
-    public void navigateWithoutSubmit(By element)
-    {
+    public void navigateWithoutSubmit(By element) {
         driver.findElement(element).click();
     }
 
+    //Last 4 digits of the card
+    public String getLastFourDigits(String enterCardNo) {
+        addedMoreCardLast4Numbers = enterCardNo.substring(enterCardNo.length() - 4);
+        return addedMoreCardLast4Numbers;
+    }
 
+    //WEbElement recode
+    public WebElement webElement(By element) {
+        return driver.findElement(element);
+    }
 }

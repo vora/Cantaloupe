@@ -1,6 +1,5 @@
 package pageActions;
 
-import base.BaseActions;
 import base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
