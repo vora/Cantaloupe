@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import resources.FinalConstants;
 
@@ -473,9 +474,9 @@ public class BaseActions extends TestBase {
     }
 
     public void randomClickBasedOnOS() throws AWTException {
-        if ((FinalConstants.platformName).equalsIgnoreCase("iOS")) {
+        if ((properties.getProperty("platformName")).equalsIgnoreCase("iOS")) {
             driver.findElement(By.xpath("//html")).click();
-        } else if ((FinalConstants.platformName).equalsIgnoreCase("Android")) {
+        } else if ((properties.getProperty("platformName")).equalsIgnoreCase("Android")) {
             randomClickOnScreen();
         }
     }
@@ -500,5 +501,66 @@ public class BaseActions extends TestBase {
     //WEbElement recode
     public WebElement webElement(By element) {
         return driver.findElement(element);
+    }
+
+    //GetDropdownOptions
+    public List<String> getallOptions(By element) {
+        {
+            List<String> options = new ArrayList<String>();
+            for (WebElement option : new Select(driver.findElement(element)).getOptions()) {
+                String getDropdownValue = option.getText();
+                if (option.getAttribute("value") != "") options.add(getDropdownValue);
+            }
+            System.out.println(options);
+            return options;
+        }
+
+    }
+
+    //Credit card Validation checks
+
+    public void creditCardValidation(long creditCardNumber) {
+        Assert.assertTrue(checkLengthOfCreditCard(creditCardNumber)>= 13 && checkLengthOfCreditCard(creditCardNumber) <= 16 &&
+                (checkPrefixDigitsForCC(creditCardNumber, 4) || checkPrefixDigitsForCC(creditCardNumber, 5) ||
+                        checkPrefixDigitsForCC(creditCardNumber, 37) || checkPrefixDigitsForCC(creditCardNumber, 6)) &&
+                (sumOfEvenPlaces_CC(creditCardNumber)+sumOfOddPlaces_CC(creditCardNumber)) % 10 == 0);
+    }
+
+    public int checkLengthOfCreditCard(long creditCardNumber) {
+        String num = creditCardNumber+"";
+        return num.length();
+    }
+    public boolean checkPrefixDigitsForCC(long creditCardNumber, int startingNumberForCards) {
+        return getprefixForCC(creditCardNumber, checkLengthOfCreditCard(startingNumberForCards)) == startingNumberForCards;
+    }
+    public long getprefixForCC(long creditCardNumber, int startingNumberForCards) {
+        if(checkLengthOfCreditCard(creditCardNumber)>startingNumberForCards) {
+            String num = creditCardNumber + "";
+            return Long.parseLong(num.substring(0, startingNumberForCards));
+        }
+        return creditCardNumber;
+    }
+
+    public int sumOfOddPlaces_CC(long creditCardNumber) {
+        int sum = 0;
+        String num = creditCardNumber + "";
+        for(int i = checkLengthOfCreditCard(creditCardNumber)-1; i >= 0; i -= 2) {
+            sum += Integer.parseInt(num.charAt(i)+"");
+        }
+        return sum;
+    }
+
+    public int sumOfEvenPlaces_CC(long creditCardNumber) {
+        int sum = 0;
+        String num = creditCardNumber + "";
+        for(int i = checkLengthOfCreditCard(creditCardNumber)-1; i >= 0; i -= 2) {
+            sum += isCreditCardNumberDivisible(Integer.parseInt(num.charAt(i)+""));
+        }
+        return sum;
+    }
+    public int isCreditCardNumberDivisible(int number) {
+        if(number<9)
+            return number;
+        return number/10 + number%10;
     }
 }

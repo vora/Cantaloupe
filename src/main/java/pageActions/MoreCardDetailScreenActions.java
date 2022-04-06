@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pageLocators.*;
@@ -14,6 +15,7 @@ import pageLocators.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -23,6 +25,8 @@ public class MoreCardDetailScreenActions extends TestBase {
 
     Properties prop = new Properties();
     BaseActions baseActions = new BaseActions();
+   private WebElement inactive;
+   private WebElement active;
 
 
        AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
@@ -86,8 +90,7 @@ public class MoreCardDetailScreenActions extends TestBase {
         return cardsAvailable;
     }
 
-    public void verifyUIComponents(String lastFourDigits)
-    {
+    public void verifyUIComponents(String lastFourDigits) {
         //driver.findElement(moreCardDetailScreenLocators.lastFourDigitsFromCard(lastFourDigits));
         String fourDigits = baseActions.getLastFourDigits(lastFourDigits);
 
@@ -96,30 +99,46 @@ public class MoreCardDetailScreenActions extends TestBase {
         WebElement moreCardNo = driver.findElement(moreCardDetailScreenLocators.lastFourDigitsFromCard(fourDigits));
 
         WebElement homeLink = driver.findElement(moreCardDetailScreenLocators.homeLink);
-      WebElement imgCard = driver.findElement(moreCardDetailScreenLocators.cardImg);
-      WebElement balanceText = driver.findElement(moreCardDetailScreenLocators.balanceText);
-      WebElement balanceamount = driver.findElement(moreCardDetailScreenLocators.balanceAmount);
-      WebElement autoReload = driver.findElement(moreCardDetailScreenLocators.autoReloadText);
-      WebElement autoReloadArrow = driver.findElement(moreCardDetailScreenLocators.autoReloadArrow);
-      WebElement inactive = driver.findElement(moreCardDetailScreenLocators.inactiveText);
-      WebElement autoRelaodMsg = driver.findElement(moreCardDetailScreenLocators.autoReloadInitialMsgToUser);
-      WebElement manualLoadImg = driver.findElement(moreCardDetailScreenLocators.manualReloadImg);
-      WebElement manualReloadArrow = driver.findElement(moreCardDetailScreenLocators.manualReloadArrow);
-      WebElement addToWallet = driver.findElement(moreCardDetailScreenLocators.addToAppleWallet);
+        WebElement imgCard = driver.findElement(moreCardDetailScreenLocators.cardImg);
+        WebElement balanceText = driver.findElement(moreCardDetailScreenLocators.balanceText);
+        WebElement balanceamount = driver.findElement(moreCardDetailScreenLocators.balanceAmountWithDigits(addedMoreCardLast4Numbers));
+        WebElement autoReload = driver.findElement(moreCardDetailScreenLocators.autoReloadText);
+        WebElement autoReloadArrow = driver.findElement(moreCardDetailScreenLocators.autoReloadArrow);
 
-      Assert.assertTrue(moreCardNo.isDisplayed()==true);
-      Assert.assertTrue(homeLink.isDisplayed()==true);
+        if (driver.findElement(moreCardDetailScreenLocators.autoReloadText).isDisplayed()) {
+            try {
+                driver.findElement(moreCardDetailScreenLocators.inactiveText).isDisplayed();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-      Assert.assertTrue(imgCard.isDisplayed()==true);
-      Assert.assertTrue(balanceText.isDisplayed()==true);
-      Assert.assertTrue(balanceamount.isDisplayed()==true);
-      Assert.assertTrue(autoReload.isDisplayed()==true);
-      Assert.assertTrue(autoRelaodMsg.isDisplayed()==true);
-      Assert.assertTrue(autoReloadArrow.isDisplayed()==true);
-      Assert.assertTrue(inactive.isDisplayed()==true);
-      Assert.assertTrue(manualLoadImg.isDisplayed()==true);
-      Assert.assertTrue(manualReloadArrow.isDisplayed()==true);
-      Assert.assertTrue(addToWallet.isDisplayed()==true);
+            try {
+                driver.findElement(moreCardDetailScreenLocators.autoReloadText).isDisplayed();
+                {
+                    Assert.assertTrue(driver.findElement(moreCardDetailScreenLocators.activeText).isDisplayed() == true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //WebElement autoRelaodMsg = driver.findElement(moreCardDetailScreenLocators.autoReloadInitialMsgToUser);
+            WebElement manualLoadImg = driver.findElement(moreCardDetailScreenLocators.manualReloadImg);
+            WebElement manualReloadArrow = driver.findElement(moreCardDetailScreenLocators.manualReloadArrow);
+            WebElement addToWallet = driver.findElement(moreCardDetailScreenLocators.addToAppleWallet);
+
+            Assert.assertTrue(moreCardNo.isDisplayed() == true);
+            Assert.assertTrue(homeLink.isDisplayed() == true);
+
+            Assert.assertTrue(imgCard.isDisplayed() == true);
+            Assert.assertTrue(balanceText.isDisplayed() == true);
+            Assert.assertTrue(balanceamount.isDisplayed() == true);
+            Assert.assertTrue(autoReload.isDisplayed() == true);
+            //Assert.assertTrue(autoRelaodMsg.isDisplayed() == true);
+            Assert.assertTrue(autoReloadArrow.isDisplayed() == true);
+
+            Assert.assertTrue(manualLoadImg.isDisplayed() == true);
+            Assert.assertTrue(manualReloadArrow.isDisplayed() == true);
+            Assert.assertTrue(addToWallet.isDisplayed() == true);
+        }
     }
 
 

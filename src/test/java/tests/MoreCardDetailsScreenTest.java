@@ -63,4 +63,6 @@ public class MoreCardDetailsScreenTest extends TestBase {
         moreCardDetailScreenActions.viewallCardsAvailable();
     }
 
+
+
 }
