@@ -82,20 +82,20 @@ public class TestBase {
 
             caps.setCapability("automationName", "XCUITest");
             caps.setCapability("autoAcceptAlerts", true);
-//            try {
-//                URL url = new URL("http://0.0.0.0:4723/wd/hub");
-//                // URL url = new URL("http://0.0.0.0:4726/wd/hub");
-//                driver = new RemoteWebDriver(url, caps);
-//                // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
-//                driver.get("https://more-qa.mycantaloupe.com");
-//                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-//                JavascriptExecutor js = (JavascriptExecutor) driver;
-//                js.executeScript("window.scrollBy(0,300)", "");
-//
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//                //   }
-//            }
+            try {
+                URL url = new URL("http://0.0.0.0:4723/wd/hub");
+                // URL url = new URL("http://0.0.0.0:4726/wd/hub");
+                driver = new RemoteWebDriver(url, caps);
+                // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
+                driver.get("https://more-qa.mycantaloupe.com");
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("window.scrollBy(0,300)", "");
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                //   }
+            }
         }
 //        if(properties.getProperty("platformName").equalsIgnoreCase(Android)) {
 //          //  DesiredCapabilities andCaps = DesiredCapabilities.chrome();
@@ -136,30 +136,31 @@ public class TestBase {
 //        }
     // }
      if(properties.getProperty("platformName").equalsIgnoreCase(Android)) {
-        DesiredCapabilities andCaps = DesiredCapabilities.chrome();
-        andCaps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        andCaps.setCapability("deviceName", "emulator-5554");
-        andCaps.setCapability("androidPackage", "com.android.chrome");
-        andCaps.setCapability("platformVersion", "12.0");
-        andCaps.setCapability("automationName", "Appium");
+         DesiredCapabilities andCaps = DesiredCapabilities.chrome();
+         andCaps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+         andCaps.setCapability("deviceName", "emulator-5554");
+         andCaps.setCapability("androidPackage", "com.android.chrome");
+         andCaps.setCapability("platformVersion", "12.0");
+         andCaps.setCapability("automationName", "Appium");
 
-//        ChromeOptions options = new ChromeOptions();
-//        andCaps.merge(options);
+         ChromeOptions options = new ChromeOptions();
+         andCaps.merge(options);
 
-        try {
-            URL url = new URL("http://127.0.0.1:4723/wd/hub");
-            driver = new RemoteWebDriver(url,
-                    andCaps);
-            // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
-            driver.get("https://more-qa.mycantaloupe.com");
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,300)", "");
 
-        } catch (MalformedURLException malformedURLException) {
-            malformedURLException.printStackTrace();
-        }
-    }
+         try {
+             URL url = new URL("http://127.0.0.1:4723/wd/hub");
+             driver = new RemoteWebDriver(url,
+                     andCaps);
+             // driver.get("http://url614.cantaloupe.com/ls/click?upn=EjjkrhVv-2Fih3UeS6XUkye-2BxJ5-2F1GyHaMpBCQ7tFCameMdE-2FLQXJ8DKxiY-2FSTbgAm-2FUKOFRuP40OOIgvdcJ3ueEUzfR3orU-2Bdcz6ZxgZDvXfaNv3HOaWF2J2yqwefV5TemRy3AYUv8xn29p6NRjtU-2Fw-3D-3DLHyf_-2B5RXcraW6kUOw6bUo2JlhQ9pJo63EytkOIRLn-2F1bR-2FZQfspglE4Q2sK4DByj9GkvectfxEkR1BEdAJEX1NbDHQzJSYeSjZZR7Vu2UUwoXRTvSJrQ4Yy5YKHQMA6E9scB3Iw4xmmDmU84lEmf40IbW7sjihmb4H-2B29BhHuttDC2TXB3fCeD-2Bwpm3nGeGT2-2Fd9W39x5jpDCGB4T8TjJ4zFzZhXS4t5rAic0BwHLL3guzlmKf3XFpj3uSgQIGKchWEIv-2BDhYmmSLuysnMDyQ1AX9g-3D-3D");
+             driver.get("https://more-qa.mycantaloupe.com");
+             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+             JavascriptExecutor js = (JavascriptExecutor) driver;
+             js.executeScript("window.scrollBy(0,300)", "");
+
+         } catch (MalformedURLException malformedURLException) {
+             malformedURLException.printStackTrace();
+         }
+     }
     }
     @AfterMethod
 

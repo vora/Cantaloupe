@@ -8,13 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import resources.FinalConstants;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -455,16 +455,16 @@ public class BaseActions extends TestBase {
 
     //AddMoreCrad - REgex
     //regex phone no
-    public void regexExpression(By element, String moreCardNo, String regexType) {
+    public void regexExpression(By element, String enterData, String regexType) {
         // String regex = "^\\d{19}$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regexType);
-        Matcher matcher = pattern.matcher(moreCardNo);
+        Matcher matcher = pattern.matcher(enterData);
 
         Boolean checkPatternCondition = matcher.matches();
 
         if (checkPatternCondition == true) {
-            webElement.sendKeys(moreCardNo);
+            webElement.sendKeys(enterData);
         } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(false, "The entered data is not valid");
         } else {
@@ -485,6 +485,12 @@ public class BaseActions extends TestBase {
     public void scrollUp() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("window.scrollBy(0,0)");
+    }
+
+    //Scroll to top of the screen
+    public void scrollDown() {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollBy(0,document.body.scrollHeight)");
     }
 
     //Navigate without Submitting the changes
@@ -562,5 +568,12 @@ public class BaseActions extends TestBase {
         if(number<9)
             return number;
         return number/10 + number%10;
+    }
+
+    //Get the last character from the string
+    public Character getLastCharacter(String str)
+    {
+       Character newString =  str.charAt(str.length()-1);
+       return newString;
     }
 }

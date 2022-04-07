@@ -2,6 +2,7 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.support.ui.Select;
@@ -95,9 +96,27 @@ public class ManualReloadActions extends TestBase {
 
     public Boolean isCreditCardExpired(String yymm) throws ParseException {
 
-        DateTimeFormatter ccMonthFormatter = DateTimeFormatter.ofPattern("MM/yy");
+        String monthString = properties.getProperty("yymm");
+        String yearString = properties.getProperty("yymm");
+
+        String monthSubString = StringUtils.substringBefore(monthString, ",");
+        String yearSubString = yearString.substring(yearString.lastIndexOf(",") + 1);
+
+        WebElement monthDropdown = driver.findElement(manualReloadLocators.creditMonthDropdown);
+        WebElement yearDropdown = driver.findElement(manualReloadLocators.creditYearDropdown);
+
+        Select month = new Select(monthDropdown);
+        Select year = new Select(yearDropdown);
+
+        monthDropdown.click();
+        month.selectByValue(monthSubString);
+
+        yearDropdown.click();
+        year.selectByValue(yearSubString);
+
+        DateTimeFormatter ccMonthFormatter = DateTimeFormatter.ofPattern("MMMMM, YYYY");
         String input = yymm; // for example
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/yy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMMM, YYYY");
         simpleDateFormat.setLenient(false);
 
         Date expiry = simpleDateFormat.parse(input);
@@ -111,6 +130,12 @@ public class ManualReloadActions extends TestBase {
             Assert.assertTrue(true, "Credit card is valid");
         }
         return expired;
+    }
+
+    //Credit card CVV
+    public void validateCVV(String cvvNo)
+    {
+        baseActions.regexExpression(manualReloadLocators.creditSecurityCVV, cvvNo, properties.getProperty("regexCVV"));
     }
 
 

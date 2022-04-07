@@ -50,8 +50,17 @@ public class ManualReloadTest extends TestBase {
     public void verifyCreditCardLength() throws IOException, AWTException, ParseException {
         {
             moreCardDetailsScreenTest.navigateToAddedMoreCardscreen();
-            manualReloadActions.verifyCreditCardIsAndSecurityEditable();
+           // manualReloadActions.verifyCreditCardIsAndSecurityEditable();
             manualReloadActions.isCreditCardExpired(properties.getProperty("yymm"));
+        }
+    }
+
+    @Test
+    public void validateCVV() throws IOException, AWTException, ParseException {
+        {
+            moreCardDetailsScreenTest.navigateToAddedMoreCardscreen();
+            // manualReloadActions.verifyCreditCardIsAndSecurityEditable();
+            manualReloadActions.validateCVV(properties.getProperty("cvvNo"));
         }
     }
 

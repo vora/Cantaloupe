@@ -1,6 +1,7 @@
 package tests;
 
 import base.TestBase;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
 import pageActions.SignInWithExistingAccountActions;
@@ -23,6 +24,7 @@ public class AccountCreation1Test extends TestBase {
 
         //Regex, error message,enter email, tick mark, check for existing email error, allow to login, if new email - allow user to next screen
         accountCreation1.validateEmptyField();
+        accountCreation1.verifyNextButtonEnabled();
     }
 
     //Validate create new email, tick mark, next button enabled and screen 2
@@ -32,9 +34,32 @@ public class AccountCreation1Test extends TestBase {
         accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
-
     }
 
+    @Test
+    public void verifyPrefilledEmail_CreationFlow() throws AWTException {
+        newEmailFlow();
+        accountCreation1.prefilledEmail(properties.getProperty("createNewEmail"));
+        accountCreation1.verifyEmailIsEditable();
+        accountCreation1.verifyCompleteButtonEnablement();
+    }
+
+
+
+    //Validate create new email, tick mark, next button enabled and screen 2
+    @Test
+    public void verifyBackLinkFunctionality() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.clickBackHomeLink();
+    }
+
+    //
+    @Test
+    public void validateExisting_EmailError() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.existingEmailError_AccountCreation(properties.getProperty("existingAccountEmail"));
+    }
 
     // validate login through existing user
    @Test
