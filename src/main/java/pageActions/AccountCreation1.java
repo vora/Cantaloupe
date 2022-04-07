@@ -164,9 +164,6 @@ public class AccountCreation1 extends TestBase {
         Character zi = baseActions.getLastCharacter(zipcodeInputAttributeWithAsterisk);
         String zipcodeInputAttribute = zipcodeInput.getAttribute("value");
 
-        baseActions.getCharCollection(myChar);
-        Assert.assertEquals(myChar, "*");
-
         if ((emailInputAttribute.equalsIgnoreCase(properties.getProperty("createNewEmail"))) && (createPasswordAttribute.isEmpty()) && (confirmPasswordAttribute.isEmpty()) && (firstNameInputAttribute.isEmpty()
                 && (lastNameInputAttribute.isEmpty()) && (mobileInputAttribute.isEmpty()) && (stateInputAttribute.isEmpty()) && (cityInputAttribute.isEmpty()
                 && (stateInputAttribute.isEmpty() && (zipcodeInputAttribute.isEmpty()))))) {
