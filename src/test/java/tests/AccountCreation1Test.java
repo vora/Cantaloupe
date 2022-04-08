@@ -4,6 +4,7 @@ import base.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
+import pageActions.AccountCreation2;
 import pageActions.SignInWithExistingAccountActions;
 
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.util.Properties;
 public class AccountCreation1Test extends TestBase {
 
     AccountCreation1 accountCreation1 = new AccountCreation1();
+    AccountCreation2 accountCreation2 = new AccountCreation2();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
 
     public AccountCreation1Test() throws IOException {
@@ -41,7 +43,7 @@ public class AccountCreation1Test extends TestBase {
         newEmailFlow();
         accountCreation1.prefilledEmail(properties.getProperty("createNewEmail"));
         accountCreation1.verifyEmailIsEditable();
-        accountCreation1.verifyCompleteButtonEnablement();
+        accountCreation2.verifyPlaceHolders();
     }
 
 

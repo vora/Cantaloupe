@@ -298,13 +298,10 @@ public class BaseActions extends TestBase {
     //Verify if the password fields are masked before clicking show
     public void checkPasswordMaskedOrNot(By element) {
         WebElement passwordMasked = driver.findElement(element);
-        if (passwordMasked.isDisplayed()) {
-
-            Boolean showTrue = driver.findElement(element).isEnabled();
-            Assert.assertTrue(showTrue);
+        if (passwordMasked.getAttribute("type").equals("password")){
+            Assert.assertTrue(true, "Field is masked");
         } else {
-            Boolean showTrue = driver.findElement(element).isEnabled();
-            Assert.assertFalse(showTrue);
+            Assert.assertTrue(false, "Field is not masked");
         }
     }
 
@@ -575,5 +572,10 @@ public class BaseActions extends TestBase {
     {
        Character newString =  str.charAt(str.length()-1);
        return newString;
+    }
+
+    public void isFieldEditable(By element)
+    {
+        Assert.assertTrue((driver.findElement(element).isEnabled())==true, "Element is in enable mode");
     }
 }

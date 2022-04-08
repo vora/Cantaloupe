@@ -2,6 +2,7 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -111,57 +113,34 @@ public class AccountCreation1 extends TestBase {
     //Verify that the complete button is enabled after all the fields have data
     public void verifyCompleteButtonEnablement() {
         WebElement emailInput = driver.findElement(accountCreationLocators.emailIdInputField);
-        //String emailInputAttributeWithAsterisk = emailInput.getAttribute("placeholder");
-       // System.out.println(emailInputAttributeWithAsterisk);
-       // Character email = baseActions.getLastCharacter(emailInputAttributeWithAsterisk);
         String emailInputAttribute = emailInput.getAttribute("value");
-        System.out.println(emailInputAttribute);
 
 
         WebElement createPassword = driver.findElement(accountCreationLocators.createPasswordInputField);
-       String createPasswordAttributeWithAsterisk = createPassword.getAttribute("placeholder");
-        //Character cp = baseActions.getLastCharacter(createPasswordAttributeWithAsterisk);
-       String createPasswordAttribute = createPassword.getAttribute("value");
-        System.out.println(createPasswordAttributeWithAsterisk);
+        String createPasswordAttribute = createPassword.getAttribute("value");
 
         WebElement confirmPassword = driver.findElement(accountCreationLocators.confirmPasswordInptField);
-        String confirmPasswordAttributeWithAsterisk = confirmPassword.getAttribute("placeHolder");
-        Character pwd =baseActions.getLastCharacter(confirmPasswordAttributeWithAsterisk);
         String confirmPasswordAttribute = confirmPassword.getAttribute("value");
 
         WebElement firstNameInput = driver.findElement(accountCreationLocators.firstName);
-        String firstNameInputAttributeWithAsterisk = firstNameInput.getAttribute("placeHolder");
-        Character fn = baseActions.getLastCharacter(firstNameInputAttributeWithAsterisk);
         String firstNameInputAttribute = firstNameInput.getAttribute("value");
 
         WebElement lastNameInput = driver.findElement(accountCreationLocators.lastName);
-        String lastNameInputAttributeWithAsterisk = lastNameInput.getAttribute("placeHolder");
-        Character ln = baseActions.getLastCharacter(lastNameInputAttributeWithAsterisk);
         String lastNameInputAttribute = lastNameInput.getAttribute("value");
 
         WebElement mobileInput = driver.findElement(accountCreationLocators.mobileNumberField);
-        String mobileInputAttributeWithAsterisk = mobileInput.getAttribute("placeHolder");
-        Character mobile = baseActions.getLastCharacter(mobileInputAttributeWithAsterisk);
         String mobileInputAttribute = mobileInput.getAttribute("value");
 
         WebElement streetInput = driver.findElement(accountCreationLocators.streetAddressInputField);
-        String streetInputAttributeWithAsterisk = streetInput.getAttribute("placeHolder");
-        Character si = baseActions.getLastCharacter(streetInputAttributeWithAsterisk);
         String streetInputAttribute = streetInput.getAttribute("value");
 
         WebElement cityInput = driver.findElement(accountCreationLocators.cityInputField);
-        String cityInputAttributeWithAsterisk = cityInput.getAttribute("placeHolder");
-        Character ci = baseActions.getLastCharacter(cityInputAttributeWithAsterisk);
         String cityInputAttribute = cityInput.getAttribute("value");
 
         WebElement stateInput = driver.findElement(accountCreationLocators.stateInptField);
-        String stateInputAttributeWithAsterisk = stateInput.getAttribute("placeHolder");
-        Character stateI = baseActions.getLastCharacter(stateInputAttributeWithAsterisk);
         String stateInputAttribute = stateInput.getAttribute("value");
 
         WebElement zipcodeInput = driver.findElement(accountCreationLocators.zipcodeInputField);
-        String zipcodeInputAttributeWithAsterisk = zipcodeInput.getAttribute("placeHolder");
-        Character zi = baseActions.getLastCharacter(zipcodeInputAttributeWithAsterisk);
         String zipcodeInputAttribute = zipcodeInput.getAttribute("value");
 
         if ((emailInputAttribute.equalsIgnoreCase(properties.getProperty("createNewEmail"))) && (createPasswordAttribute.isEmpty()) && (confirmPasswordAttribute.isEmpty()) && (firstNameInputAttribute.isEmpty()
@@ -219,7 +198,7 @@ public class AccountCreation1 extends TestBase {
 
 
     //Verify Error messages()
-    public void emailErrorMessage() throws AWTException {
+        public void emailErrorMessage() throws AWTException {
         driver.findElement(accountCreationLocators.enterYourEmailInput).click();
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankEmailErrorMsg);
@@ -339,6 +318,12 @@ public class AccountCreation1 extends TestBase {
         String getEnteredNewEmail = emailId.getAttribute("value");
         Assert.assertEquals(getEnteredNewEmail, properties.getProperty("existingAccountEmail"));
         return getEnteredNewEmail;
+    }
+
+    //enterData
+    public void enterData(By element, String dataToBeEntered)
+    {
+        driver.findElement(element).sendKeys(dataToBeEntered);
     }
 
 }

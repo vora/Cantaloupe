@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pageActions.AccountCreation1;
 import pageActions.AccountCreation2;
+import pageLocators.AccountCreationLocators;
 
 import java.awt.*;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class AccountCreation2Test extends TestBase {
 
     AccountCreation1 accountCreation1 = new AccountCreation1();
     AccountCreation2 accountCreation2 = new AccountCreation2();
+    AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
     BaseActions baseActions = new BaseActions();
 
 
@@ -50,7 +52,6 @@ public class AccountCreation2Test extends TestBase {
     {
         accountCreation1.clickCreateButton();
         accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
-        accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
         accountCreation2.tryWrongPassword(properties.getProperty("wrongPassword"));
         baseActions.clearData(driver.findElement(By.id("id_password")));
@@ -68,15 +69,30 @@ public class AccountCreation2Test extends TestBase {
         accountCreation2.clickHidePassword();
     }
 
+    @Test
+    //Check if password/confirmPassword fields are editable, masked
+    public void checkPasswordFields() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation2.isPasswordFieldEditable();
+        accountCreation2.isConfirmPasswordFieldEditable();
+        accountCreation2.checkPasswordMasked();
+        accountCreation2.confirmPasswordMasked();
+
+    }
+
     //verify if the password and confirm passwords are a match
     @Test
-    public void verifyPasswords() throws AWTException {
+    public void verifyPasswordAndConfirmPassword() throws AWTException {
         accountCreation1.clickCreateButton();
         accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
 
         accountCreation1.verrifyTickMark();
         accountCreation1.verifyNextButtonEnabled();
         accountCreation2.enterPassword(properties.getProperty("createAccountPassword"));
+        accountCreation2.checkPasswordMasked();
+        accountCreation2.isConfirmPasswordFieldEditable();
         accountCreation2.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
     }
 
@@ -90,7 +106,7 @@ public class AccountCreation2Test extends TestBase {
         accountCreation2.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation2.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation2.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation2.verifyPhoneNoInput(properties.getProperty("mobileNumber"));
+        accountCreation2.verifyPhoneNoInput();
         accountCreation2.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
     }
 
@@ -105,4 +121,39 @@ public class AccountCreation2Test extends TestBase {
 
     }
 
+    //Verify if all the fields are in editable mode
+    @Test
+    public void verifyIfFieldsAreEditable() throws IOException, AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation2.isEmailFieldEditable();
+        accountCreation2.isPasswordFieldEditable();
+        accountCreation2.isConfirmPasswordFieldEditable();
+        accountCreation2.isFirstNameEditable();
+        accountCreation2.isLastNameEditable();
+        accountCreation2.isMobileEditable();
+        accountCreation2.isStreetAddressEditable();
+        accountCreation2.isCityEditable();
+        accountCreation2.isStateEditable();
+        accountCreation2.isZipcodeEditable();
+    }
+
+    @Test
+    public void verifyFirstAndLastNameRegex() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation2.verifyFirstNameRegex();
+        accountCreation2.verifyFirstNameRegex();
+    }
+
+    @Test
+    public void verifyMobile() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation1.enterData(accountCreationLocators.phoneNoInput, properties.getProperty("mobileNumber"));
+        accountCreation2.regexPhoneNo();
+        accountCreation2.verifyPhoneNoFormat();
+    }
 }
