@@ -77,8 +77,9 @@ public class AccountCreationLocators {
     public By phoneNoInput = By.id("id_mobile");
     public By uniquePhoneNumberText = By.xpath("//span[contains(text(), 'This Phone Number Must Be Unique And In Your Possession.')]");
     public By alreadyUsedPhoneNoText = By.xpath("//span[contains(text(), 'If You Already Used This Phone Number, Please Try Resetting The User Information Via User Profile Update.')]");
-
+    public By phoneNoInUseError = By.xpath("//input[@id='id_mobile']/../preceding-sibling::div/span");
     public By invalidMobileError = By.xpath("//span[contains(text(), 'Invalid mobile number.')]");
+    public By tickMarkImageForMobile = By.xpath("//*[@id='id_mobile']/../span");
 
     public By streetAddressInput = By.id("id_address");
     public By cityInput = By.id("id_city");
@@ -102,4 +103,15 @@ public class AccountCreationLocators {
 
     //Initial Screen
     public By backHomeLink = By.xpath("//*[text()='Back home']");
+
+    //Registration complete
+    public By goodNewsText = By.xpath("//*[text()='Good News!']");
+    public By sentMsgToCreatedEmail = By.xpath("//div[@class='styles__Message-sc-o3aos0-3 dIocUV']");
+
+    //Terms Of Condition && PP
+    public By tocConfirm_MoreUserTermsText = By.xpath("//*[text()='MORE User Terms']");
+    public By privacyPolicyText = By.xpath("//*[text()='Privacy Policy']");
+    public By backToSignUp = By.xpath("//*[text()='Back to Sign Up']");
+
+
 }

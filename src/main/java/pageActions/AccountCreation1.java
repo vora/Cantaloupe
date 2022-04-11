@@ -273,7 +273,8 @@ public class AccountCreation1 extends TestBase {
 
     //Click create button
     public void clickCreateButton() {
-        driver.findElement(loginScreen.createAccountBigButton).click();
+         driver.findElement(loginScreen.createAccountBigButton).click();
+        driver.findElement(loginScreen.continueWithEmail).click();
         Boolean createAccountText = driver.findElement(accountCreationLocators.createAccountText).isDisplayed();
         Assert.assertTrue(createAccountText == true, "User is on Account creation screen");
     }

@@ -25,7 +25,7 @@ public class AccountCreation2Test extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailValidationFlow() throws IOException, AWTException
+    public void verifyEmailFieldInputData() throws IOException, AWTException
     {
         // Verify email entered, tick mark
         accountCreation1.clickCreateButton();
@@ -42,7 +42,10 @@ public class AccountCreation2Test extends TestBase {
     {
         accountCreation1.clickCreateButton();
         accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
-        accountCreation2.enteredEmaiCheck(properties.getProperty("createNewEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation1.verrifyTickMark();
+        //Feedback - assert text entered n getAttribute - Remove js
+        //accountCreation2.enteredEmaiCheck(properties.getProperty("createNewEmail"));
         accountCreation2.verifyEmailIsEditable(properties.getProperty("existingAccountEmail"));
     }
 
@@ -114,10 +117,24 @@ public class AccountCreation2Test extends TestBase {
     //verify if checkbox is not checked and validate the links
     @Test
     public void verifyConsentSection() throws IOException, AWTException {
-        verifyPersonalDetailsSection();
-        accountCreation2.checkbox();
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verrifyTickMark();
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation2.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
+        accountCreation2.verifyFirstNameInput(properties.getProperty("firstName"));
+        accountCreation2.verifyLastNameInput(properties.getProperty("lastName"));
+        accountCreation2.verifyPhoneNoInput();
+        accountCreation2.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
+        accountCreation2.isCheckboxPreChecked();
         accountCreation2.verifyTermsAndPrivacy();
+    }
+
+    @Test
+    public void completeRegistration() throws IOException, AWTException {
+        verifyConsentSection();
         accountCreation2.clickCompleteButton();
+        accountCreation2.confirmRegistration();
 
     }
 
@@ -156,4 +173,63 @@ public class AccountCreation2Test extends TestBase {
         accountCreation2.regexPhoneNo();
         accountCreation2.verifyPhoneNoFormat();
     }
+
+    @Test
+    public void verifyMobileUniqueNessAndError() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation1.enterData(accountCreationLocators.phoneNoInput, properties.getProperty("mobileNumber"));
+        accountCreation2.regexPhoneNo();
+        accountCreation2.verifyPhoneNoFormat();
+        try {
+            accountCreation2.verifyMobileUniquesNessTick();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        try {
+            accountCreation2.verifyMobileUniqueNessError();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void verifyError_After10DigitsInputOnly() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation1.enterData(accountCreationLocators.phoneNoInput, properties.getProperty("existingMobileNo"));
+        accountCreation2.verifyErrorAfter10DigitsEntry();
+
+    }
+
+    @Test
+    public void verifyAddressFields() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        accountCreation2.enterAddressDetails();
+        accountCreation2.regexCompleteAddress();
+    }
+
+    @Test
+    public void verifyTOC_PPNavigations() throws AWTException {
+        accountCreation1.clickCreateButton();
+        accountCreation1.validateEmailCriteriaField(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation1.verifyNextButtonEnabled();
+        baseActions.scrollDown();
+        accountCreation2.navigateToTOC();
+        accountCreation2.navigateBackToRegistration();
+        accountCreation2.navigateToPP();
+        accountCreation2.navigateBackToRegistration();
+
+    }
+
+
 }

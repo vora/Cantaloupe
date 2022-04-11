@@ -2,12 +2,15 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pageLocators.AccountCreationLocators;
 import java.awt.*;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 
 public class AccountCreation2 extends TestBase {
@@ -61,21 +64,24 @@ public class AccountCreation2 extends TestBase {
             }
     }
 
+
+
     //Enter data in password fields;
     public void enterPassword(String password)
     {
-       baseActions.regexPassword(accountCreationLocators.createPassowrd, password);
+       //baseActions.regexPassword(accountCreationLocators.createPassowrd, password);
+        baseActions.regexExpression(accountCreationLocators.createPassowrd, password, properties.getProperty("regexPassword"));
        //Include spl character ` - should not be allowed
     }
 
     //MaskedPassword for create Password
-    public void checkPasswordMasked(String password)
+    public void checkPasswordMasked()
     {
         baseActions.checkPasswordMaskedOrNot(accountCreationLocators.createPassowrd);
     }
 
     //MaskedPassword for Confirm Password
-    public void createPasswordMasked(String password)
+    public void confirmPasswordMasked()
     {
         baseActions.checkPasswordMaskedOrNot(accountCreationLocators.confirmPassword);
     }
@@ -157,6 +163,16 @@ public class AccountCreation2 extends TestBase {
         baseActions.enterValue(accountCreationLocators.firstnameInput, firstname);
     }
 
+    public void verifyFirstNameRegex()
+    {
+        baseActions.regexExpression(accountCreationLocators.firstnameInput, properties.getProperty("firstName"), properties.getProperty("regexFirstAndLastName"));
+    }
+
+    public void verifyLastNameRegex()
+    {
+        baseActions.regexExpression(accountCreationLocators.firstnameInput, properties.getProperty("lastName"), properties.getProperty("regexFirstAndLastName"));
+    }
+
 
     public void verifyLastNameInput(String lastname) throws AWTException {
         baseActions.clickButton(accountCreationLocators.lastNameInput);
@@ -167,11 +183,27 @@ public class AccountCreation2 extends TestBase {
     }
 
     //verify errors
-    public void verifyPhoneNoInput(String phoneNo) throws AWTException {
-        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys("A");
+    public void verifyPhoneNoInput() throws AWTException {
+        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("mobileNumber"));
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.invalidMobileError);
-        baseActions.regexPhoneno(accountCreationLocators.phoneNoInput, phoneNo);
+        regexPhoneNo();
+    }
+
+    //regexPhoneNumber
+    public void regexPhoneNo()
+    {
+        baseActions.regexExpression(accountCreationLocators.phoneNoInput, properties.getProperty("mobileNumber"), properties.getProperty("regexMobile"));
+    }
+
+    //Verify Phone Number Format
+    public void verifyPhoneNoFormat()
+    {
+        String mobileFormat = driver.findElement(accountCreationLocators.mobileNumberField).getAttribute("value");
+        String number = mobileFormat.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+
+        Assert.assertEquals(number, mobileFormat, "Mobile number is in the expected format");
+
     }
 
     //verify address
@@ -189,16 +221,18 @@ public class AccountCreation2 extends TestBase {
         driver.findElement(accountCreationLocators.stateInput).sendKeys("");
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankStateError);
-        baseActions.regexState(accountCreationLocators.stateInput, state);
+//        baseActions.regexState(accountCreationLocators.stateInput, state);
 
         driver.findElement(accountCreationLocators.zipcodeInput).sendKeys("");
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankZipcodeError);
-        baseActions.regexZipcode(accountCreationLocators.zipcodeInput, zipcode);
+//        baseActions.regexZipcode(accountCreationLocators.zipcodeInput, zipcode);
+        regexCompleteAddress();
     }
 
-    //check the checkbox
-    public void checkbox()
+    //Verify that the checkbox for "I have read and agree to Cantaloupe’s:" is not pre- selected
+    //Verify that after clicking on the checkbox for "I have read and agree to Cantaloupe’s:" gets selected
+    public void isCheckboxPreChecked()
     {
         driver.findElement(accountCreationLocators.completeButton).click();
         Boolean checkboxErrorStatus = driver.findElement(accountCreationLocators.checkBoxErrorMessage).isDisplayed();// WebElement checkboxStatus = driver.findElement(accountCreationLocators.checkboxForTerms);
@@ -234,15 +268,289 @@ public class AccountCreation2 extends TestBase {
         driver.findElement(accountCreationLocators.completeButton).click();
     }
 
+    //Confirm Registration
+    public void confirmRegistration()
+    {
+        WebElement goodNews = driver.findElement(accountCreationLocators.goodNewsText);
+        WebElement sentAMsg = driver.findElement(accountCreationLocators.sentMsgToCreatedEmail);
+        String msgContainsEmail = sentAMsg.getText();
+
+        Assert.assertTrue(goodNews.isDisplayed() == true && msgContainsEmail.contains(properties.getProperty("createNewEmail")), "User registation eas successful");
+
+
+    }
+
+    //Verify that, all fields are compulsory with the asterick (*) in the placeholder text
+    public void verifyPlaceHolders() {
+
+        WebElement emailInputPlaceHolder = driver.findElement(accountCreationLocators.emailIdInputFieldPlaceHolder);
+        Character email = baseActions.getLastCharacter(emailInputPlaceHolder.getText());
+
+        WebElement createPasswordPasswordPlaceHolder = driver.findElement(accountCreationLocators.createPasswordInputFieldPlaceHolder);
+        Character cp = baseActions.getLastCharacter(createPasswordPasswordPlaceHolder.getText());
+
+        WebElement confirmPasswordPlaceHolder = driver.findElement(accountCreationLocators.confirmPasswordInptFieldPlaceHolder);
+        Character pwd =baseActions.getLastCharacter(confirmPasswordPlaceHolder.getText());
+
+        WebElement firstNameInputPlaceHolder = driver.findElement(accountCreationLocators.firstNamePlaceHolder);
+        Character fn = baseActions.getLastCharacter(firstNameInputPlaceHolder.getText());
+
+        WebElement lastNameInputPlaceHolder = driver.findElement(accountCreationLocators.lastNamePlaceHolder);
+        Character ln = baseActions.getLastCharacter(lastNameInputPlaceHolder.getText());
+
+
+        WebElement mobileInputPlaceHolder = driver.findElement(accountCreationLocators.mobileNumberFieldPlaceHolder);
+        Character mobile = baseActions.getLastCharacter(mobileInputPlaceHolder.getText());
+
+
+        WebElement streetInputPlaceHolder = driver.findElement(accountCreationLocators.streetAddressInputFieldPlaceHolder);
+        Character si = baseActions.getLastCharacter(streetInputPlaceHolder.getText());
+
+        WebElement cityInputPlaceHolder = driver.findElement(accountCreationLocators.cityInputFieldPlaceHolder);
+        Character ci = baseActions.getLastCharacter(cityInputPlaceHolder.getText());
+
+        WebElement stateInputPlaceHolder = driver.findElement(accountCreationLocators.stateInptFieldPlaceHolder);
+        Character stateI = baseActions.getLastCharacter(stateInputPlaceHolder.getText());
+
+        WebElement zipcodeInputPlaceHolder = driver.findElement(accountCreationLocators.zipcodeInputFieldPlaceHolder);
+        Character zi = baseActions.getLastCharacter(zipcodeInputPlaceHolder.getText());
+
+        Character [] myChar={email, cp, pwd, fn, ln, si, stateI, ci, zi, mobile};
+        ArrayList<Character> myChar1 = new ArrayList<Character>();
+        myChar1.addAll(java.util.List.of(myChar));
+
+        for (Character s : myChar) {
+            Character star = '*';
+            if (star.equals(s)) {
+                Assert.assertTrue(true, "* is added at the end of all the placeHolders");
+            } else {
+                Assert.assertTrue(false, "Something is missing with the placeHolders");
+            }
+        }
+    }
+
+
+    //Verify that, the input field for "Email" should be editable
+    public void isEmailFieldEditable()
+    {
+        baseActions.isFieldEditable(accountCreationLocators.emailIdInputField);
+    }
+
+    //Verify that, the input field for "Create password" should be editable
+    public void isPasswordFieldEditable()
+    {
+        baseActions.isFieldEditable(accountCreationLocators.createPasswordInputField);
+    }
+
+    //Verify that, the input field for "Confirm password" should be editable
+    public void isConfirmPasswordFieldEditable()
+    {
+        baseActions.isFieldEditable(accountCreationLocators.confirmPasswordInptField);
+    }
+
+    //Verify that, the input field for "First name" should be editable
+    public void isFirstNameEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.firstnameInput);
+    }
+
+    //Verify that, the input field for "Last name" should be editable
+    public void isLastNameEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.lastNameInput);
+    }
+
+    //Verify that, the input field for "Mobile" should be editable
+    public void isMobileEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.mobileNumberField);
+    }
+
+    //Verify that, the input field for "Street Address" should be editable
+    public void isStreetAddressEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+    }
+
+    //Verify that, the input field for "City" should be editable
+    public void isCityEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+    }
+
+    //Verify that, the input field for "State" should be editable
+    public void isStateEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+    }
+
+    //Verify that, the input field for "Zipcode" should be editable
+    public void isZipcodeEditable() {
+        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+    }
+
+    //Verify that if the input number by user is unique, the number will be accepted with a ✓ on the field
+    public void verifyMobileUniquesNessTick()
+    {
+        Boolean checkTickMark = baseActions.verrifyTickMark(accountCreationLocators.tickMarkImageForMobile);
+         if(checkTickMark==true)
+        {
+            Assert.assertTrue(true, "Mobile No entered is unique");
+        }
+        else
+        {
+            Assert.assertTrue(false, "This phone number is already in use. Please use a different phone number or contact customer service at +1-888-561-4748.");
+        }
+    }
+
+    //Verify that using an already registered number will throw a validation error "This phone number is already in use. Please use a different phone number or contact customer service at +1-888-561-4748"
+    public void verifyMobileUniqueNessError()
+    {
+         Boolean checkPhoneNoUnique_Error = baseActions.verrifyTickMark(accountCreationLocators.phoneNoInUseError);
+        if(checkPhoneNoUnique_Error==true)
+        {
+            Assert.assertTrue(true, "This phone number is already in use. Please use a different phone number or contact customer service at +1-888-561-4748.");
+        }
+        else
+        {
+            Assert.assertTrue(false, "Mobile No entered is invalid");
+        }
+    }
+
+    //Verify that the error message will be displayed after user inputs 10 digits
+    public boolean verifyErrorAfter10DigitsEntry()
+    {
+        String phoneNoText = driver.findElement(accountCreationLocators.mobileNumberField).getAttribute("value");
+        WebElement uniquenessError = driver.findElement(accountCreationLocators.phoneNoInUseError);
+        String numberOnly = phoneNoText.replaceAll("[^0-9]", "");
+
+        int phoneNoLength = numberOnly.length();
+        if(phoneNoLength==10)
+        {
+           WebElement phoneNoLinkText = driver.findElement(By.linkText ("+1-888-561-4748"));
+            Assert.assertTrue(uniquenessError.isDisplayed()==true, "Error message is displayed after entering 10 digits");
+            WebDriverWait wait = new WebDriverWait(driver,6);
+            // elementToBeClickable expected criteria
+
+            Assert.assertTrue(phoneNoLinkText.isEnabled(), "The link is in enabled mode");
+            wait.until(ExpectedConditions.elementToBeClickable (phoneNoLinkText));
+            return true;
+        }
+        else if((driver.findElement(accountCreationLocators.invalidMobileError)).isDisplayed()==true)
+        {
+            Assert.assertTrue(uniquenessError.isDisplayed()==true, "Invalid mobile number.");
+            return true;
+        }
+        else
+        {
+            Assert.assertTrue(false, "Error messages for mobile is not displayed properly");
+        }
+        return false;
+    }
+
+    //VerifyRegex for Address fields
+    public void regexStreet()
+    {
+        baseActions.regexExpression(accountCreationLocators.streetAddressInput, properties.getProperty("streetAddress"), properties.getProperty("regexAddress"));
+
+    }
+
+    public void regexCity()
+    {
+        baseActions.regexExpression(accountCreationLocators.streetAddressInput, properties.getProperty("city"), properties.getProperty("regexCity"));
+
+    }
+
+    public void regexState()
+    {
+        String stateEntered = properties.getProperty("state");
+        if(stateEntered.matches(properties.getProperty("regexStateFullName")) || stateEntered.matches(properties.getProperty("regexStatecode")))
+        {
+            driver.findElement(accountCreationLocators.stateInput).sendKeys(properties.getProperty("state"));
+            Assert.assertTrue(true, "Entered state is valid");
+        }
+        else
+        {
+            Assert.assertTrue(false, "The State entered is not valid");
+        }
+        //baseActions.regexExpression(accountCreationLocators.streetAddressInput, properties.getProperty("state"), stateEntered);
+
+    }
+
+    public void regexZipcode()
+    {
+        baseActions.regexExpression(accountCreationLocators.zipcodeInputField, properties.getProperty("zipcode"), properties.getProperty("regexZipcode"));
+
+    }
+
+    //Add all the inputs for address and get it into one string
+    public void addUpAllAddressInputs() {
+        baseActions.addUpAllAddressInputs(accountCreationLocators.streetAddressInput, accountCreationLocators.cityInput);
+    }
+
+    //Regx for the final String of address
+    public void regexCompleteAddress()
+    {
+//        String finalStringAddress = addUpAllAddressInputs();
+//        Pattern pattern = Pattern.compile(properties.getProperty("regexFinalAddress"));
+//        Matcher matcher = pattern.matcher(finalStringAddress);
+//
+//        Boolean checkPatternCondition = matcher.matches();
+//
+//        if (checkPatternCondition == true) {
+//        } else if ((checkPatternCondition == false)) {
+//            Assert.assertTrue(false, "The entered data is not valid");
+//        } else {
+//            log.info("Create Account Screen : Something is not proper for the entered phone number ");
+//        }
+        accountCreation1.enterData(accountCreationLocators.streetAddressInput, properties.getProperty("streetAddress"));
+       // accountCreation1.enterData(accountCreationLocators.cityInputField, properties.getProperty("city"));
+        baseActions.regexCompleteAddress(accountCreationLocators.streetAddressInput, accountCreationLocators.cityInput);
+
+        regexState();
+        regexZipcode();
+    }
 
 
 
+    //Enter details for Address
+    public void enterAddressDetails()
+    {
+        accountCreation1.enterData(accountCreationLocators.streetAddressInput, properties.getProperty("streetAddress"));
+        accountCreation1.enterData(accountCreationLocators.cityInputField, properties.getProperty("city"));
+    }
+
+    //Verify that, clicking on "Terms Of Use" button will redirect user to the terms of use screen
+    public void navigateToTOC()
+    {
+        driver.findElement(accountCreationLocators.termsOfUseLink).click();
+        Assert.assertTrue(driver.findElement(accountCreationLocators.tocConfirm_MoreUserTermsText).isDisplayed()==true, "User is on TOC screen");
+    }
 
 
+    //Verify that, clicking on "PP" button will redirect user to the terms of use screen
+    public void navigateToPP()
+    {
+        driver.findElement(accountCreationLocators.privacyPolicyLink).click();
+        Assert.assertTrue(driver.findElement(accountCreationLocators.privacyPolicyText).isDisplayed()==true, "User is on TOC screen");
+    }
 
+    public void navigateBackToRegistration()
+    {
+        baseActions.scrollDown();
+        driver.findElement(accountCreationLocators.backToSignUp).click();
+        Assert.assertTrue(driver.findElement(accountCreationLocators.createAccountText).isDisplayed()==true);
+    }
 
+    //Verify that, all the input fields should have the same value if the user comes back from "Terms of Use And Privacy Policy" screen
+    public void verifyInputAfterTOCAndPOPNavigation()
+    {
+        String email = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String password = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String cinfirmPassword = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String firstName = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String lastName = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String mobileNumber = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String sreetAddress = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String city = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String state = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
+        String zipcode = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
 
-
-
+      //  Assert.assertEquals(email.equals());
+    }
 
 }

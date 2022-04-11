@@ -311,6 +311,14 @@ public class BaseActions extends TestBase {
         js.executeScript("arguments[0].value=' " + editValue + " ';", element);
 
     }
+    //Clear Data only
+    public void clearclearExistingData(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].value=' " + " ';", element);
+
+    }
+
+
 
     public void regexFirstAndLastName(By element, String name) {
         String regex = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{8,20})?)";
@@ -370,7 +378,7 @@ public class BaseActions extends TestBase {
     }
 
     //regex phone no
-    public void regexZipcode(By element, String zipcode) {
+    public void regexZipcode1(By element, String zipcode) {
         String regex = "\\b\\d{5}(?:-\\d{4})?\\b";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -408,7 +416,7 @@ public class BaseActions extends TestBase {
 
 
     ///^[a-zA-Z]+$/
-    public void regexState(By element, String State) {
+    public void regexState1(By element, String State) {
         String regex = "Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|\n" +
                 "Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|\n" +
                 "Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico\n" +
@@ -578,4 +586,53 @@ public class BaseActions extends TestBase {
     {
         Assert.assertTrue((driver.findElement(element).isEnabled())==true, "Element is in enable mode");
     }
+
+    //VerifyTickMark()
+    public Boolean verrifyTickMark(By ele) {
+        Boolean element = driver.findElement(ele).isDisplayed();
+        if (element) {
+           // Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", driver.findElement(ele));
+            Assert.assertTrue(element == true, "Tick mark is present");
+        } else {
+            Assert.assertTrue(false, "tick mark is not present");
+        }
+        return element;
+    }
+
+
+
+    //Add all the inputs for address and get it into one string
+    public String addUpAllAddressInputs(By street, By city) {
+        String addressEntered = driver.findElement(street).getAttribute("value");
+        String cityEntered = driver.findElement(city).getAttribute("value");
+        String streetAddressAndCity = addressEntered + " " + cityEntered + " ";
+        return streetAddressAndCity;
+    }
+
+
+
+
+    //Regx for the final String of address
+    public void regexCompleteAddress(By street, By city )
+    {
+        String finalStringAddress = addUpAllAddressInputs(street, city);
+        Pattern pattern = Pattern.compile(properties.getProperty("regexFinalAddress"));
+        Matcher matcher = pattern.matcher(finalStringAddress);
+
+        Boolean checkPatternCondition = matcher.matches();
+
+        if (checkPatternCondition == true) {
+        } else if ((checkPatternCondition == false)) {
+            Assert.assertTrue(false, "The entered data is not valid");
+        } else {
+            log.info("Create Account Screen : Something is not proper for the entered phone number ");
+        }
+    }
+
+
+
+
+
+
+
 }
