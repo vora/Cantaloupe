@@ -20,6 +20,11 @@ public class HomePageLocators {
     public By errorStatus503 = By.xpath("//*[text()='Request failed with status code 503'");
     public By copyRights = By.xpath("//*[contains(text(),'© 2022 Cantaloupe, Inc, All Rights Reserved.']");
    // public By logoImg = By.xpath("//img[@src='images/logo-more-small.svg']");
+    public By signInButton = By.xpath("//*[text()='']']");
+    public By createAccountBigButton = By.xpath("//*[@class='styles__Container-sc-ajoebm-0 cUxQNN']/button");
+    public By alreadyHaveAccountButton = By.xpath("//*[text()='Already have an account?']");
+    public By continueWithEmail = By.xpath("//*[text()='continue with email']");
+    public By createAccountText = By.xpath("//*[text()='Create Account']");
 
 
 
@@ -30,4 +35,6 @@ public class HomePageLocators {
 
 
 
-        }
+
+
+}

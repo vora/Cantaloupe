@@ -4,40 +4,25 @@ import base.TestBase;
 import org.testng.annotations.Test;
 import pageActions.FAQActions;
 import pageActions.SignInWithExistingAccountActions;
-import resources.FinalConstants;
+import pageActions.UpdateProfileActions;
 
 import java.awt.*;
 import java.io.IOException;
 
-public class FAQTest extends TestBase {
+public class UpdateProfileTests extends TestBase {
 
-    FAQActions faqActions = new FAQActions();
+    UpdateProfileActions updateProfileActions = new UpdateProfileActions();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
 
-    public FAQTest() throws IOException {
+    public UpdateProfileTests() throws IOException {
     }
 
     @Test
     public void validtaeFAQUI() throws IOException, AWTException {
         signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
-        faqActions.clickFAQLink();
-        faqActions.validateUIOnFAQ();
-    }
 
-    @Test
-    public void verifyFAQQA() throws IOException, AWTException {
-        signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
         signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
-        faqActions.clickFAQLink();
-        faqActions.verifyQuestionsOnFAQ();
-    }
-
-    @Test
-    public void navigateBackToDashboard() throws IOException, AWTException {
-        signInWithExistingAccountActions.clickAlreadyExistingAccountLink();
-        signInWithExistingAccountActions.clickSignIn(properties.getProperty("existingAccountEmail"), properties.getProperty("existingAccountPassword"));
-        faqActions.clickFAQLink();
-        faqActions.navigateBackToDashboard();
+        signInWithExistingAccountActions.clickProfileLink();
+        updateProfileActions.verifyUIElements();
     }
 }

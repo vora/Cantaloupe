@@ -14,7 +14,6 @@ import java.io.IOException;
 
 public class AccountCreationTest extends TestBase {
 
-    AccountCreation1 accountCreation1 = new AccountCreation1();
     AccountCreation accountCreation = new AccountCreation();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
@@ -37,14 +36,17 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void newAccountCreation() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
     }
 
     @Test
     public void verifyPrefilledEmail_CreationFlow() throws AWTException {
-        newAccountCreation();
+        accountCreation.clickCreateButton();
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+        accountCreation.verrifyTickMark();
+        accountCreation.verifyNextButtonEnabled();
         accountCreation.prefilledEmail(properties.getProperty("createNewEmail"));
         accountCreation.verifyEmailIsEditable();
         accountCreation.verifyPlaceHolders();
@@ -56,8 +58,8 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyBackLinkFunctionality() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
-        accountCreation.clickBackHomeLink();
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+        accountCreation.clickBackToLoginOptionsLink();
     }
 
     //
@@ -69,9 +71,9 @@ public class AccountCreationTest extends TestBase {
 
     // validate login through existing user
     @Test
-    public void existingEmaillowLogin() throws IOException, AWTException {
+    public void verifySignInDisabled_existingEmail() throws IOException, AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.loginThroughExistingEmail(properties.getProperty("existingAccountEmail"), properties.getProperty("regexEmail"));
+        accountCreation.loginThroughExistingEmail(properties.getProperty("existingAccountEmail"));
         signInWithExistingAccountActions.verifySignInDisabled();
     }
 
@@ -82,7 +84,7 @@ public class AccountCreationTest extends TestBase {
     {
         // Verify email entered, tick mark
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.enteredEmaiCheck(properties.getProperty("createNewEmail"));
 
     }
@@ -94,7 +96,7 @@ public class AccountCreationTest extends TestBase {
     public void verifyEmailIsEditable() throws IOException, AWTException
     {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verrifyTickMark();
         //Feedback - assert text entered n getAttribute - Remove js
@@ -107,7 +109,7 @@ public class AccountCreationTest extends TestBase {
     public void verifyPassword() throws IOException, AWTException
     {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.tryWrongPassword(properties.getProperty("wrongPassword"));
         baseActions.clearData(driver.findElement(By.id("id_password")));
@@ -120,7 +122,14 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void showPasswordAndHide() throws IOException, AWTException
     {
-        verifyPassword();
+        accountCreation.clickCreateButton();
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+        accountCreation.verifyNextButtonEnabled();
+        accountCreation.tryWrongPassword(properties.getProperty("wrongPassword"));
+        baseActions.clearData(driver.findElement(By.id("id_password")));
+        accountCreation.validateErrorMessageForPassword(properties.getProperty("wrongPassword"));
+        accountCreation.tryConfirmPassword(properties.getProperty("wrongPassword"));
+        accountCreation.validateErrorMessageForConfirmPassword(properties.getProperty("wrongPassword"));
         accountCreation.clickShowPassword();
         accountCreation.clickHidePassword();
     }
@@ -129,7 +138,7 @@ public class AccountCreationTest extends TestBase {
     //Check if password/confirmPassword fields are editable, masked
     public void checkPasswordFields() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.isPasswordFieldEditable();
         accountCreation.isConfirmPasswordFieldEditable();
@@ -142,8 +151,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyPasswordAndConfirmPassword() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
-
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
         accountCreation.enterPassword(properties.getProperty("createAccountPassword"));
@@ -156,7 +164,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyPersonalDetailsSection() throws IOException, AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
@@ -171,7 +179,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyConsentSection() throws IOException, AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
@@ -185,7 +193,17 @@ public class AccountCreationTest extends TestBase {
 
     @Test
     public void completeRegistration() throws IOException, AWTException {
-        verifyConsentSection();
+        accountCreation.clickCreateButton();
+        accountCreation.validateEmailCriteria(properties.getProperty("accountCreationEmail"));
+        accountCreation.verrifyTickMark();
+        accountCreation.verifyNextButtonEnabled();
+        accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
+        accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
+        accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
+        accountCreation.verifyPhoneNoInput();
+        accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
+        accountCreation.isCheckboxPreChecked();
+        accountCreation.verifyTermsAndPrivacy();
         accountCreation.clickCompleteButton();
         accountCreation.confirmRegistration();
 
@@ -195,7 +213,8 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyIfFieldsAreEditable() throws IOException, AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+        accountCreation.verifyNextButtonEnabled();
         accountCreation.isEmailFieldEditable();
         accountCreation.isPasswordFieldEditable();
         accountCreation.isConfirmPasswordFieldEditable();
@@ -211,7 +230,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyFirstAndLastNameRegex() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verifyFirstNameRegex();
         accountCreation.verifyFirstNameRegex();
@@ -220,7 +239,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyMobile() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.enterData(accountCreationLocators.phoneNoInput, properties.getProperty("mobileNumber"));
         accountCreation.regexPhoneNo();
@@ -230,32 +249,33 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyMobileUniqueNessAndError() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.enterData(accountCreationLocators.phoneNoInput, properties.getProperty("mobileNumber"));
         accountCreation.regexPhoneNo();
         accountCreation.verifyPhoneNoFormat();
-        try {
-            accountCreation.verifyMobileUniquesNessTick();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        try {
-            accountCreation.verifyMobileUniqueNessError();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        accountCreation.verifyIfMobileNoISNewOrUsed();
+//        try {
+//            accountCreation.verifyMobileUniquesNessTick();
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        try {
+//            accountCreation.verifyMobileUniqueNessError();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
     }
 
 
     @Test
     public void verifyError_After10DigitsInputOnly() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.enterData(accountCreationLocators.phoneNoInput, properties.getProperty("existingMobileNo"));
         accountCreation.verifyErrorAfter10DigitsEntry();
@@ -265,7 +285,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyAddressFields() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         accountCreation.enterAddressDetails();
         accountCreation.regexCompleteAddress();
@@ -274,7 +294,7 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void verifyTOC_PPNavigations() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
         baseActions.scrollDown();
         accountCreation.navigateToTOC();
@@ -286,13 +306,13 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void checkInputsBeforeAndAfterNavigations() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation.verifyPhoneNoInput();
+        accountCreation.verifyMobileInput();
         accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
         accountCreation.isCheckboxPreChecked();
         accountCreation.verifyTermsAndPrivacy();
@@ -307,12 +327,10 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void backToLoginLink() throws AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"), properties.getProperty("regexEmail"));
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
         baseActions.scrollDown();
         accountCreation.clickBackToLoginOptions();
     }
-
-
 }

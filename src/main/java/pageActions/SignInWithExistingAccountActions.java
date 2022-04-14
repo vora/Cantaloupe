@@ -18,6 +18,7 @@ public class SignInWithExistingAccountActions extends TestBase {
 
         BaseActions baseActions = new BaseActions();
         LandingScreen loginScreen = new LandingScreen();
+        HomePageLocators homePageLocators = new HomePageLocators();
         SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
         CreateOrLoginInitialLocators createAccountLocators = new CreateOrLoginInitialLocators();
         AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
@@ -36,6 +37,7 @@ public class SignInWithExistingAccountActions extends TestBase {
         {
             driver.findElement(loginScreen.alreadyHaveAccountButton).isEnabled();
             driver.findElement(loginScreen.alreadyHaveAccountButton).click();
+            driver.findElement(homePageLocators.continueWithEmail).click();
         }
 
         //clicks on continue with email link
@@ -103,7 +105,8 @@ public class SignInWithExistingAccountActions extends TestBase {
     //Verify if the sign in button is in disabled mode when there is no data entered
     public void verifySignInDisabled()
     {
-
+        WebElement continueWithEmail = driver.findElement(homePageLocators.continueWithEmail);
+        continueWithEmail.click();
         WebElement buttonNotEnabled = driver.findElement(signInWithExistingAccountLocators.signInButton);
         if(buttonNotEnabled.isEnabled())
         {
@@ -136,6 +139,11 @@ public class SignInWithExistingAccountActions extends TestBase {
     public void clickSignOut()
     {
         driver.findElement(loggedInUserLocators.signOutLink).click();
+    }
+
+    public void clickProfileLink()
+    {
+        driver.findElement(loggedInUserLocators.profileLink).click();
     }
 
 

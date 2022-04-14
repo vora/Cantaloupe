@@ -16,7 +16,7 @@ public class ForgotPasswordActions extends TestBase {
     SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
     ForgotPasswordLocators forgotPasswordLocators = new ForgotPasswordLocators();
     AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
-    AccountCreation2 accountCreation2 = new AccountCreation2();
+    AccountCreation accountCreation2 = new AccountCreation();
     HomePageLocators homePageLocators = new HomePageLocators();
     public ForgotPasswordActions() throws IOException {
     }

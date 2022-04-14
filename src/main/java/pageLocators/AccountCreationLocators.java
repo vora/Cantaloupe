@@ -103,6 +103,7 @@ public class AccountCreationLocators {
 
     //Initial Screen
     public By backHomeLink = By.xpath("//*[text()='Back home']");
+    public By backToLoginOptions = By.xpath("//*[text()='Back to login options']");
 
     //Registration complete
     public By goodNewsText = By.xpath("//*[text()='Good News!']");

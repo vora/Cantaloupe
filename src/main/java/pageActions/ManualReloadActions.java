@@ -135,7 +135,7 @@ public class ManualReloadActions extends TestBase {
     //Credit card CVV
     public void validateCVV(String cvvNo)
     {
-        baseActions.regexExpression(manualReloadLocators.creditSecurityCVV, cvvNo, properties.getProperty("regexCVV"));
+        baseActions.regexExpression(manualReloadLocators.creditSecurityCVV, cvvNo, "^[0-9]{3,4}$");
     }
 
 
