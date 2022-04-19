@@ -1,6 +1,7 @@
 package pageLocators;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class UpdateProfileLocators {
 
@@ -23,7 +24,7 @@ public class UpdateProfileLocators {
 
     public By lastNameInput = By.xpath("//input[@name='lastName']");
 
-    public By mobilemeInput = By.xpath("//input[@name='mobile']");
+    public By mobileInput = By.xpath("//input[@name='mobile']");
     public By warmingIconForMobile = By.xpath("//img[@title='/icons/info-gray.svg']");
     public By warningMsgForMobile = By.xpath("//[text()='This Phone Number Must Be Unique And In Your Possession.']");
     public By streetAddressInput = By.xpath("//input[@name='address1']");
@@ -37,13 +38,14 @@ public class UpdateProfileLocators {
     public By updateButton = By.xpath("//*[text()='Update profile']");
 
     // error Messages
-    public By firstNameError = By.xpath("//[text()='Please enter your first name.']");
-    public By lastNameError = By.xpath("//[text()='Please enter your last name.']");
-    public By mobileError = By.xpath("//[text()='Invalid mobile number.']");
-    public By streetAddressError = By.xpath("//[text()='Please enter your address.']");
-    public By cityError = By.xpath("//[text()='Please enter your city.']");
-    public By stateError = By.xpath("//[text()='Please enter your state.']");
-    public By zipcodeError = By.xpath("//[text()='Please enter your zip code.']");
+    public By firstNameError = By.xpath("//*[text()='Please enter your first name.']");
+    public By lastNameError = By.xpath("//*[text()='Please enter your last name.']");
+    public By mobileError = By.xpath("//*[text()='Invalid mobile number.']");
+    public By mobileUniqueNessError = By.xpath("//input[@name='mobile']/../parent::div/../preceding-sibling::div[1]");
+    public By streetAddressError = By.xpath("//*[text()='Please enter your address.']");
+    public By cityError = By.xpath("//*[text()='Please enter your city.']");
+    public By stateError = By.xpath("//*[text()='Please enter your state.']");
+    public By zipcodeError = By.xpath("//*[text()='Please enter your zip code.']");
 
     //Clear Icons
     public By firstNameClearIcon = By.xpath("//input[@name='firstName']/../span");

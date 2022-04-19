@@ -2,10 +2,8 @@ package tests;
 
 import base.TestBase;
 import org.testng.annotations.Test;
-import pageActions.AccountCreation1;
 import pageActions.ManualReloadActions;
 import pageActions.MoreCardDetailScreenActions;
-import pageActions.SignInWithExistingAccountActions;
 
 import java.awt.*;
 import java.io.IOException;

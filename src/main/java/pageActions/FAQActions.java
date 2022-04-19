@@ -78,7 +78,7 @@ public class FAQActions extends TestBase {
         Assert.assertEquals(question4, properties.getProperty("faqQ4"), "FAQQ4 is valid");
         Assert.assertEquals(answer4, properties.getProperty("faqA4"), "FAQA4 is valid");
         Assert.assertEquals(question5, properties.getProperty("faqQ5"), "FAQQ5 is valid");
-        Assert.assertEquals(answer5, properties.getProperty("faqA5"), "FAQA5 is valid");
+        Assert.assertEquals(properties.getProperty("faqA5"), answer5, "FAQA5 is valid");
     }
 
     public void clickFAQLink()

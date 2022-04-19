@@ -2,7 +2,6 @@ package tests;
 
 import base.TestBase;
 import org.testng.annotations.Test;
-import pageActions.AccountCreation1;
 import pageActions.MoreCardDetailScreenActions;
 import pageActions.SignInWithExistingAccountActions;
 
@@ -11,7 +10,6 @@ import java.io.IOException;
 
 public class MoreCardDetailsScreenTest extends TestBase {
 
-    AccountCreation1 accountCreation1 = new AccountCreation1();
     MoreCardDetailScreenActions moreCardDetailScreenActions = new MoreCardDetailScreenActions();
     SignInWithExistingAccountActions signInWithExistingAccountActions = new SignInWithExistingAccountActions();
 

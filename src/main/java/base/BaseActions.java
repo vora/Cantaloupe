@@ -6,7 +6,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.awt.*;
@@ -14,7 +16,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -26,6 +27,7 @@ public class BaseActions extends TestBase {
     String url = "";
     String homePage = "";
     String link = "";
+    String state;
 
     public BaseActions() throws IOException {
     }
@@ -306,9 +308,9 @@ public class BaseActions extends TestBase {
     }
 
     //Clear and re-enter data in input field through js
-    public void clearInputfieldAndEnterNewData(WebElement element, String editValue) {
+    public void clearInputfieldAndEnterNewData(By element, String editValue) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].value=' " + editValue + " ';", element);
+        js.executeScript("arguments[0].value=' " + editValue + " ';", driver.findElement(element));
 
     }
     //Clear Data only
@@ -320,7 +322,7 @@ public class BaseActions extends TestBase {
 
 
 
-    public void regexFirstAndLastName(By element, String name) {
+    public String regexFirstAndLastName(By element, String name) {
         String regex = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{8,20})?)";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -335,10 +337,11 @@ public class BaseActions extends TestBase {
         } else {
             log.info("Create Account Screen : Something is not proper for the entered name ");
         }
+        return name;
     }
 
     //regex phone no
-    public void regexPhoneno(By element, String phoneNo) {
+    public String regexPhoneno(By element, String phoneNo) {
         String regex = "^\\d{10}$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -353,22 +356,23 @@ public class BaseActions extends TestBase {
         } else {
             log.info("Create Account Screen : Something is not proper for the entered phone number ");
         }
+        return phoneNo;
 
     }
 
     //regex phone no
-    public void regexAddress(By element, String phoneNo) {
+    public void regexAddress(By element, String streetAddress) {
 
         String regex = "\\d+\\s+([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)";
         //String regex = "^\\b\\d{1,8}(-)?[a-z]?\\W[a-z|\\W|\\.]{1,}\\W(road|drive|avenue|boulevard|circle|street|lane|waylrd\\.|st\\.|dr\\.|ave\\.|blvd\\.|cir\\.|In\\.|rd|dr|ave|blvd|cir|ln)";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(phoneNo);
+        Matcher matcher = pattern.matcher(streetAddress);
 
         Boolean checkPatternCondition = matcher.matches();
 
         if (checkPatternCondition == true) {
-            webElement.sendKeys(phoneNo);
+            webElement.sendKeys(streetAddress);
         } else if ((checkPatternCondition == false)) {
             Assert.assertTrue(true, "The entered address is not valid");
         } else {
@@ -378,7 +382,7 @@ public class BaseActions extends TestBase {
     }
 
     //regex phone no
-    public void regexZipcode1(By element, String zipcode) {
+    public String regexZipcode(By element, String zipcode) {
         String regex = "\\b\\d{5}(?:-\\d{4})?\\b";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
@@ -393,6 +397,7 @@ public class BaseActions extends TestBase {
         } else {
             log.info("Create Account Screen : Something is not proper for the entered zipcode ");
         }
+        return zipcode;
     }
 
     ///^[a-zA-Z]+$/
@@ -437,6 +442,24 @@ public class BaseActions extends TestBase {
             log.info("Create Account Screen : Something is not proper for the entered address ");
         }
 
+    }
+
+
+    //Regex for state
+    public String regexState(By element, String state)
+    {
+       // if(state.matches("Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico|New[ ]York|North[ ]Carolina|North[ ]Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode[ ]Island|South[ ]Carolina|South[ ]Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West[ ]Virginia|Wisconsin|Wyoming") || state.matches("^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$"))
+        if(state.matches("^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$"))
+
+        {
+            Assert.assertTrue(true, "Entered state is valid");
+        }
+        else
+        {
+            Assert.assertTrue(false, "The State entered is not valid");
+        }
+        //baseActions.regexExpression(accountCreationLocators.streetAddressInput, properties.getProperty("state"), stateEntered);
+        return state;
     }
 
     //JS
@@ -627,6 +650,44 @@ public class BaseActions extends TestBase {
         } else {
             log.info("Create Account Screen : Something is not proper for the entered phone number ");
         }
+    }
+
+    //Vlidate mobile data entered and errors
+    public boolean verifyMobileEntered(By element, By errorForUniqueness, By invalidError)
+    {
+        String phoneNoText = driver.findElement(element).getAttribute("value");
+        WebElement uniquenessError = driver.findElement(errorForUniqueness);
+        String numberOnly = phoneNoText.replaceAll("[^0-9]", "");
+
+        int phoneNoLength = numberOnly.length();
+        if(phoneNoLength==10)
+        {
+            WebElement phoneNoLinkText = driver.findElement(By.linkText ("+1-888-561-4748"));
+            Assert.assertTrue(uniquenessError.isDisplayed()==true, "Error message is displayed after entering 10 digits");
+            WebDriverWait wait = new WebDriverWait(driver,6);
+            // elementToBeClickable expected criteria
+
+            Assert.assertTrue(phoneNoLinkText.isEnabled(), "The link is in enabled mode");
+            wait.until(ExpectedConditions.elementToBeClickable (phoneNoLinkText));
+            return true;
+        }
+        else if((driver.findElement(invalidError)).isDisplayed()==true)
+        {
+            Assert.assertTrue(uniquenessError.isDisplayed()==true, "Invalid mobile number.");
+            return true;
+        }
+        else
+        {
+            Assert.assertTrue(false, "Error messages for mobile is not displayed properly");
+        }
+        return false;
+    }
+
+    //Extract only numbers from a string
+    public String extractNumbers(String mobileNo)
+    {
+        String mobileNumberOnly= mobileNo.replaceAll("[^0-9]", "");
+        return mobileNumberOnly;
     }
 
 

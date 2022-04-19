@@ -4,7 +4,6 @@ import base.BaseActions;
 import base.TestBase;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-import pageActions.AccountCreation1;
 import pageActions.AccountCreation;
 import pageActions.SignInWithExistingAccountActions;
 import pageLocators.AccountCreationLocators;
@@ -25,16 +24,19 @@ public class AccountCreationTest extends TestBase {
 
     @Test
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void errorValidations() throws AWTException {
+    public void verifyNavigationBackToHomePage() throws AWTException {
 
         //Regex, error message,enter email, tick mark, check for existing email error, allow to login, if new email - allow user to next screen
+        //Validate create new email, tick mark, next button enabled and screen 2
         accountCreation.validateEmptyField();
         accountCreation.verifyNextButtonEnabled();
+        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+        accountCreation.clickBackToLoginOptionsLink();
     }
 
     //Validate create new email, tick mark, next button enabled and screen 2
     @Test
-    public void newAccountCreation() throws AWTException {
+    public void verifyEmailUniqueness() throws AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
@@ -52,17 +54,7 @@ public class AccountCreationTest extends TestBase {
         accountCreation.verifyPlaceHolders();
     }
 
-
-
-    //Validate create new email, tick mark, next button enabled and screen 2
-    @Test
-    public void verifyBackLinkFunctionality() throws AWTException {
-        accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
-        accountCreation.clickBackToLoginOptionsLink();
-    }
-
-    //
+    // Verify that, user is not able to use an already registered email id from other account
     @Test
     public void validateExisting_EmailError() throws AWTException {
         accountCreation.clickCreateButton();
@@ -80,7 +72,7 @@ public class AccountCreationTest extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailFieldInputData() throws IOException, AWTException
+    public void verifyEmailEnteredIsValid() throws IOException, AWTException
     {
         // Verify email entered, tick mark
         accountCreation.clickCreateButton();
@@ -136,7 +128,7 @@ public class AccountCreationTest extends TestBase {
 
     @Test
     //Check if password/confirmPassword fields are editable, masked
-    public void checkPasswordFields() throws AWTException {
+    public void checkPasswordFields_Masked() throws AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
@@ -255,20 +247,6 @@ public class AccountCreationTest extends TestBase {
         accountCreation.regexPhoneNo();
         accountCreation.verifyPhoneNoFormat();
         accountCreation.verifyIfMobileNoISNewOrUsed();
-//        try {
-//            accountCreation.verifyMobileUniquesNessTick();
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        try {
-//            accountCreation.verifyMobileUniqueNessError();
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
     }
 
 

@@ -3,6 +3,7 @@ package ExtentReports;
 import java.io.File;
 import java.io.IOException;
 
+import base.TestBase;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
@@ -11,7 +12,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 
-public class ExtentManager {
+public class ExtentManager extends TestBase {
     private static ExtentReports extent;
     private static String reportFileName = "Test-Automaton-Report"+".html";
     private static String fileSeperator = System.getProperty("file.separator");
@@ -26,13 +27,13 @@ public class ExtentManager {
     }
 
     //Create an extent report instance
-    public static ExtentReports createInstance() {
+    public static ExtentReports createInstance () {
         String fileName = getReportPath(reportFilepath);
 
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
         htmlReporter.config().setChartVisibilityOnOpen(true);
-        htmlReporter.config().setTheme(Theme.STANDARD);
+        htmlReporter.config().setTheme(Theme.DARK);
         htmlReporter.config().setDocumentTitle(reportFileName);
         htmlReporter.config().setEncoding("utf-8");
         htmlReporter.config().setReportName(reportFileName);
@@ -41,8 +42,8 @@ public class ExtentManager {
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
         //Set environment details
-        extent.setSystemInfo("OS", "Windows");
-        extent.setSystemInfo("AUT", "QA");
+        extent.setSystemInfo("OS", "Platform is " + System.getProperty("platformName"));
+        extent.setSystemInfo("Environment", "QA");
 
         return extent;
     }
@@ -63,5 +64,4 @@ public class ExtentManager {
         }
         return reportFileLocation;
     }
-
 }
