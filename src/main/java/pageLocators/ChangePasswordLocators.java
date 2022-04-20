@@ -4,14 +4,17 @@ import org.openqa.selenium.By;
 
 public class ChangePasswordLocators {
 
-    public By forgotPasswordText = By.xpath("//h1[@class='styles__Text-sc-1ualdcc-0 iMfJqE']");
-    public By forgotPasswordEmailInput = By.xpath("//input[@id='id_email']");
-    public By forgotPasswordSendRestLink = By.xpath("//*[@id='forgot']/div[2]/button");
-    public By createNewPasswordH1 = By.xpath("//*[text()='Create new password']");
-    //public By createNewPasswordWithEmail = By.xpath("//*[text()='Create new password'" + email + "']");
-    public By updatePassword = By.xpath("//*[text()='Update password']");
-    public By backToWelcomeLink = By.xpath("//*[text()='Back to welcome screen']");
     public By changePasswordHeader = By.xpath("//*[text()='Change password']");
     public By backLink = By.xpath("//*[text()='BACK']");
+    public By oldPasswordInput = By.xpath("//input[@id='id_oldPassword']");
+    public By showOldPassword = By.xpath("//input[@id='id_oldPassword']/../span");
+    public By createPasswordInput = By.xpath("//input[@id='id_password']");
+    public By showCreatePassword = By.xpath("//input[@id='id_password']/../span");
+    public By confirmPasswordInput = By.xpath("//input[@id='id_confirmPassword']");
+    public By showConfirmPassword = By.xpath("//input[@id='id_confirmPassword']/../span");
+    public By creatNewPasswordHeader = By.xpath("//*[text()='Create new password:']");
+    public By updateButton = By.xpath("//*[]text()='Update password'");
+
+
 
 }

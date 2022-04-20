@@ -290,7 +290,7 @@ public class AccountCreationTest extends TestBase {
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation.verifyMobileInput();
+        accountCreation.verifyPhoneNoInput();
         accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
         accountCreation.isCheckboxPreChecked();
         accountCreation.verifyTermsAndPrivacy();

@@ -42,6 +42,8 @@ public class UpdateProfileLocators {
     public By lastNameError = By.xpath("//*[text()='Please enter your last name.']");
     public By mobileError = By.xpath("//*[text()='Invalid mobile number.']");
     public By mobileUniqueNessError = By.xpath("//input[@name='mobile']/../parent::div/../preceding-sibling::div[1]");
+    public By mobileInputTickMark = By.xpath("//input[@name='mobile']/parent::div/span/img");
+
     public By streetAddressError = By.xpath("//*[text()='Please enter your address.']");
     public By cityError = By.xpath("//*[text()='Please enter your city.']");
     public By stateError = By.xpath("//*[text()='Please enter your state.']");

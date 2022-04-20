@@ -451,11 +451,11 @@ public class AccountCreation extends TestBase {
     {
         baseActions.enterValue(accountCreationLocators.createPassowrd, password);
         baseActions.enterValue(accountCreationLocators.confirmPassword, confirm);
-        String createpPassword = driver.findElement(accountCreationLocators.createPassowrd).getAttribute("value");
-        baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.createPassowrd), createpPassword);
+        String createPassword = driver.findElement(accountCreationLocators.createPassowrd).getAttribute("value");
+        baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.createPassowrd), createPassword);
         String confirmPassword = driver.findElement(accountCreationLocators.confirmPassword).getAttribute("value");
-
-        Assert.assertEquals(createpPassword, confirmPassword);
+        baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.confirmPassword), confirmPassword);
+        Assert.assertEquals(createPassword, confirmPassword);
     }
 
 
@@ -488,18 +488,24 @@ public class AccountCreation extends TestBase {
 
     //verify errors
     public void verifyPhoneNoInput() throws AWTException {
-        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("mobileNumber"));
+        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("dfd"));
         baseActions.randomClickBasedOnOS();
-        baseActions.validateErrorMessages(accountCreationLocators.invalidMobileError);
+        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("mobileNumber"));
         regexPhoneNo();
+        WebElement phoneTick = driver.findElement(accountCreationLocators.phoneNoValidTick);
+        if(phoneTick.getAttribute("src").equals("/icons/check-circle-orange.svg"))
+        {
+            Assert.assertTrue(true, "Entered phone number is unique");
+        }
     }
 
     //Verify Errors For Phone Number Input Field
-    public void verifyMobileInput() throws AWTException {
-        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("mobileNumber"));
+    public void verifyMobileInput(String validMobileNumber, String invalidMobilbeNumber) throws AWTException {
+        driver.findElement(accountCreationLocators.phoneNoInput);
+       // driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(invalidMobilbeNumber);
         baseActions.randomClickBasedOnOS();
-        baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.invalidMobileError), properties.getProperty("invalidMobileNumber"));
         baseActions.validateErrorMessages(accountCreationLocators.invalidMobileError);
+        baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.phoneNoInput), validMobileNumber);
         regexPhoneNo();
     }
 
@@ -512,11 +518,7 @@ public class AccountCreation extends TestBase {
     //Verify Phone Number Format
     public void verifyPhoneNoFormat()
     {
-        String mobileFormat = driver.findElement(accountCreationLocators.mobileNumberField).getAttribute("value");
-        String number = mobileFormat.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
-
-        Assert.assertEquals(number, mobileFormat, "Mobile number is in the expected format");
-
+        baseActions.verifyPhoneNoFormat(accountCreationLocators.mobileNumberField);
     }
 
     //verify address
@@ -885,16 +887,15 @@ public class AccountCreation extends TestBase {
         String zipcode = driver.findElement(accountCreationLocators.zipcodeInput).getAttribute("value");
 
 
-        Assert.assertEquals(email,properties.getProperty("createNewEmail"), "Email field values are both equal");
-        Assert.assertEquals(password, properties.getProperty("createAccountPassword"), "Password field values are both equal");
-        Assert.assertEquals(confirmPassword, properties.getProperty("createAccountConfirmPassword"), "Confirm Password field values are both equal");
-        Assert.assertEquals(firstName, properties.getProperty("firstName"), "Firstname field values are both equal");
-        Assert.assertEquals(lastName,properties.getProperty("lastName"), "Lastname field values are both equal");
-        Assert.assertEquals(mobileNumberFormatted, properties.getProperty("mobileNumber"), "Mobile Number field values are both equal");
-        Assert.assertEquals(streetAddress, properties.getProperty("streetAddress"), "Street Address field values are both equal");
-        Assert.assertEquals(city, properties.getProperty("city"), "City field values are both equal");
-        Assert.assertEquals(state, properties.getProperty("state"), "State field values are both equal");
-        Assert.assertEquals(zipcode, properties.getProperty("zipcode"), "Zipcode field values are both equal");
+        Assert.assertEquals(email,properties.getProperty("createNewEmail"), "Email field values both should be equal");
+        Assert.assertEquals(password, properties.getProperty("createAccountPassword"), "Password field values both should be equal");
+        Assert.assertEquals(confirmPassword, properties.getProperty("createAccountConfirmPassword"), "Confirm Password field values both should be equal");
+        Assert.assertEquals(lastName,properties.getProperty("lastName"), "Lastname field values both should be equal");
+        Assert.assertEquals(mobileNumberFormatted, properties.getProperty("mobileNumber"), "Mobile Number field values both should be equal");
+        Assert.assertEquals(streetAddress, properties.getProperty("streetAddress"), "Street Address field values both should be equal");
+        Assert.assertEquals(city, properties.getProperty("city"), "City field values both should be equal");
+        Assert.assertEquals(state, properties.getProperty("state"), "State field values both should be equal");
+        Assert.assertEquals(zipcode, properties.getProperty("zipcode"), "Zipcode field values both should be equal");
 
        List<String> inputValues = new ArrayList<>();
         inputValues.add(email);

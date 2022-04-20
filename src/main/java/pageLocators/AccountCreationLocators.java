@@ -75,6 +75,7 @@ public class AccountCreationLocators {
     public By firstNameError = By.xpath("//span[contains(text(),'Please enter your first name.')]");
     public By lastNameError = By.xpath("//span[contains(text(),'Please enter your last name.')]");
     public By phoneNoInput = By.id("id_mobile");
+    public By phoneNoValidTick = By.xpath("//input[@id='id_mobile']/../span/img");
     public By uniquePhoneNumberText = By.xpath("//span[contains(text(), 'This Phone Number Must Be Unique And In Your Possession.')]");
     public By alreadyUsedPhoneNoText = By.xpath("//span[contains(text(), 'If You Already Used This Phone Number, Please Try Resetting The User Information Via User Profile Update.')]");
     public By phoneNoInUseError = By.xpath("//input[@id='id_mobile']/../preceding-sibling::div/span");

@@ -453,12 +453,13 @@ public class BaseActions extends TestBase {
 
         {
             Assert.assertTrue(true, "Entered state is valid");
+            //driver.findElement(element).sendKeys(state);
         }
         else
         {
             Assert.assertTrue(false, "The State entered is not valid");
         }
-        //baseActions.regexExpression(accountCreationLocators.streetAddressInput, properties.getProperty("state"), stateEntered);
+
         return state;
     }
 
@@ -690,10 +691,62 @@ public class BaseActions extends TestBase {
         return mobileNumberOnly;
     }
 
+    //Verify Phone Number Format
+    public void verifyPhoneNoFormat(By element)
+    {
+        String mobileFormat = driver.findElement(element).getAttribute("value");
+        String number = mobileFormat.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+        Assert.assertEquals(number, mobileFormat, "Mobile number is in the expected format");
+    }
 
+    //Verify that the error message will be displayed after user inputs 10 digits
+    public boolean verifyErrorAfter10DigitsEntry(By mobileInput, By mobileUniquenessError, By tickMark)
+    {
+        String phoneNoText = driver.findElement(mobileInput).getAttribute("value");
+        WebElement uniquenessError = driver.findElement(mobileUniquenessError);
+        String numberOnly = phoneNoText.replaceAll("[^0-9]", "");
 
+        WebDriverWait wait = new WebDriverWait(driver,30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(mobileUniquenessError));
+        WebElement checkError = driver.findElement(mobileUniquenessError);
 
+        int phoneNoLength = numberOnly.length();
+        if((phoneNoLength==10) && (checkError.getText()).contains("Invalid mobile number.") || (checkError.getText()).contains("already in use"))
+        {
+            Assert.assertTrue(false, "Mobile field has invalid data");
 
+        }
+        else if(driver.findElement(tickMark).isDisplayed()==true)
+        {
+            Assert.assertTrue(true, "Entered phone number is unique");
+        }
+        return false;
+    }
 
+    //Verify entered value in the input fields
+    public String getEneteredValue(By element) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+        WebElement emailInputNotEditable = driver.findElement(element);
+        String enteredEmail = emailInputNotEditable.getAttribute("value");
+        return enteredEmail;
+    }
 
+    //Chck if a field is empty or has data
+    public boolean checkFiedIsBlankOrHasData(By element)
+    {
+        WebElement inputBox = driver.findElement(element);
+        String textInsideInputBox = inputBox.getAttribute("value");
+        if(textInsideInputBox.isEmpty())
+        {
+            Assert.assertTrue(false, element + " is blank.");
+            return false;
+        }
+        else if(!(textInsideInputBox.isEmpty()))
+        {
+            Assert.assertTrue(true, element + "has data.");
+            return true;
+        }
+        return true;
+    }
 }

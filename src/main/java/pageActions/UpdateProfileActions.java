@@ -97,13 +97,14 @@ public class UpdateProfileActions extends TestBase {
     }
 
     //Verify if the email field value has the same email as login
-    public void verifyEmailIEdntered() {
+    public String verifyEmailIEdntered() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(updateProfileLocators.emailFieldNonEditable));
         WebElement emailInputNotEditable = driver.findElement(updateProfileLocators.emailFieldNonEditable);
         String enteredEmail = emailInputNotEditable.getAttribute("value");
         String emailDisplayed = properties.getProperty("existingAccountEmail");
         Assert.assertTrue(enteredEmail.equals(emailDisplayed), "email value is equal");
+        return enteredEmail;
     }
 
     // Verify if Password is masked and check if Change Icon and text is available
@@ -131,25 +132,25 @@ public class UpdateProfileActions extends TestBase {
         Assert.assertTrue((firstName.isDisplayed()) && (lastName.isDisplayed()) && (mobileNumber.isDisplayed()
                 && (streetAddress.isDisplayed() && (city.isDisplayed()) && (state.isDisplayed()) && (zipcode.isDisplayed()))));
 
-        clickandAssertElement(firstName, updateProfileLocators.firstNameClearIcon, updateProfileLocators.firstNameError);
-        clickandAssertElement(lastName, updateProfileLocators.lastNameClearIcon, updateProfileLocators.lastNameError);
+        clickandAssertError(firstName, updateProfileLocators.firstNameClearIcon, updateProfileLocators.firstNameError);
+        clickandAssertError(lastName, updateProfileLocators.lastNameClearIcon, updateProfileLocators.lastNameError);
 
         mobileNumber.click();
         driver.findElement(updateProfileLocators.mobileClearIcon).click();
-        baseActions.clearInputfieldAndEnterNewData(updateProfileLocators.mobileInput, " ");
+        baseActions.clearInputfieldAndEnterNewData(updateProfileLocators.mobileInput, "werer");
         mobileNumber.sendKeys(Keys.BACK_SPACE);
         baseActions.randomClickBasedOnOS();
         Assert.assertTrue(driver.findElement(updateProfileLocators.mobileError).isDisplayed());
         mobileNumber.isEnabled();
 
-        clickandAssertElement(streetAddress, updateProfileLocators.streetAddressClearIcon, updateProfileLocators.streetAddressError);
-        clickandAssertElement(city, updateProfileLocators.cityClearIcon, updateProfileLocators.cityError);
-        clickandAssertElement(state, updateProfileLocators.stateClearIcon, updateProfileLocators.stateError);
-        clickandAssertElement(zipcode, updateProfileLocators.zipcodeClearIcon, updateProfileLocators.zipcodeError);
+        clickandAssertError(streetAddress, updateProfileLocators.streetAddressClearIcon, updateProfileLocators.streetAddressError);
+        clickandAssertError(city, updateProfileLocators.cityClearIcon, updateProfileLocators.cityError);
+        clickandAssertError(state, updateProfileLocators.stateClearIcon, updateProfileLocators.stateError);
+        clickandAssertError(zipcode, updateProfileLocators.zipcodeClearIcon, updateProfileLocators.zipcodeError);
     }
 
     //Click a button, clear the field, random click on screen, and asset if an element is available
-    public void clickandAssertElement(WebElement elementToClick, By clickClearIcon, By errorDisplayed) throws AWTException {
+    public void clickandAssertError(WebElement elementToClick, By clickClearIcon, By errorDisplayed) throws AWTException {
         elementToClick.click();
         driver.findElement(clickClearIcon).click();
         baseActions.randomClickBasedOnOS();
@@ -240,6 +241,10 @@ public class UpdateProfileActions extends TestBase {
         if((checkError.getText()).contains("Invalid mobile number.") || (checkError.getText()).contains("already in use")) {
             Assert.assertTrue(false, "Mobile field has invalid data");
         }
+        else if(driver.findElement(updateProfileLocators.mobileInputTickMark).getAttribute("src").equals("/icons/check-circle-orange.svg"))
+        {
+            Assert.assertFalse(true, "The entered mobile data is valid and will not display any errors");
+        }
         return true;
     }
 
@@ -251,7 +256,7 @@ public class UpdateProfileActions extends TestBase {
         String streetAddress = updateStreetAddress();
         String city = updateCity();
         String state = updateState();
-        String zipcode = updateZipcode();
+          String zipcode = updateZipcode();
 
         String firstNameValue = driver.findElement(updateProfileLocators.firstNameInput).getAttribute("value");
         String lastNameValue = driver.findElement(updateProfileLocators.lastNameInput).getAttribute("value");
@@ -279,4 +284,81 @@ public class UpdateProfileActions extends TestBase {
             String confirmText = "Your profile has been updated.";
             Assert.assertTrue(alertUpdateProfileSuccess.getText().equals(confirmText));
         }
+
+    //Verify Phone Number Format
+    public void verifyPhoneNoFormat()
+    {
+        baseActions.verifyPhoneNoFormat(updateProfileLocators.mobileInput);
+    }
+
+    //verify Errors After 10 Digit Entry for Mobile
+    public void verifyErrorAfter10DigitsEntry()
+    {
+        baseActions.verifyErrorAfter10DigitsEntry(updateProfileLocators.mobileInput, updateProfileLocators.mobileUniqueNessError, updateProfileLocators.mobileInputTickMark);
+    }
+
+    //verify uniqueness error will have a number clickable
+    public boolean verifyNumberclickable_InMobileError()
+    {
+        WebElement uniquenessError = driver.findElement(updateProfileLocators.mobileUniqueNessError);
+        WebElement phoneNoLinkText = driver.findElement(By.linkText ("+1-888-561-4748"));
+        Assert.assertTrue((uniquenessError.isDisplayed())==true && (phoneNoLinkText.isEnabled())==true, "The link in the error message is clickable");
+        WebDriverWait wait = new WebDriverWait(driver,6);
+        wait.until(ExpectedConditions.elementToBeClickable (phoneNoLinkText));
+        return true;
+    }
+
+
+    //Cross check test data when is same as per registration
+    public List<String> getEnteredValues_againtRegistration()
+    {
+        String email = baseActions.getEneteredValue(updateProfileLocators.emailFieldNonEditable);
+        String firstName = baseActions.getEneteredValue(updateProfileLocators.firstNameInput);
+        String lastName = baseActions.getEneteredValue(updateProfileLocators.lastNameInput);
+        String mobileNumber = baseActions.getEneteredValue(updateProfileLocators.mobileInput);
+        String streetAddress = baseActions.getEneteredValue(updateProfileLocators.streetAddressInput);
+        String city = baseActions.getEneteredValue(updateProfileLocators.cityInput);
+        String state = baseActions.getEneteredValue(updateProfileLocators.stateInput);
+        String zipcode = baseActions.getEneteredValue(updateProfileLocators.zipcodeInput);
+
+        System.out.println(email + "**********");
+        System.out.println(properties.getProperty("registeredEmail"));
+
+        List<String> profileValues = new ArrayList<>();
+        profileValues.add(email);
+        profileValues.add(mobileNumber);
+        profileValues.add(streetAddress);
+        profileValues.add(city);
+        profileValues.add(state);
+        profileValues.add(zipcode);
+
+        //Check against registered values
+
+        Assert.assertEquals(email, properties.getProperty("registeredEmail"), "Email is equal");
+        Assert.assertEquals(mobileNumber, properties.getProperty("registeredMobileNumber"), "Mobile Number is equal");
+        Assert.assertEquals(firstName, properties.getProperty("registeredFirstName"), "FirstName is equal");
+        Assert.assertEquals(lastName, properties.getProperty("registeredLastName"), "LastName is equal");
+        Assert.assertEquals(streetAddress, properties.getProperty("registeredStreetAddress"), "Street Address is equal");
+        Assert.assertEquals(city, properties.getProperty("registeredCity"), "City is equal");
+        Assert.assertEquals(state, properties.getProperty("registeredState"), "State is equal");
+        Assert.assertEquals(zipcode, properties.getProperty("registeredZipcode"), "Zipcode is equal");
+        return profileValues;
+    }
+
+    //Verify profile button will be activated only if all the fields are filled with data
+    public void checkFieldsForBlankData() throws InterruptedException {
+
+        WebDriverWait wait = new WebDriverWait(driver, 70);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(updateProfileLocators.passwordFieldMasked)).getAttribute("value");
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.passwordFieldMasked);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.firstNameInput);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.lastNameInput);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.mobileInput);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.streetAddressInput);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.cityInput);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.stateInput);
+        baseActions.checkFiedIsBlankOrHasData(updateProfileLocators.zipcodeInput);
+    }
+
+
 }
