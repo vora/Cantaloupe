@@ -278,23 +278,10 @@ public class BaseActions extends TestBase {
         }
     }
 
-    public void regexPassword(By element, String password) {
-
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
-
-        WebElement webElement = driver.findElement(element);
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(password);
-
-        Boolean checkPatternCondition = matcher.matches();
-
-        if (checkPatternCondition == true) {
-            webElement.sendKeys(password);
-        } else if ((checkPatternCondition == false)) {
-            Assert.assertTrue(false, "The entered email is not valid");
-        } else {
-            log.info("Create Account Screen : Something is not proper for email ");
-        }
+    public boolean regexPassword(By element, String password) {
+        String regexPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
+        boolean isPasswordValid = regexExpression(element, password, regexPassword);
+        return isPasswordValid;
     }
 
     //Verify if the password fields are masked before clicking show
@@ -446,21 +433,22 @@ public class BaseActions extends TestBase {
 
 
     //Regex for state
-    public String regexState(By element, String state)
+    public boolean regexState(By element, String state)
     {
+        String regexState = "^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$";
        // if(state.matches("Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico|New[ ]York|North[ ]Carolina|North[ ]Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode[ ]Island|South[ ]Carolina|South[ ]Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West[ ]Virginia|Wisconsin|Wyoming") || state.matches("^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$"))
-        if(state.matches("^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$"))
-
-        {
-            Assert.assertTrue(true, "Entered state is valid");
-            //driver.findElement(element).sendKeys(state);
-        }
-        else
-        {
-            Assert.assertTrue(false, "The State entered is not valid");
-        }
-
-        return state;
+//        if(state.matches(regexState))
+//
+//        {
+//            Assert.assertTrue(true, "Entered state is valid");
+//            //driver.findElement(element).sendKeys(state);
+//        }
+//        else
+//        {
+//            Assert.assertTrue(false, "The State entered is not valid");
+//        }
+        boolean isStateValid = regexExpression(element, state, regexState);
+        return isStateValid;
     }
 
     //JS
@@ -484,7 +472,7 @@ public class BaseActions extends TestBase {
 
     //AddMoreCrad - REgex
     //regex phone no
-    public void regexExpression(By element, String enterData, String regexType) {
+    public boolean regexExpression(By element, String enterData, String regexType) {
         // String regex = "^\\d{19}$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regexType);
@@ -499,6 +487,7 @@ public class BaseActions extends TestBase {
         } else {
             log.info("Create Account Screen : Something is not proper for the entered phone number ");
         }
+        return checkPatternCondition;
 
     }
 
@@ -606,7 +595,7 @@ public class BaseActions extends TestBase {
        return newString;
     }
 
-    public void isFieldEditable(By element)
+    public void checkFieldsAreEditable(By element)
     {
         Assert.assertTrue((driver.findElement(element).isEnabled())==true, "Element is in enable mode");
     }
@@ -748,5 +737,38 @@ public class BaseActions extends TestBase {
             return true;
         }
         return true;
+    }
+
+    public void checkFieldsAreEditable(By element1, By element2)
+    {
+        Boolean inpuFields1 = driver.findElement(element1).isEnabled();
+        Boolean inputField2 = driver.findElement(element2).isEnabled();
+        Assert.assertTrue((inpuFields1 && inputField2) == true, "Input fields would accept data");
+    }
+
+    public void checkFieldsAreEditable(By element1, By element2, By element3)
+    {
+        Boolean inpuFields1 = driver.findElement(element1).isEnabled();
+        Boolean inputField2 = driver.findElement(element2).isEnabled();
+        Boolean inputField3 = driver.findElement(element3).isEnabled();
+        Assert.assertTrue((inpuFields1 && inputField2 && inputField3) == true, "Input fields would accept data");
+    }
+
+    //check if error message is shown when the password criteria is not met
+    public void validateErrorMessageForPassword(By createPassword, By errorCriteria, String wrongPassword) throws AWTException {
+        driver.findElement(createPassword).sendKeys(wrongPassword);
+        randomClickBasedOnOS();
+        WebElement passwordError = driver.findElement(errorCriteria);
+
+        Boolean status = passwordError.isDisplayed();
+        if(status == true)
+        {
+            randomClickBasedOnOS();
+            Assert.assertTrue(true, "Password criteria is validated");
+        }
+        else
+        {
+            Assert.assertTrue(false, "Password criteria is validated");
+        }
     }
 }

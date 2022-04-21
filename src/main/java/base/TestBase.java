@@ -121,7 +121,7 @@ public class TestBase {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-
+        }
 
         if (properties.getProperty("platformName").equalsIgnoreCase(Android)) {
             DesiredCapabilities andCaps = DesiredCapabilities.chrome();
@@ -150,7 +150,13 @@ public class TestBase {
             }
         }
 
-        }
+    }
+
+    @AfterMethod
+    public void teraDown()
+    {
+        driver.manage().deleteAllCookies();
+        driver.quit();
     }
 
 

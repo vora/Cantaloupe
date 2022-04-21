@@ -212,7 +212,10 @@ public class AccountCreation extends TestBase {
 
     //VerifyTickMark()
     public void verrifyTickMark() {
-        if ((driver.findElement(accountCreationLocators.tickMarkImage).isDisplayed())) {
+        WebDriverWait wait = new WebDriverWait(driver, 3000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.createEmailTockMarkImg));
+
+        if ((driver.findElement(accountCreationLocators.createEmailTockMarkImg).isDisplayed())) {
             Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", driver.findElement(accountCreationLocators.tickMarkImage));
             Assert.assertTrue(image1Present == true, "Tick mark is present");
         } else if (!(driver.findElement(accountCreationLocators.tickMarkImage)).isDisplayed()) {
@@ -390,20 +393,7 @@ public class AccountCreation extends TestBase {
 
     //check if error message is shown when the password criteria is not met
     public void validateErrorMessageForPassword(String wrongPassword) throws AWTException {
-       driver.findElement(accountCreationLocators.createPassowrd).sendKeys(wrongPassword);
-        baseActions.randomClickBasedOnOS();
-        WebElement passwordError = driver.findElement(accountCreationLocators.passwordErrorCriteria);
-
-        Boolean status = passwordError.isDisplayed();
-        if(status == true)
-        {
-            baseActions.randomClickBasedOnOS();
-            Assert.assertTrue(true, "Password criteria is validated");
-        }
-        else
-        {
-            Assert.assertTrue(false, "Password criteria is validated");
-        }
+       baseActions.validateErrorMessageForPassword(accountCreationLocators.createPassowrd, accountCreationLocators.passwordErrorCriteria, wrongPassword);
     }
 
     //Try wrong password
@@ -447,15 +437,19 @@ public class AccountCreation extends TestBase {
     }
 
     //Verify that password and confirm password are a match
-    public void verifyPasswordAndConfirmPassword(String password, String confirm)
+    public boolean verifyPasswordAndConfirmPassword(String password, String confirm)
     {
         baseActions.enterValue(accountCreationLocators.createPassowrd, password);
+        //baseActions.clearInputfieldAndEnterNewData(accountCreationLocators.createPassowrd, password);
         baseActions.enterValue(accountCreationLocators.confirmPassword, confirm);
         String createPassword = driver.findElement(accountCreationLocators.createPassowrd).getAttribute("value");
         baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.createPassowrd), createPassword);
         String confirmPassword = driver.findElement(accountCreationLocators.confirmPassword).getAttribute("value");
         baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.confirmPassword), confirmPassword);
-        Assert.assertEquals(createPassword, confirmPassword);
+        Assert.
+                assertEquals(createPassword, confirmPassword);
+        boolean isEqual = createPassword.equals(confirmPassword);
+        return isEqual;
     }
 
 
@@ -648,54 +642,54 @@ public class AccountCreation extends TestBase {
     //Verify that, the input field for "Email" should be editable
     public void isEmailFieldEditable()
     {
-        baseActions.isFieldEditable(accountCreationLocators.emailIdInputField);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.emailIdInputField);
     }
 
     //Verify that, the input field for "Create password" should be editable
     public void isPasswordFieldEditable()
     {
-        baseActions.isFieldEditable(accountCreationLocators.createPasswordInputField);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.createPasswordInputField);
     }
 
     //Verify that, the input field for "Confirm password" should be editable
     public void isConfirmPasswordFieldEditable()
     {
-        baseActions.isFieldEditable(accountCreationLocators.confirmPasswordInptField);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.confirmPasswordInptField);
     }
 
     //Verify that, the input field for "First name" should be editable
     public void isFirstNameEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.firstnameInput);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.firstnameInput);
     }
 
     //Verify that, the input field for "Last name" should be editable
     public void isLastNameEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.lastNameInput);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.lastNameInput);
     }
 
     //Verify that, the input field for "Mobile" should be editable
     public void isMobileEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.mobileNumberField);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.mobileNumberField);
     }
 
     //Verify that, the input field for "Street Address" should be editable
     public void isStreetAddressEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.streetAddressInput);
     }
 
     //Verify that, the input field for "City" should be editable
     public void isCityEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.streetAddressInput);
     }
 
     //Verify that, the input field for "State" should be editable
     public void isStateEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.streetAddressInput);
     }
 
     //Verify that, the input field for "Zipcode" should be editable
     public void isZipcodeEditable() {
-        baseActions.isFieldEditable(accountCreationLocators.streetAddressInput);
+        baseActions.checkFieldsAreEditable(accountCreationLocators.streetAddressInput);
     }
 
     //Verify that if the input number by user is unique, the number will be accepted with a ✓ on the field
@@ -819,22 +813,9 @@ public class AccountCreation extends TestBase {
     //Regx for the final String of address
     public void regexCompleteAddress()
     {
-//        String finalStringAddress = addUpAllAddressInputs();
-//        Pattern pattern = Pattern.compile(properties.getProperty("regexFinalAddress"));
-//        Matcher matcher = pattern.matcher(finalStringAddress);
-//
-//        Boolean checkPatternCondition = matcher.matches();
-//
-//        if (checkPatternCondition == true) {
-//        } else if ((checkPatternCondition == false)) {
-//            Assert.assertTrue(false, "The entered data is not valid");
-//        } else {
-//            log.info("Create Account Screen : Something is not proper for the entered phone number ");
-//        }
         enterData(accountCreationLocators.streetAddressInput, properties.getProperty("streetAddress"));
        // accountCreation1.enterData(accountCreationLocators.cityInputField, properties.getProperty("city"));
         baseActions.regexCompleteAddress(accountCreationLocators.streetAddressInput, accountCreationLocators.cityInput);
-
         regexState();
         regexZipcode();
     }

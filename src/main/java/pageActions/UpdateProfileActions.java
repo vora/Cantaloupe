@@ -165,7 +165,7 @@ public class UpdateProfileActions extends TestBase {
         updateMobile();
         updateStreetAddress();
         updateCity();
-        updateState();
+        updateState("CA");
         updateZipcode();
     }
 
@@ -217,12 +217,15 @@ public class UpdateProfileActions extends TestBase {
     }
 
     //Verify if user is able to edit and enter new value in the street fields
-    public String updateState() {
+    public String updateState(String enterState) {
         WebElement stateInput = driver.findElement(updateProfileLocators.stateInput);
-        String state = baseActions.regexState(updateProfileLocators.stateInput, properties.getProperty("updateState"));
-        stateInput.click();
-        stateInput.sendKeys(state);
-        return state;
+        boolean state = baseActions.regexState(updateProfileLocators.stateInput, properties.getProperty("updateState"));
+        if(state==true)
+        {
+            stateInput.click();
+            stateInput.sendKeys(enterState);
+        }
+        return enterState;
     }
 
     //Verify if user is able to edit and enter new value in the zipcode fields
@@ -255,7 +258,7 @@ public class UpdateProfileActions extends TestBase {
         String mobileNumber = updateMobile();
         String streetAddress = updateStreetAddress();
         String city = updateCity();
-        String state = updateState();
+        String state = updateState("CA");
           String zipcode = updateZipcode();
 
         String firstNameValue = driver.findElement(updateProfileLocators.firstNameInput).getAttribute("value");

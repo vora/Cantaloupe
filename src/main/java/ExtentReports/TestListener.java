@@ -54,6 +54,7 @@ public class TestListener extends TestBase implements ITestListener {
         }
         System.out.println("*** Test execution " + result.getMethod().getMethodName() + " failed...");
         ExtentTestManager.getTest().log(Status.FAIL, "Test Failed");
+
         assert targetLocation != null;
         try {
             targetLocation = convertTo64BaseString();
@@ -93,7 +94,7 @@ public class TestListener extends TestBase implements ITestListener {
     //Convert image to 64 base string
     public String convertTo64BaseString() throws IOException {
        File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-       String path = getScreenshot(driver, "Error Screen shot");
+       String path = getScreenshot(driver, "errorFile");
        FileUtils.copyFile(file, new File(path));
        byte[] image = IOUtils.toByteArray(new FileInputStream(path));
        return Base64.getEncoder().encodeToString(image);

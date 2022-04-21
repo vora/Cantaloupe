@@ -49,6 +49,7 @@ public class AccountCreationLocators {
     public By nextButton = By.xpath("//*[@id='registration']/div[2]/button");
     public By emailErrorMessage = By.xpath("//*[contains(text(),'Password must be between 8 and 20 characters. It must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and a special character from this list')]");
     public static By tickMarkImage = By.xpath("//*[@id='registration']/div[1]/div/span/img");
+    public By createEmailTockMarkImg = By.xpath("//*[@id='id_email']/../span/img");
     public By existingEmailError = By.xpath("//span[contains(text(), 'That Email Address Is Already In Use. Would You Like To Log In Instead?')]");
    // public By loginThroughCreateScreen = By.xpath("//*[@id='registration']/div[1]/div[1]/button");
 

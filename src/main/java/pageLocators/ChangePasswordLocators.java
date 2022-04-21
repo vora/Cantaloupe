@@ -15,6 +15,9 @@ public class ChangePasswordLocators {
     public By creatNewPasswordHeader = By.xpath("//*[text()='Create new password:']");
     public By updateButton = By.xpath("//*[]text()='Update password'");
 
+   // Errors
+    public By invalidErrorCreatePassword = By.xpath("//input[@id='id_password']/parent::div/preceding-sibling::div");
+    public By invalidErrorConfirmPassword = By.xpath("//input[@id='id_confirmPassword']/parent::div/preceding-sibling::div");
 
 
 }
