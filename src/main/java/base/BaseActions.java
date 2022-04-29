@@ -771,4 +771,24 @@ public class BaseActions extends TestBase {
             Assert.assertTrue(false, "Password criteria is validated");
         }
     }
+
+    //Wrong Scenarios
+    public void validateWrongScenarios(By elementInput, By elementErrorMessage, String wrongEntry) throws AWTException {
+        driver.findElement(elementInput).click();
+        randomClickBasedOnOS();
+        driver.findElement(elementInput).sendKeys(wrongEntry);
+        randomClickBasedOnOS();
+        WebElement passwordError = driver.findElement(elementErrorMessage);
+
+        Boolean status = passwordError.isDisplayed();
+        if(status == true)
+        {
+            randomClickBasedOnOS();
+            Assert.assertTrue(true, " Input riteria is valid");
+        }
+        else
+        {
+            Assert.assertTrue(false, "Input criteria is not  valid");
+        }
+    }
 }

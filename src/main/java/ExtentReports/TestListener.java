@@ -1,6 +1,7 @@
 package ExtentReports;
 
 import base.TestBase;
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -54,6 +55,7 @@ public class TestListener extends TestBase implements ITestListener {
         }
         System.out.println("*** Test execution " + result.getMethod().getMethodName() + " failed...");
         ExtentTestManager.getTest().log(Status.FAIL, "Test Failed");
+        ExtentTestManager.getTest().log(Status.FATAL, "Test Failed due to" + result.getThrowable());
 
         assert targetLocation != null;
         try {

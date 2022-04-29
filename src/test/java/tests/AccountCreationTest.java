@@ -72,21 +72,18 @@ public class AccountCreationTest extends TestBase {
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailEnteredIsValid() throws IOException, AWTException
-    {
+    public void verifyEmailEnteredIsValid() throws IOException, AWTException {
         // Verify email entered, tick mark
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.enteredEmaiCheck(properties.getProperty("createNewEmail"));
-
     }
 
     //Verify if the email is editable
     @Test
 
     //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
-    public void verifyEmailIsEditable() throws IOException, AWTException
-    {
+    public void verifyEmailIsEditable() throws IOException, AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
@@ -98,8 +95,7 @@ public class AccountCreationTest extends TestBase {
 
     //Verify wrong password fields
     @Test
-    public void verifyPassword() throws IOException, AWTException
-    {
+    public void verifyPassword() throws IOException, AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
@@ -112,8 +108,7 @@ public class AccountCreationTest extends TestBase {
 
     //Verify if both the password and confirm password matches adn click on show icon and hide icon
     @Test
-    public void showPasswordAndHide() throws IOException, AWTException
-    {
+    public void showPasswordAndHide() throws IOException, AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verifyNextButtonEnabled();
@@ -146,10 +141,11 @@ public class AccountCreationTest extends TestBase {
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
-        accountCreation.enterPassword(properties.getProperty("createAccountPassword"));
-        accountCreation.checkPasswordMasked();
-        accountCreation.isConfirmPasswordFieldEditable();
-        accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
+        //accountCreation.enterPassword(properties.getProperty("verifyPassword"));
+        // accountCreation.checkPasswordMasked();
+        // baseActions.clearInputfieldAndEnterNewData(accountCreationLocators.createPassowrd, properties.getProperty(""));
+        //accountCreation.isConfirmPasswordFieldEditable();
+        accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("verifyPassword"), properties.getProperty("verifyConfirmPassword"));
     }
 
     //verify personal details section
@@ -282,7 +278,7 @@ public class AccountCreationTest extends TestBase {
     }
 
     @Test
-    public void checkInputsBeforeAndAfterNavigations() throws AWTException {
+    public void verifyInputsBeforeAndAfterNavigations() throws AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
         accountCreation.verrifyTickMark();
@@ -310,5 +306,98 @@ public class AccountCreationTest extends TestBase {
         accountCreation.verifyNextButtonEnabled();
         baseActions.scrollDown();
         accountCreation.clickBackToLoginOptions();
+    }
+
+    //@Test
+
+    //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
+    // public void verifyWrongEmail(String wrongEmail, String wrongPassword, String wrongFirstName, String wrongLastName, String wrongMobileNumber, String wrongStreetaddtress, String wrongcity, String wrongState, String wrongZipcode,) throws IOException, AWTException
+    //{
+    //   accountCreation.clickCreateButton();
+    //accountCreation.verifyWrongEmail();
+    //}
+
+
+
+    //Validate all errors such as empty input field, then error message, then existing email error message and login button flow
+    //public void verifyWrongEmail(String wrongEmail, String wrongPassword, String wrongFirstName, String wrongLastName, String wrongMobileNumber, String wrongStreetaddtress, String wrongcity, String wrongState, String wrongZipcode,) throws IOException, AWTException
+    @Test
+    public void verifyWrongMobile() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongMobile();
+        }
+    }
+
+    @Test
+    public void verifyWrongEmail() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongEmail();
+        }
+    }
+
+    @Test
+    public void verifyWrongFirstName() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongFirstName();
+        }
+    }
+
+    @Test
+    public void verifyWrongLastName() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongLastName();
+        }
+    }
+
+    @Test
+    public void verifyWrongStreetAddress() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongStreetAddress();
+        }
+    }
+
+    @Test
+    public void verifyWrongCity() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongCity();
+        }
+    }
+
+    @Test
+    public void verifyWrongState() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongState();
+        }
+    }
+
+    @Test
+    public void verifyWrongZipcode() throws AWTException {
+        {
+            accountCreation.clickCreateButton();
+            accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+            accountCreation.verifyNextButtonEnabled();
+            accountCreation.verifyWrongZipcode();
+        }
     }
 }

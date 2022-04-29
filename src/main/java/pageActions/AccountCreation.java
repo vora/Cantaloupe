@@ -898,7 +898,7 @@ public class AccountCreation extends TestBase {
     public void checkInputsAfterNavigation()
     {
         navigateToTOC();
-        navigateBackToRegistration();
+      //  navigateBackToRegistration();
         List<String> enteredData = verifyInputAfterTOCAndPOPNavigation();
         Collections.sort(enteredData);
         navigateToPP();
@@ -938,6 +938,47 @@ public class AccountCreation extends TestBase {
         } else if (!(driver.findElement(accountCreationLocators.tickMarkImage)).isDisplayed()) {
             Assert.assertTrue(false, "tick mark is not present");
         }
+    }
+
+    //wrongScenarios - Email
+    public void verifyWrongEmail() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.emailIdInputField, accountCreationLocators.emailErrorMessage, properties.getProperty("wrongEmail"));
+    }
+
+    //wrongScenarios - FirstName
+    public void verifyWrongFirstName() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.firstnameInput, accountCreationLocators.firstNameError, properties.getProperty("wrongFirstName"));
+    }
+
+    //wrongScenarios - LastName
+    public void verifyWrongLastName() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.lastNameInput, accountCreationLocators.lastNameError, properties.getProperty("wrongLastName"));
+    }
+
+    //wrongScenarios - Mobile
+    public void verifyWrongMobile() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.mobileNumberField, accountCreationLocators.invalidMobileError, properties.getProperty("wrongMobileNumber"));
+    }
+
+
+    //wrongScenarios - Street Address
+    public void verifyWrongStreetAddress() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.streetAddressInput, accountCreationLocators.streetAddressErrorText, properties.getProperty("wrongStreetAddress"));
+    }
+
+    //wrongScenarios - City
+    public void verifyWrongCity() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.cityInput, accountCreationLocators.cityErrorText, properties.getProperty("wrongCity"));
+    }
+
+    //wrongScenarios - State
+    public void verifyWrongState() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.stateInput, accountCreationLocators.stateErrorText, properties.getProperty("wrongState"));
+    }
+
+    //wrongScenarios - zipcode
+    public void verifyWrongZipcode() throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.zipcodeInput, accountCreationLocators.zipcodeErrorText, properties.getProperty("wrongZipcode"));
     }
 
 

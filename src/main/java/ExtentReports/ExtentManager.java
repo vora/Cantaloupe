@@ -14,7 +14,7 @@ import org.testng.annotations.AfterMethod;
 
 public class ExtentManager extends TestBase {
     private static ExtentReports extent;
-    private static String reportFileName = "Test-Automaton-Report"+".html";
+    private static String reportFileName = "Cantaloupe-Automaton-Report"+".html";
     private static String fileSeperator = System.getProperty("file.separator");
     private static String reportFilepath = System.getProperty("user.dir") +fileSeperator+ "TestReport";
     private static String reportFileLocation =  reportFilepath +fileSeperator+ reportFileName;
@@ -42,8 +42,9 @@ public class ExtentManager extends TestBase {
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
         //Set environment details
-        extent.setSystemInfo("OS", "Platform is " + System.getProperty("platformName"));
+        extent.setSystemInfo("OS", "Platform is " + properties.getProperty("platformName"));
         extent.setSystemInfo("Environment", "QA");
+        extent.setSystemInfo("userName", "rprem");
 
         return extent;
     }
