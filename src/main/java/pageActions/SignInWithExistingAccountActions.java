@@ -2,13 +2,13 @@ package pageActions;
 
 import base.BaseActions;
 import base.TestBase;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageLocators.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,11 +18,15 @@ public class SignInWithExistingAccountActions extends TestBase {
 
         BaseActions baseActions = new BaseActions();
         LandingScreen loginScreen = new LandingScreen();
+        HomePageLocators homePageLocators = new HomePageLocators();
         SignInWithExistingAccountLocators signInWithExistingAccountLocators = new SignInWithExistingAccountLocators();
         CreateOrLoginInitialLocators createAccountLocators = new CreateOrLoginInitialLocators();
         AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
         LoggedInUserLocators loggedInUserLocators = new LoggedInUserLocators();
         CreateOrLoginInitialLocators createOrLoginInitialLocators = new CreateOrLoginInitialLocators();
+
+
+
     String emailErrorText = "Please enter your email.";
 
     public SignInWithExistingAccountActions() throws IOException {
@@ -33,6 +37,7 @@ public class SignInWithExistingAccountActions extends TestBase {
         {
             driver.findElement(loginScreen.alreadyHaveAccountButton).isEnabled();
             driver.findElement(loginScreen.alreadyHaveAccountButton).click();
+            driver.findElement(homePageLocators.continueWithEmail).click();
         }
 
         //clicks on continue with email link
@@ -44,15 +49,14 @@ public class SignInWithExistingAccountActions extends TestBase {
 
 
         //Verify error messages displayed whn there are no data entered
-        public void validateErrorMessages()
-        {
+        public void validateErrorMessages() throws AWTException {
             driver.findElement(signInWithExistingAccountLocators.emailInput).click();
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             driver.findElement(signInWithExistingAccountLocators.passwordInput).click();
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             String emailErrorText = "Please enter your email.";
             String passwordErrorText = "Please enter your password.";
-            List<String> getAllErrors = baseActions.getSpanText(signInWithExistingAccountLocators.errorMessages);
+            List<String> getAllErrors = baseActions.getListElements(signInWithExistingAccountLocators.errorMessages);
             if((getAllErrors.contains(emailErrorText)) && (getAllErrors).contains(passwordErrorText))
             {
                 Assert.assertTrue(true, "Error messages are displayed");
@@ -66,7 +70,7 @@ public class SignInWithExistingAccountActions extends TestBase {
 
 
     //Validate all the fields on Sign in screen and enter data in email and password fields and verify sign in button mode
-    public void verifySignInScreen(String existingAccountEmail, String existingAccountPassword) throws IOException {
+    public void verifySignInScreen(String existingAccountEmail, String existingAccountPassword) throws IOException, AWTException {
 
 
         driver.findElement(createOrLoginInitialLocators.continueWithEmail).click();
@@ -82,9 +86,9 @@ public class SignInWithExistingAccountActions extends TestBase {
             Assert.assertTrue(forgotPasswordLink);
 
             driver.findElement(signInWithExistingAccountLocators.emailInput).sendKeys(existingAccountEmail);
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
             driver.findElement(signInWithExistingAccountLocators.passwordInput).sendKeys(existingAccountPassword);
-            driver.findElement(By.xpath("//html")).click();
+            baseActions.randomClickBasedOnOS();
 
             Boolean buttonNotEnabled = driver.findElement(signInWithExistingAccountLocators.signInButton).isEnabled();
 
@@ -101,8 +105,9 @@ public class SignInWithExistingAccountActions extends TestBase {
     //Verify if the sign in button is in disabled mode when there is no data entered
     public void verifySignInDisabled()
     {
-
-        WebElement buttonNotEnabled = (driver.findElement(signInWithExistingAccountLocators.signInButton));
+        WebElement continueWithEmail = driver.findElement(homePageLocators.continueWithEmail);
+        continueWithEmail.click();
+        WebElement buttonNotEnabled = driver.findElement(signInWithExistingAccountLocators.signInButton);
         if(buttonNotEnabled.isEnabled())
         {
             Assert.assertTrue(false, "Sign iin button is enabled and is not working as expected");
@@ -116,7 +121,7 @@ public class SignInWithExistingAccountActions extends TestBase {
 
     //Verify user is able to login successfully
     @Test(dataProvider = "CantaloupeTestData", dataProviderClass = DataProvider.class)
-    public void clickSignIn(String existingAccountEmail, String existingAccountPassword) throws IOException {
+    public void clickSignIn(String existingAccountEmail, String existingAccountPassword) throws IOException, AWTException {
             verifySignInScreen(existingAccountEmail, existingAccountPassword);
             driver.findElement(signInWithExistingAccountLocators.signInButton).click();
            if(driver.findElement(loggedInUserLocators.profileLink).isEnabled())
@@ -135,4 +140,11 @@ public class SignInWithExistingAccountActions extends TestBase {
     {
         driver.findElement(loggedInUserLocators.signOutLink).click();
     }
+
+    public void clickProfileLink()
+    {
+        driver.findElement(loggedInUserLocators.profileLink).click();
+    }
+
+
 }
