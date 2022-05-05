@@ -791,4 +791,25 @@ public class BaseActions extends TestBase {
             Assert.assertTrue(false, "Input criteria is not  valid");
         }
     }
+
+    public void clickBlankInputAndCheckErrors(By elementInput, By errorMessage) throws AWTException {
+        clickLinksAndButtons(elementInput);
+        randomClickBasedOnOS();
+        isErrorDisplayed(errorMessage);
+    }
+
+    //Check if an element existis or not
+    public void isErrorDisplayed(By element)
+    {
+        Boolean isPresent = driver.findElements(element).size() > 0;
+        if(isPresent==true)
+        {
+            Assert.assertTrue(true, "Error message is present");
+        }
+        else
+        {
+            Assert.fail();
+        }
+    }
+
 }

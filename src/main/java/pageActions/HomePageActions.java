@@ -69,6 +69,7 @@ public class HomePageActions extends TestBase {
         headerList.add(driver.findElement(homePageLocators.secondHeader));
         headerList.add(driver.findElement(homePageLocators.thirdHeader));
         headerList.add(driver.findElement(homePageLocators.fourthHeader));
+        headerList.add(driver.findElement(homePageLocators.fourthHeader));
 
         for ( int i = 0 ; i<corousalList.size(); i++ )
         {

@@ -13,8 +13,9 @@ public class HomePageLocators {
     public By moreTransactionImg = By.xpath("//img[@alt='Google Wallet/Apple Pay Card']");
     public By firstHeader = By.xpath("//*[text()='Reload your pass with a credit or debit card']");
     public By secondHeader = By.xpath("//*[text()='Your More Pass Works with Apple Wallet']");
-    public By thirdHeader = By.xpath("//*[text()='Add a CPay pass to pay with digital tokens']");
+    public By thirdHeader = By.xpath("//*[text()='And Get 2% back on all CPay transactions ']");
     public By fourthHeader = By.xpath("//*[text()='View your transactions, get help, and more ']");
+    public By fifthHeader = By.xpath("//*[text()='Add a CPay pass to pay with digital tokens']");
     public By alreadyHaveAnAccountLink = By.xpath("//*[text()='Already have an account?']");
     public By createAccountButton = By.xpath("//*[text()='Create account']");
     public By errorStatus503 = By.xpath("//*[text()='Request failed with status code 503'");

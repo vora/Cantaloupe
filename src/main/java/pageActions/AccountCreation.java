@@ -213,12 +213,14 @@ public class AccountCreation extends TestBase {
     //VerifyTickMark()
     public void verrifyTickMark() {
         WebDriverWait wait = new WebDriverWait(driver, 3000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.createEmailTockMarkImg));
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(accountCreationLocators.createEmailTockMarkImg));
 
-        if ((driver.findElement(accountCreationLocators.createEmailTockMarkImg).isDisplayed())) {
+        Boolean isPresent = driver.findElements(accountCreationLocators.tickMarkImage).size() > 0;
+
+        if (isPresent==true) {
             Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", driver.findElement(accountCreationLocators.tickMarkImage));
             Assert.assertTrue(image1Present == true, "Tick mark is present");
-        } else if (!(driver.findElement(accountCreationLocators.tickMarkImage)).isDisplayed()) {
+        } else if (isPresent==false) {
             Assert.assertTrue(false, "tick mark is not present");
         }
     }
@@ -446,8 +448,7 @@ public class AccountCreation extends TestBase {
         baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.createPassowrd), createPassword);
         String confirmPassword = driver.findElement(accountCreationLocators.confirmPassword).getAttribute("value");
         baseActions.clearInputfieldAndEnterNewData((accountCreationLocators.confirmPassword), confirmPassword);
-        Assert.
-                assertEquals(createPassword, confirmPassword);
+        Assert.assertEquals(createPassword, confirmPassword);
         boolean isEqual = createPassword.equals(confirmPassword);
         return isEqual;
     }
@@ -481,10 +482,10 @@ public class AccountCreation extends TestBase {
     }
 
     //verify errors
-    public void verifyPhoneNoInput() throws AWTException {
+    public void verifyPhoneNoInput(String mobileNumber) throws AWTException {
         driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("dfd"));
         baseActions.randomClickBasedOnOS();
-        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(properties.getProperty("mobileNumber"));
+        driver.findElement(accountCreationLocators.phoneNoInput).sendKeys(mobileNumber);
         regexPhoneNo();
         WebElement phoneTick = driver.findElement(accountCreationLocators.phoneNoValidTick);
         if(phoneTick.getAttribute("src").equals("/icons/check-circle-orange.svg"))
@@ -941,44 +942,139 @@ public class AccountCreation extends TestBase {
     }
 
     //wrongScenarios - Email
-    public void verifyWrongEmail() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.emailIdInputField, accountCreationLocators.emailErrorMessage, properties.getProperty("wrongEmail"));
+    public void verifyWrongEmail(String wrongEmail) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.emailIdInputField, accountCreationLocators.emailErrorMessage, wrongEmail);
     }
 
     //wrongScenarios - FirstName
-    public void verifyWrongFirstName() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.firstnameInput, accountCreationLocators.firstNameError, properties.getProperty("wrongFirstName"));
+    public void verifyWrongFirstName(String wrongFirstname) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.firstnameInput, accountCreationLocators.firstNameError, wrongFirstname);
     }
 
     //wrongScenarios - LastName
-    public void verifyWrongLastName() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.lastNameInput, accountCreationLocators.lastNameError, properties.getProperty("wrongLastName"));
+    public void verifyWrongLastName(String wrongLastName) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.lastNameInput, accountCreationLocators.lastNameError, wrongLastName);
     }
 
     //wrongScenarios - Mobile
-    public void verifyWrongMobile() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.mobileNumberField, accountCreationLocators.invalidMobileError, properties.getProperty("wrongMobileNumber"));
+    public void verifyWrongMobile(String wrongMobileNumber) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.mobileNumberField, accountCreationLocators.invalidMobileError, wrongMobileNumber);
     }
 
 
     //wrongScenarios - Street Address
-    public void verifyWrongStreetAddress() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.streetAddressInput, accountCreationLocators.streetAddressErrorText, properties.getProperty("wrongStreetAddress"));
+    public void verifyWrongStreetAddress(String wrongStreetAddress) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.streetAddressInput, accountCreationLocators.streetAddressErrorText, wrongStreetAddress);
     }
 
     //wrongScenarios - City
-    public void verifyWrongCity() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.cityInput, accountCreationLocators.cityErrorText, properties.getProperty("wrongCity"));
+    public void verifyWrongCity(String wrongCity) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.cityInput, accountCreationLocators.cityErrorText, wrongCity);
     }
 
     //wrongScenarios - State
-    public void verifyWrongState() throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.stateInput, accountCreationLocators.stateErrorText, properties.getProperty("wrongState"));
+    public void verifyWrongState(String wrongState) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.stateInput, accountCreationLocators.stateErrorText, wrongState);
     }
 
+
+    //wrongScenarios - State
+    public void verifyWrongZipcode(String wrongZipcode) throws AWTException {
+        baseActions.validateWrongScenarios(accountCreationLocators.zipcodeInput, accountCreationLocators.zipcodeInput, wrongZipcode);
+    }
+
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankEmailError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.emailIdInputField, accountCreationLocators.blankEmailErrorMsg);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankCreatePasswordError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.createPasswordInputField, accountCreationLocators.passwordErrorCriteria);
+    }
+
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankConfirmPasswordError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.confirmPasswordInptField, accountCreationLocators.passwordNotAMatchError);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankFirstNameError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.firstnameInput, accountCreationLocators.firstNameError);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankLastNameError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.lastNameInput, accountCreationLocators.lastNameError);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankPhoneNumberError() throws AWTException {
+        baseActions.clickLinksAndButtons(accountCreationLocators.phoneNoInput);
+        baseActions.enterValue(accountCreationLocators.phoneNoInput, " ");
+        baseActions.isErrorDisplayed(accountCreationLocators.invalidMobileError);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validatePhoneNumberInUseError() throws AWTException {
+        baseActions.clickLinksAndButtons(accountCreationLocators.phoneNoInput);
+        baseActions.enterValue(accountCreationLocators.phoneNoInput, "1234567890");
+        baseActions.isErrorDisplayed(accountCreationLocators.phoneNoInUseError);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankStreetAddressError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.streetAddressInput, accountCreationLocators.streetAddressErrorText);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankCityError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.cityInput, accountCreationLocators.cityErrorText);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankStateError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.stateInput, accountCreationLocators.stateErrorText);
+    }
+
+    //Validates all the input fields on the account creation screen
+    public void validateBlankZipcodeError() throws AWTException {
+        baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.zipcodeInput, accountCreationLocators.zipcodeErrorText);
+    }
+
+
     //wrongScenarios - zipcode
-    public void verifyWrongZipcode() throws AWTException {
+    public void verifyWrongZipcodeError() throws AWTException {
         baseActions.validateWrongScenarios(accountCreationLocators.zipcodeInput, accountCreationLocators.zipcodeErrorText, properties.getProperty("wrongZipcode"));
+    }
+
+    public void validateAllErrors() throws AWTException {
+        validateBlankEmailError();
+        validateBlankCreatePasswordError();
+        validateBlankConfirmPasswordError();
+        validateBlankFirstNameError();
+        validateBlankLastNameError();
+        validateBlankPhoneNumberError();
+        validatePhoneNumberInUseError();
+        validateBlankStreetAddressError();
+        validateBlankCityError();
+        validateBlankStateError();
+        validateBlankZipcodeError();
+    }
+
+    public void verifyAnyErrorsDisplayedOnScreen()
+    {
+        List<WebElement> allErrors = driver.findElements(accountCreationLocators.listOfAllSpanErrors);
+        if(allErrors.size() != 0){
+            for (int i = 0; i < allErrors.size(); i++) {
+                Assert.assertTrue(false, allErrors.get(i).getText());
+            }
+        }
+        else{
+            Assert.assertFalse(true,"No error message is present on the screen" );
+        }
     }
 
 

@@ -158,7 +158,7 @@ public class AccountCreationTest extends TestBase {
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation.verifyPhoneNoInput();
+        accountCreation.verifyPhoneNoInput(properties.getProperty("mobileNumber"));
         accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
     }
 
@@ -173,7 +173,7 @@ public class AccountCreationTest extends TestBase {
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation.verifyPhoneNoInput();
+        accountCreation.verifyPhoneNoInput(properties.getProperty("mobileNumber"));
         accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
         accountCreation.isCheckboxPreChecked();
         accountCreation.verifyTermsAndPrivacy();
@@ -182,16 +182,17 @@ public class AccountCreationTest extends TestBase {
     @Test
     public void completeRegistration() throws IOException, AWTException {
         accountCreation.clickCreateButton();
-        accountCreation.validateEmailCriteria(properties.getProperty("accountCreationEmail"));
+        accountCreation.validateEmailCriteria("test@yopmail1.com");
         accountCreation.verrifyTickMark();
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation.verifyPhoneNoInput();
+        accountCreation.verifyPhoneNoInput(properties.getProperty("mobileNumber"));
         accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
         accountCreation.isCheckboxPreChecked();
         accountCreation.verifyTermsAndPrivacy();
+        accountCreation.verifyAnyErrorsDisplayedOnScreen();
         accountCreation.clickCompleteButton();
         accountCreation.confirmRegistration();
 
@@ -286,7 +287,7 @@ public class AccountCreationTest extends TestBase {
         accountCreation.verifyPasswordAndConfirmPassword(properties.getProperty("createAccountPassword"), properties.getProperty("createAccountConfirmPassword"));
         accountCreation.verifyFirstNameInput(properties.getProperty("firstName"));
         accountCreation.verifyLastNameInput(properties.getProperty("lastName"));
-        accountCreation.verifyPhoneNoInput();
+        accountCreation.verifyPhoneNoInput(properties.getProperty("mobileNumber"));
         accountCreation.verifyAddressInput(properties.getProperty("streetAddress"), properties.getProperty("city"), properties.getProperty("state"), properties.getProperty("zipcode"));
         accountCreation.isCheckboxPreChecked();
         accountCreation.verifyTermsAndPrivacy();
@@ -327,7 +328,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongMobile();
+            accountCreation.verifyWrongMobile(properties.getProperty("wrongMobileNumber"));
         }
     }
 
@@ -337,7 +338,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongEmail();
+            accountCreation.verifyWrongEmail(properties.getProperty("wrongEmail"));
         }
     }
 
@@ -347,7 +348,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongFirstName();
+            accountCreation.verifyWrongFirstName(properties.getProperty("wrongFirstName"));
         }
     }
 
@@ -357,7 +358,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongLastName();
+            accountCreation.verifyWrongLastName(properties.getProperty("wrongLastName"));
         }
     }
 
@@ -367,7 +368,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongStreetAddress();
+            accountCreation.verifyWrongStreetAddress(properties.getProperty("wrongStreetAddress"));
         }
     }
 
@@ -377,7 +378,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongCity();
+            accountCreation.verifyWrongCity(properties.getProperty("wrongCity"));
         }
     }
 
@@ -387,7 +388,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongState();
+            accountCreation.verifyWrongState(properties.getProperty("wrongState"));
         }
     }
 
@@ -397,7 +398,7 @@ public class AccountCreationTest extends TestBase {
             accountCreation.clickCreateButton();
             accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
             accountCreation.verifyNextButtonEnabled();
-            accountCreation.verifyWrongZipcode();
+            accountCreation.verifyWrongZipcode(properties.getProperty("wrongZipcode"));
         }
     }
 }
