@@ -41,7 +41,6 @@ public class ExtentManager extends TestBase {
 
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
-        //Set environment details
         extent.setSystemInfo("OS", "Platform is " + System.getProperty("platformName"));
         extent.setSystemInfo("Environment", "QA");
 

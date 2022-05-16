@@ -60,7 +60,6 @@ public class BaseActions extends TestBase {
                 log.info(url + " - URL belongs to another domain. Hence, skipping it.");
                 continue;
             }
-
             validateUrl(url);
         }
     }
@@ -140,13 +139,6 @@ public class BaseActions extends TestBase {
         return elementText;
     }
 
-    //Method to enter text in the search text box
-    public String searchText(By locator, String enterText) {
-        WebElement element = driver.findElement(locator);
-        element.sendKeys(enterText);
-        return enterText;
-    }
-
     //Method to click on an elemenet based on the element locator
     public void clickLinksAndButtons(By locator) {
         WebElement element = driver.findElement(locator);
@@ -157,9 +149,8 @@ public class BaseActions extends TestBase {
     public void retrievedSearchResults(By locator, String searchText) {
         WebElement element = driver.findElement(locator);
         String retrievedText = element.getText();
-        String s = StringUtils.substringBetween(retrievedText, "'", "'");
-        String expected = searchText;
-        Assert.assertEquals(expected, s);
+        String expectedText = searchText;
+        Assert.assertEquals(retrievedText, expectedText);
     }
 
     //Mouse over on the webelement
@@ -186,7 +177,6 @@ public class BaseActions extends TestBase {
         List<String> errorText = new ArrayList<>();
 
         for (int i = 0; i < allErrors.size(); i++) {
-            //obtain text
             String errorTextAdd = allErrors.get(i).getAttribute("innerHTML");
             errorText.add(errorTextAdd);
         }
@@ -204,24 +194,6 @@ public class BaseActions extends TestBase {
         }
     }
 
-    //Edit InputFilds and update with new test data
-
-    public void EditAndUpdateInputFields(By element, String newTestData) {
-        WebElement webElement = driver.findElement(element);
-        // TouchAction touchActions = new TouchAction(driver);
-        // touchActions.tap((TapOptions) webElement);
-        deleteInputCharacters(element);
-        webElement.sendKeys(newTestData);
-    }
-
-    public void EditAndUpdateInputFields(By element, Integer newTestData) {
-        WebElement webElement = driver.findElement(element);
-        // TouchAction touchActions = new TouchAction(driver);
-        // touchActions.tap((TapOptions) webElement);
-        deleteInputCharacters(element);
-        webElement.sendKeys(String.valueOf(newTestData));
-    }
-
     public void clickButton(By element) {
         WebElement webElement = driver.findElement(element);
         webElement.click();
@@ -230,11 +202,6 @@ public class BaseActions extends TestBase {
     public void enterValue(By element, String sendKeysData) {
         driver.findElement(element).sendKeys(sendKeysData);
     }
-
-    public void enterPhoneNo(By element, String sendKeysData) {
-        driver.findElement(element).sendKeys(sendKeysData);
-    }
-
 
     //Regex for Email
     public void validateEmailInputs(By element, String email) {
@@ -268,16 +235,6 @@ public class BaseActions extends TestBase {
         return webElement.getText();
     }
 
-    //Tick marks for email, phone number
-    public static void verifyTick(WebElement element) {
-        if (element.isDisplayed()) {
-            Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", element);
-            Assert.assertTrue(image1Present == true, "Tick mark is present");
-        } else if (!(element).isDisplayed()) {
-            Assert.assertTrue(false, "tick mark is not present");
-        }
-    }
-
     public boolean regexPassword(By element, String password) {
         String regexPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
         boolean isPasswordValid = regexExpression(element, password, regexPassword);
@@ -300,14 +257,6 @@ public class BaseActions extends TestBase {
         js.executeScript("arguments[0].value=' " + editValue + " ';", driver.findElement(element));
 
     }
-    //Clear Data only
-    public void clearclearExistingData(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].value=' " + " ';", element);
-
-    }
-
-
 
     public String regexFirstAndLastName(By element, String name) {
         String regex = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{8,20})?)";
@@ -349,9 +298,7 @@ public class BaseActions extends TestBase {
 
     //regex phone no
     public void regexAddress(By element, String streetAddress) {
-
-        //String regex = "\\d+\\s+([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)";
-        String regex = "[\\w,.!?]";
+        String regex = "^[\\.a-zA-Z0-9,!? ]*$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(streetAddress);
@@ -368,7 +315,7 @@ public class BaseActions extends TestBase {
 
     }
 
-    //regex phone no
+    //regex zipcode
     public String regexZipcode(By element, String zipcode) {
         String regex = "\\b\\d{5}(?:-\\d{4})?\\b";
         WebElement webElement = driver.findElement(element);
@@ -387,7 +334,7 @@ public class BaseActions extends TestBase {
         return zipcode;
     }
 
-    ///^[a-zA-Z]+$/
+    ///regexcity
     public void regexCity(By element, String cityOrState) {
         String regex = "(?:[A-Z][a-z.-]+[ ]?)+";
         WebElement webElement = driver.findElement(element);
@@ -407,46 +354,10 @@ public class BaseActions extends TestBase {
     }
 
 
-    ///^[a-zA-Z]+$/
-    public void regexState1(By element, String State) {
-        String regex = "Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|\n" +
-                "Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|\n" +
-                "Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico\n" +
-                "|New[ ]York|North[ ]Carolina|North[ ]Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode[ ]Island\n" +
-                "|South[ ]Carolina|South[ ]Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West[ ]Virginia\n" +
-                "|Wisconsin|Wyoming";
-        WebElement webElement = driver.findElement(element);
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(State);
-
-        Boolean checkPatternCondition = matcher.matches();
-
-        if (checkPatternCondition == true) {
-            webElement.sendKeys(State);
-        } else if ((checkPatternCondition == false)) {
-            Assert.assertTrue(true, "The entered address is not valid");
-        } else {
-            log.info("Create Account Screen : Something is not proper for the entered address ");
-        }
-
-    }
-
-
     //Regex for state
     public boolean regexState(By element, String state)
     {
         String regexState = "^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$";
-        // if(state.matches("Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico|New[ ]York|North[ ]Carolina|North[ ]Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode[ ]Island|South[ ]Carolina|South[ ]Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West[ ]Virginia|Wisconsin|Wyoming") || state.matches("^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$"))
-//        if(state.matches(regexState))
-//
-//        {
-//            Assert.assertTrue(true, "Entered state is valid");
-//            //driver.findElement(element).sendKeys(state);
-//        }
-//        else
-//        {
-//            Assert.assertTrue(false, "The State entered is not valid");
-//        }
         boolean isStateValid = regexExpression(element, state, regexState);
         return isStateValid;
     }
@@ -462,18 +373,12 @@ public class BaseActions extends TestBase {
     //Random click()
     public void randomClickOnScreen() throws AWTException {
         Actions actions = new Actions(driver);
-
         Robot robot = new Robot();
-
         robot.mouseMove(0, 0);
-
         actions.click().build().perform();
     }
 
-    //AddMoreCrad - REgex
-    //regex phone no
     public boolean regexExpression(By element, String enterData, String regexType) {
-        // String regex = "^\\d{19}$";
         WebElement webElement = driver.findElement(element);
         Pattern pattern = Pattern.compile(regexType);
         Matcher matcher = pattern.matcher(enterData);
@@ -511,20 +416,11 @@ public class BaseActions extends TestBase {
         jse.executeScript("window.scrollBy(0,document.body.scrollHeight)");
     }
 
-    //Navigate without Submitting the changes
-    public void navigateWithoutSubmit(By element) {
-        driver.findElement(element).click();
-    }
 
     //Last 4 digits of the card
     public String getLastFourDigits(String enterCardNo) {
         addedMoreCardLast4Numbers = enterCardNo.substring(enterCardNo.length() - 4);
         return addedMoreCardLast4Numbers;
-    }
-
-    //WEbElement recode
-    public WebElement webElement(By element) {
-        return driver.findElement(element);
     }
 
     //GetDropdownOptions
@@ -622,13 +518,12 @@ public class BaseActions extends TestBase {
         return streetAddressAndCity;
     }
 
-
-
-
     //Regx for the final String of address
-    public void regexCompleteAddress(By street,  By city, String regexFinalAddress )
+    public void regexCompleteAddress(By street,  By city )
     {
+        String regexFinalAddress = "^[\\.a-zA-Z0-9,!? ]*$";
         String finalStringAddress = addUpAllAddressInputs(street, city);
+
         Pattern pattern = Pattern.compile(regexFinalAddress);
         Matcher matcher = pattern.matcher(finalStringAddress);
 
@@ -740,21 +635,6 @@ public class BaseActions extends TestBase {
             return true;
         }
         return true;
-    }
-
-    public void checkFieldsAreEditable(By element1, By element2)
-    {
-        Boolean inpuFields1 = driver.findElement(element1).isEnabled();
-        Boolean inputField2 = driver.findElement(element2).isEnabled();
-        Assert.assertTrue((inpuFields1 && inputField2) == true, "Input fields would accept data");
-    }
-
-    public void checkFieldsAreEditable(By element1, By element2, By element3)
-    {
-        Boolean inpuFields1 = driver.findElement(element1).isEnabled();
-        Boolean inputField2 = driver.findElement(element2).isEnabled();
-        Boolean inputField3 = driver.findElement(element3).isEnabled();
-        Assert.assertTrue((inpuFields1 && inputField2 && inputField3) == true, "Input fields would accept data");
     }
 
     //check if error message is shown when the password criteria is not met

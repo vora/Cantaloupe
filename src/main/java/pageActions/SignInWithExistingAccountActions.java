@@ -23,8 +23,6 @@ public class SignInWithExistingAccountActions extends TestBase {
 
         AccountCreationLocators accountCreationLocators = new AccountCreationLocators();
         LoggedInUserLocators loggedInUserLocators = new LoggedInUserLocators();
-        CreateOrLoginInitialLocators createOrLoginInitialLocators = new CreateOrLoginInitialLocators();
-
 
 
     String emailErrorText = "Please enter your email.";
@@ -73,7 +71,7 @@ public class SignInWithExistingAccountActions extends TestBase {
     public void verifySignInScreen(String existingAccountEmail, String existingAccountPassword) throws IOException, AWTException {
 
 
-        driver.findElement(createOrLoginInitialLocators.continueWithEmail).click();
+        driver.findElement(signInWithExistingAccountLocators.continueWithEmail).click();
         String signInText = driver.findElement(signInWithExistingAccountLocators.signInText).getText();
 
         if(signInText.equalsIgnoreCase("Sign In")) {

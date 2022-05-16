@@ -11,6 +11,7 @@ import org.testng.Assert;
 import pageLocators.AccountCreationLocators;
 import pageLocators.HomePageLocators;
 
+
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.io.IOException;
@@ -251,11 +252,8 @@ public class AccountCreation extends TestBase {
     }
 
 
-
-
-
     // validate if entered email displays on create account screen
-    public String enteredEmaiCheck(String emailValue) {
+    public String enteredEmailCheck(String emailValue) {
         Boolean emailStatus = driver.findElement(accountCreationLocators.emailIdInputField).isDisplayed();
         if (emailStatus == true) {
             String enteredEmailValue = driver.findElement(accountCreationLocators.emailIdInputField).getAttribute("value");
@@ -278,30 +276,10 @@ public class AccountCreation extends TestBase {
         return emailValue;
     }
 
-    //Verify that the user is able to edit the email input field on screen 2
-    public void verifyEmailIsEditable1(String editEmail)
-    {
-        try {
-            WebElement emailField = driver.findElement(accountCreationLocators.emailIdInputField);
-            if (emailField.isDisplayed()) {
-                baseActions.randomClickBasedOnOS();
-                baseActions.clearInputfieldAndEnterNewData(accountCreationLocators.emailIdInputField, editEmail);
-            }
-        }
-        catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-    }
-
-
-
     //Enter data in password fields;
     public void enterPassword(String password)
     {
-       //baseActions.regexPassword(accountCreationLocators.createPassowrd, password);
         baseActions.regexExpression(accountCreationLocators.createPassowrd, password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$");
-       //Include spl character ` - should not be allowed
     }
 
     //MaskedPassword for create Password
@@ -443,8 +421,7 @@ public class AccountCreation extends TestBase {
         driver.findElement(accountCreationLocators.streetAddressInput).sendKeys("");
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankStreetError);
-       // baseActions.regexAddress(accountCreationLocators.streetAddressInput, streetAddress);
-        baseActions.enterData(accountCreationLocators.streetAddressInputField, streetAddress);
+        baseActions.regexAddress(accountCreationLocators.streetAddressInput, streetAddress);
 
         driver.findElement(accountCreationLocators.cityInput).sendKeys("");
         baseActions.randomClickBasedOnOS();
@@ -458,7 +435,7 @@ public class AccountCreation extends TestBase {
         driver.findElement(accountCreationLocators.zipcodeInput).sendKeys("");
         baseActions.randomClickBasedOnOS();
         baseActions.validateErrorMessages(accountCreationLocators.blankZipcodeError);
-        regexCompleteAddress(properties.getProperty("streetAddress"), properties.getProperty("regexFinalAddress"));
+        regexCompleteAddress();
     }
 
     //Verify that the checkbox for "I have read and agree to Cantaloupe’s:" is not pre- selected
@@ -668,11 +645,6 @@ public class AccountCreation extends TestBase {
         }
     }
 
-
-
-
-
-
     //Verify that the error message will be displayed after user inputs 10 digits
     public boolean verifyErrorAfter10DigitsEntry()
     {
@@ -719,18 +691,7 @@ public class AccountCreation extends TestBase {
 
     public void regexState()
     {
-//        String stateEntered = properties.getProperty("state");
-//        if(stateEntered.matches("Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New[ ]Hampshire|New[ ]Jersey|New[ ]Mexico|New[ ]York|North[ ]Carolina|North[ ]Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode[ ]Island|South[ ]Carolina|South[ ]Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West[ ]Virginia|Wisconsin|Wyoming") || stateEntered.matches("^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$"))
-//        {
-//            driver.findElement(accountCreationLocators.stateInput).sendKeys(properties.getProperty("state"));
-//            Assert.assertTrue(true, "Entered state is valid");
-//        }
-//        else
-//        {
-//            Assert.assertTrue(false, "The State entered is not valid");
-//        }
-//        //baseActions.regexExpression(accountCreationLocators.streetAddressInput, properties.getProperty("state"), stateEntered);
-        baseActions.regexState(accountCreationLocators.stateInput, properties.getProperty("state"));
+         baseActions.regexState(accountCreationLocators.stateInput, properties.getProperty("state"));
     }
 
     public void regexZipcode()
@@ -745,16 +706,12 @@ public class AccountCreation extends TestBase {
     }
 
     //Regx for the final String of address
-    public void regexCompleteAddress(String streetAddress, String regexFinalAddress)
+    public void regexCompleteAddress()
     {
-       // baseActions.enterData(accountCreationLocators.streetAddressInput, streetAddress);
-       // accountCreation1.enterData(accountCreationLocators.cityInputField, properties.getProperty("city"));
-        baseActions.regexCompleteAddress(accountCreationLocators.streetAddressInput, accountCreationLocators.cityInput, regexFinalAddress);
+        baseActions.regexCompleteAddress(accountCreationLocators.streetAddressInput, accountCreationLocators.cityInput);
         regexState();
         regexZipcode();
     }
-
-
 
     //Enter details for Address
     public void enterAddressAndCityDetails(String streetAddress, String city)
@@ -831,7 +788,7 @@ public class AccountCreation extends TestBase {
     //Verify that, all the input fields should have the same value if the user comes back from "Terms of Use" screen
     public void checkInputsAfterNavigation()
     {
-        navigateToTOC();
+        //navigateToTOC();
       //  navigateBackToRegistration();
         List<String> enteredData = verifyInputAfterTOCAndPOPNavigation();
         Collections.sort(enteredData);
@@ -857,21 +814,10 @@ public class AccountCreation extends TestBase {
     //Verify that, user can click on "Back to login options" button to exit registration form and direct to the Create Account screen
     public void clickBackToLoginOptions()
     {
-    //driver.findElement(accountCreationLocators.backToLoginLink).click();
         driver.findElement(accountCreationLocators.backToLoginOptions).click();
-    WebElement continueWithEmailLink = driver.findElement(homePageLocators.continueWithEmail);
-    WebElement createAccountText = driver.findElement(homePageLocators.createAccountText);
-    Assert.assertTrue((createAccountText.isDisplayed() && continueWithEmailLink.isDisplayed())==true, "User navigated back to Create Account screen");
-    }
-
-    //VerifyTickMark()
-    public void verrifyTickMark1() {
-        if ((driver.findElement(accountCreationLocators.tickMarkImage).isDisplayed())) {
-            Boolean image1Present = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", driver.findElement(accountCreationLocators.tickMarkImage));
-            Assert.assertTrue(image1Present == true, "Tick mark is present");
-        } else if (!(driver.findElement(accountCreationLocators.tickMarkImage)).isDisplayed()) {
-            Assert.assertTrue(false, "tick mark is not present");
-        }
+        WebElement continueWithEmailLink = driver.findElement(homePageLocators.continueWithEmail);
+        WebElement createAccountText = driver.findElement(homePageLocators.createAccountText);
+        Assert.assertTrue((createAccountText.isDisplayed() && continueWithEmailLink.isDisplayed())==true, "User navigated back to Create Account screen");
     }
 
     //wrongScenarios - Email
@@ -977,26 +923,6 @@ public class AccountCreation extends TestBase {
         baseActions.clickBlankInputAndCheckErrors(accountCreationLocators.zipcodeInput, accountCreationLocators.zipcodeErrorText);
     }
 
-
-    //wrongScenarios - zipcode
-    public void verifyWrongZipcodeError(String wrongZipcode) throws AWTException {
-        baseActions.validateWrongScenarios(accountCreationLocators.zipcodeInput, accountCreationLocators.zipcodeErrorText, wrongZipcode);
-    }
-
-    public void validateAllErrors() throws AWTException {
-        validateBlankEmailError();
-        validateBlankCreatePasswordError();
-        validateBlankConfirmPasswordError();
-        validateBlankFirstNameError();
-        validateBlankLastNameError();
-        validateBlankPhoneNumberError();
-        validatePhoneNumberInUseError();
-        validateBlankStreetAddressError();
-        validateBlankCityError();
-        validateBlankStateError();
-        validateBlankZipcodeError();
-    }
-
     public void verifyAnyErrorsDisplayedOnScreen()
     {
         List<WebElement> allErrors = driver.findElements(accountCreationLocators.listOfAllSpanErrors);
@@ -1009,6 +935,4 @@ public class AccountCreation extends TestBase {
             Assert.assertFalse(true,"No error message is present on the screen" );
         }
     }
-
-
 }

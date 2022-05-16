@@ -16,6 +16,7 @@ public class SignInWithExistingAccountLocators {
     public By forgotPasswordLink = By.xpath("//*[@id='login']/div[1]/div[3]");
     public By signInButton = By.xpath("//*[@id='login']/div[2]/button");
     public By backToLogin = By.xpath("//div[@class='styles__Text-sc-1r7ypxo-0 fwwrnt']");
+    public By continueWithEmail = By.xpath("//*[@id='id_email']");
 
 
     public By carousel = By.xpath("//*ul[@class='control-dots']/li");

@@ -86,8 +86,8 @@ public class TestListener extends TestBase implements ITestListener {
 
         String destination = System.getProperty("user.dir") + "/TestReport/" + screenshotName + " " + dateName
                 + ".png";
-        File finalDestination = new File(destination);
-        FileUtils.copyFile(source, finalDestination);
+        //File finalDestination = new File(destination);
+       // FileUtils.copyFile(source, finalDestination);
         return destination;
     }
 
