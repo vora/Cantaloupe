@@ -14,6 +14,8 @@ public class HomePageLocators {
     public By createAccountBigButton = By.xpath("//*[@class='styles__Container-sc-ajoebm-0 cUxQNN']/button");
     public By continueWithEmail = By.xpath("//*[text()='continue with email']");
     public By createAccountText = By.xpath("//*[text()='Create Account']");
+    public By corousalHeaders = By.xpath("//*[@id='__next']/main/div/div/div[2]/div/div/div/div/ul/li/div/h1");
+
 
 
 

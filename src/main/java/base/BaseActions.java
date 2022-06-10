@@ -716,4 +716,33 @@ public class BaseActions extends TestBase {
         return inputAttribute;
     }
 
+    public void verifyAnyErrorsDisplayedOnScreen(By element)
+    {
+        List<WebElement> allErrors = driver.findElements(element);
+        if(allErrors.size() != 0){
+            for (int i = 0; i < allErrors.size(); i++) {
+                Assert.assertTrue(true, allErrors.get(i).getText());
+            }
+        }
+        else{
+            Assert.assertFalse(false,"No error message is present on the screen" );
+        }
+    }
+
+    public void checkFieldsAreEditable(By element1, By element2, By element3)
+    {
+        Boolean inpuFields1 = driver.findElement(element1).isEnabled();
+        Boolean inputField2 = driver.findElement(element2).isEnabled();
+        Boolean inputField3 = driver.findElement(element3).isEnabled();
+        Assert.assertTrue((inpuFields1 && inputField2 && inputField3) == true, "Input fields would accept data");
+    }
+
+    public void checkFieldsAreEditable(By element1, By element2)
+    {
+        Boolean inpuFields1 = driver.findElement(element1).isEnabled();
+        Boolean inputField2 = driver.findElement(element2).isEnabled();
+        Assert.assertTrue((inpuFields1 && inputField2) == true, "Input fields would accept data");
+    }
+
+
 }

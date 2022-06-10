@@ -413,7 +413,7 @@ public class AccountCreation extends TestBase {
     //Verify Phone Number Format
     public void verifyPhoneNoFormat()
     {
-        baseActions.verifyPhoneNoFormat(accountCreationLocators.mobileNumberField);
+        baseActions.verifyPhoneNoFormat(accountCreationLocators.mobileNumberInput);
     }
 
     //verify address
@@ -925,14 +925,15 @@ public class AccountCreation extends TestBase {
 
     public void verifyAnyErrorsDisplayedOnScreen()
     {
-        List<WebElement> allErrors = driver.findElements(accountCreationLocators.listOfAllSpanErrors);
-        if(allErrors.size() != 0){
-            for (int i = 0; i < allErrors.size(); i++) {
-                Assert.assertTrue(false, allErrors.get(i).getText());
-            }
-        }
-        else{
-            Assert.assertFalse(true,"No error message is present on the screen" );
-        }
+//        List<WebElement> allErrors = driver.findElements(accountCreationLocators.listOfAllSpanErrors);
+//        if(allErrors.size() != 0){
+//            for (int i = 0; i < allErrors.size(); i++) {
+//                Assert.assertTrue(false, allErrors.get(i).getText());
+//            }
+//        }
+//        else{
+//            Assert.assertFalse(true,"No error message is present on the screen" );
+//        }
+        baseActions.verifyAnyErrorsDisplayedOnScreen(accountCreationLocators.listOfAllSpanErrors);
     }
 }

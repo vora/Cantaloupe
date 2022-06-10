@@ -21,6 +21,7 @@ public class AccountCreationLocators {
     public By lastNamePlaceHolder = By.xpath("//input[@id='id_lastName']/../label");
     public By enterLastNameErrorText = By.xpath("//*[text()='Please enter your last name.']");
     public By mobileNumberField = By.xpath("//input[@id='id_mobile']");
+    public By mobileNumberInput = By.xpath("//input[@name='id_mobile']");
     public By mobileNumberFieldPlaceHolder = By.xpath("//input[@id='id_mobile']/../label");
     public By enterMobileNumberErrorText = By.xpath("//*[text()='Invalid mobile number.']");
     public By streetAddressInputField = By.xpath("//input[@id='id_address']");
