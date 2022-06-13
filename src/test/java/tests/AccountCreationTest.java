@@ -92,9 +92,11 @@ public class AccountCreationTest extends TestBase {
     public void verifyEmailIsEditable() throws IOException, AWTException {
         accountCreation.clickCreateButton();
         accountCreation.validateEmailCriteria(properties.getProperty("createNewEmail"));
+
         accountCreation.verifyNextButtonEnabled();
         accountCreation.verrifyTickMark();
         accountCreation.verifyEmailIsEditable(properties.getProperty("existingAccountEmail"));
+        accountCreation.isPasswordFieldEditable();
     }
 
     //Verify wrong password fields

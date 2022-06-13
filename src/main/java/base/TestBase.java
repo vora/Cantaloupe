@@ -77,9 +77,9 @@ public class TestBase {
         DesiredCapabilities caps = new DesiredCapabilities();
         if (properties.getProperty("platformName").equalsIgnoreCase(iOS)) {
             caps.setCapability("platformName", "iOS");
-            caps.setCapability("deviceName", "iPhone 13 Pro Max");
+            caps.setCapability("deviceName", "iPhone 12 Pro Max");
             caps.setCapability(CapabilityType.BROWSER_NAME, "safari");
-            caps.setCapability("platformVersion", "15.2");
+            caps.setCapability("platformVersion", "14.5");
 
             caps.setCapability("automationName", "XCUITest");
             caps.setCapability("autoAcceptAlerts", true);

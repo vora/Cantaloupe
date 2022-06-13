@@ -1,8 +1,8 @@
-git statuspackage pageLocators;
+package pageLocators;
 
 import org.openqa.selenium.By;
 
-public class AccountCreationLocators1111 {
+public class AccountCreationLocatorsTest {
 
     public By listOfAllSpanErrors = By.xpath("//span[@class='styles__Msg-sc-1b7g2ge-1 eitdLI']");
     public By createAccountText = By.xpath("//*[@id='registration']/h1");
